@@ -1,0 +1,17 @@
+{
+  "name": "@pavittarx/portfolio",
+  "version": "1.0.0",
+  "description": "portfolio website & repository for @pavittarx",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "pavittarx",
+    "@pavittarx",
+    "portfolio",
+    "website"
+  ],
+  "author": "pavittarx",
+  "license": "MIT"
+}
