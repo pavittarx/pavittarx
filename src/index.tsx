@@ -1,6 +1,9 @@
 import React from "react";
 import { render } from "react-dom";
 
-const Application: React.SFC<{}> = () => <h1>Hello, Pavi.</h1>;
+import App from "~/pages/App";
+import './index.css';
+
+const Application: React.FC<{}> = App;
 
 render(<Application />, document.getElementById("root"));
