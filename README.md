@@ -17,7 +17,7 @@ I am a Full stack Developer in love with Javascript &/ Typescript. I'm currently
 
 [Code Portfolio](https://github.com/pavittarx/)
 
-[Mail: pavittarx@gmail.com](mailto:pavittarx@gmail.com)
+[eMail](mailto:pavittarx@gmail.com)
 
 [Connect @Linkedin](https://linkedin.com/in/pavittarx)
 
