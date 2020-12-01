@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { HomeWrapper, HeaderStyles, MainStyles } from "./home.styles";
 
 import logo from "~/assets/images/pavittarx.svg";
+
 import { IMenuOpen, IMenuClose, IMail, IBox } from "~/shared/icons";
+import {Button} from "~/shared/buttons";
 
 const Main: React.FC = () => {
   const copyEmail = () => {
@@ -28,12 +30,13 @@ const Main: React.FC = () => {
             <span> Get in touch</span>
           </div>
         </div>
+        <Button text="Hello World"/>
       </main>
     </MainStyles>
   );
 };
 
-const Header: React.FC = () => {
+const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
