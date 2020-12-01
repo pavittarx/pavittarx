@@ -13,12 +13,15 @@ Here are some ideas to get you started:
 - ⚡ Fun fact: ...
 -->
 
-I am a Full stack Developer in love with Javascript &/ Typescript. I'm currently open for work opportunities as a Web Developer.
 
-[Code Portfolio](https://github.com/pavittarx/)
+### Intro
 
-[eMail](mailto:pavittarx@gmail.com)
+A fullstack developer interested in Javascript &/ Typescript. 
 
-[Connect @Linkedin](https://linkedin.com/in/pavittarx)
+#### Contact me
+I am available for hire. Please reach out to me on any of the following channels:
 
----
+Email: pavittarx@gmail.com
+
+[![Linkedin Profile](https://pubx.s3-us-west-1.amazonaws.com/gh-linkedin.svg)](https://linkedin.in/in/pavittarx)
+[![FreeCodeCamp Profile](https://pubx.s3-us-west-1.amazonaws.com/gh-freecodecamp.svg)](https;//freecodecamp.org/pavittarx)
