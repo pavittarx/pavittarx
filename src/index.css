@@ -7,14 +7,17 @@
 
 /* Global Defaults */
 
+html {
+  font-size: 16px;
+}
+
 body {
   margin: 0;
   padding: 0;
   background: var(--dark);
   color: var(--text);
 
-  font-family: 'Rosario', sans-serif;
-  
+  font-family: "Rosario", sans-serif;
 }
 
 * {
@@ -30,7 +33,13 @@ a {
 
 /* Global Classes */
 
-.para{
-  margin: 16px 0;
-  padding: 8px 0;
+.para {
+  margin: 1rem 0;
+  padding: 0.5rem 0;
+}
+
+@media screen (min-width: 1440px) {
+  html {
+    font-size: 24px;
+  }
 }
