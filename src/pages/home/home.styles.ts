@@ -1,18 +1,16 @@
 import styled from "styled-components";
 
-const _tablet = (css: string) => {
-  return `@media only screen and (min-width: 500px){
-    ${css}
-  }`;
-};
-
-const TabletStyles = styled.div`
-  color: red;
-`
-
-
-export const HomeWrapper = styled.div`
+export const HomeWrapper = styled.div<{backgroundImage?: string}>`
   background: inherit;
+  height: 100vh;
+
+  overflow: hidden;
+
+  background-image: ${(props) =>
+    props.backgroundImage ? "url(" + props.backgroundImage + ")" : "none"};
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  /* background-size: contain; */
 `;
 
 export const HeaderStyles = styled.section`
@@ -37,9 +35,9 @@ export const HeaderStyles = styled.section`
   }
 `;
 
-export const MainStyles = styled.section`
-  margin-left: 24px;
-  margin-right: 20px;
+export const MainStyles = styled.section<{ backgroundImage: string }>`
+  padding-left: 24px;
+  padding-right: 20px;
 
   #header {
     font-size: 58px;
@@ -68,22 +66,23 @@ export const MainStyles = styled.section`
       }
     }
   }
+  
 
   /* @tablet*/
-  @media (min-width: 768px){
-    #header{
+  @media (min-width: 768px) {
+    #header {
       font-size: 72px;
     }
 
-    #main .description{
+    #main .description {
       max-width: 1000px;
     }
   }
 
-  @media (min-width: 900px){
-    #header{
+  /* web */
+  @media (min-width: 900px) {
+    #header {
       font-size: 84px;
     }
   }
-
 `;

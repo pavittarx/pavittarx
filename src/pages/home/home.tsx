@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+
+import { IMenuOpen, IMenuClose, IMail, IBox } from "~/shared/icons";
+import { Button } from "~/shared/buttons";
+
 import { HomeWrapper, HeaderStyles, MainStyles } from "./home.styles";
 
 import logo from "~/assets/images/pavittarx.svg";
-
-import { IMenuOpen, IMenuClose, IMail, IBox } from "~/shared/icons";
-import {Button} from "~/shared/buttons";
+import illustration from "~/assets/images/illustration.svg";
+import attachIcon from "~/assets/icons/attach.svg";
 
 const Main: React.FC = () => {
   const copyEmail = () => {
@@ -14,7 +17,7 @@ const Main: React.FC = () => {
   };
 
   return (
-    <MainStyles>
+    <MainStyles backgroundImage={illustration}>
       <header id="header">Pavittar Singh</header>
       <main id="main">
         <div className="para description">
@@ -30,7 +33,7 @@ const Main: React.FC = () => {
             <span> Get in touch</span>
           </div>
         </div>
-        <Button text="Hello World"/>
+        <Button icon={attachIcon} text="Resume" />
       </main>
     </MainStyles>
   );
@@ -51,9 +54,9 @@ const Header = () => {
   );
 };
 
-const Home: React.FC = () => {
+const Home: React.FC<{}> = () => {
   return (
-    <HomeWrapper>
+    <HomeWrapper backgroundImage={illustration}>
       <Header />
       <Main />
     </HomeWrapper>
