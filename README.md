@@ -24,4 +24,4 @@ I am available for hire. Please reach out to me on any of the following channels
 Email: pavittarx@gmail.com
 
 [![Linkedin Profile](https://pubx.s3-us-west-1.amazonaws.com/gh-linkedin.svg)](https://linkedin.in/in/pavittarx)
-[![FreeCodeCamp Profile](https://pubx.s3-us-west-1.amazonaws.com/gh-freecodecamp.svg)](https;//freecodecamp.org/pavittarx)
+[![FreeCodeCamp Profile](https://pubx.s3-us-west-1.amazonaws.com/gh-freecodecamp.svg)](https://freecodecamp.org/pavittarx)
