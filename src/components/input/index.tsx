@@ -1,9 +1,11 @@
 import React, { ChangeEventHandler } from "react";
 
+import "./input.scss";
+
 type InputProps = {
   placeholder: string;
   value: string;
-  onChange: ChangeEventHandler;
+  onChange: ChangeEventHandler<HTMLInputElement>;
   id?: string;
 };
 

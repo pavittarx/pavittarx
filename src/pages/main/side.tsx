@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "components/header";
 import Button from "components/button";
+import TextInput from "components/input";
 import PlaceholderImage from "assets/images/profile-placeholder.jpg";
 
 import "./main.scss";
@@ -43,14 +44,29 @@ const Info = () => {
 };
 
 const NewsLetter = () => {
-  return <div className="newsletter-container">
-    <div className="heading"> Subscribe to my newsletter</div>
-    <div className="input-form">
-      <div className="input-container">
-        <input type="text" /> 
+  const [email, setEmail] = useState("");
+
+  return (
+    <div className="newsletter-container">
+      <div className="heading"> Subscribe to my newsletter</div>
+      <div className="input-form">
+        <TextInput
+          placeholder="Your Email @"
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
+        />
+        <div className="button-wrapper">
+        <Button>
+          <div className="gradient-text button-text">
+            Join
+          </div>
+        </Button>
+        </div>
       </div>
     </div>
-  </div>;
+  );
 };
 
 const Sidebar = () => {
