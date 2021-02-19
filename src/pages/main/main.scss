@@ -1,0 +1,50 @@
+.main-container {
+}
+
+.sidebar-container {
+  height: 100%;
+}
+
+.sidebar-content-container {
+  height: 300px;
+  padding: 24px;
+  color: #222222bf;
+}
+
+.info-container {
+  .profile-image {
+    margin-bottom: 20px;
+
+    img {
+      border-radius: 16px;
+      margin: 10px;
+    }
+  }
+
+  .headline-short {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .headline-large {
+    font-size: 32px;
+  }
+}
+
+.update-container {
+  // background: #eee;
+  // color: #888;
+
+  font-family: "Roboto";
+  padding: 15px 0px;
+  margin: 15px 0;
+  border-radius: 15px;
+  font-size: 16px;
+
+  .heading {
+    font-size: 17px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    opacity: 0.95;
+  }
+}

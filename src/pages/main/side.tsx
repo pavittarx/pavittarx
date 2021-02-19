@@ -1,0 +1,48 @@
+import React from "react";
+import Header from "components/header";
+import PlaceholderImage from "assets/images/profile-placeholder.jpg";
+
+import "./main.scss";
+
+const SidebarContent = () => {
+  return (
+    <section className="sidebar-content-container">
+      <Info />
+      <Update />
+    </section>
+  );
+};
+
+const Update = () => {
+  return (
+    <div className="update-container">
+      <div className="heading gradient-text">Update: 2021</div>
+      <div className="content">
+        I am currently available for freelance web design and development projects.
+      </div>
+    </div>
+  );
+};
+
+const Info = () => {
+  return (
+    <div className="info-container">
+      <div className="profile-image">
+        <img src={PlaceholderImage} alt="@pavittarx" />
+      </div>
+      <div className="headline-short">Hello! I am Pavittar Singh.</div>
+      <div className="headline-large">I build websites and apps.</div>
+    </div>
+  );
+};
+
+const Sidebar = () => {
+  return (
+    <section id="sidebar" className="sidebar-container">
+      <Header />
+      <SidebarContent />
+    </section>
+  );
+};
+
+export default Sidebar;
