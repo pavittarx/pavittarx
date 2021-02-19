@@ -14,19 +14,42 @@ code {
     monospace;
 }
 
+a{
+  text-decoration: none;
+}
+
+
+
 * {
   box-sizing: border-box;
 }
 
 :root {
-  --primary: #330867 ;
+  --primary: #330867;
   --secondary: #2575fc;
+
+  --divider-border: 1px solid #a9a9a95c;
 }
 
 .gradient-text {
-  background: linear-gradient(to right, #330867, #2575fc);
+  background: linear-gradient(to right, var(--primary), var(--secondary));
   background-clip: text;
   color: transparent;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+
+  display: inline-block;
+
+  &:hover{
+    color: #fff;
+  }
+}
+
+.button-outlined {
+  padding: 10px 25px;
+  background: linear-gradient(var(--primary), var(--secondary));
+
+  > div {
+    background: #fff;
+  } 
 }
