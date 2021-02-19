@@ -1,5 +1,5 @@
 {
-  "name": "@devissh/app",
+  "name": "@pavittar/portfolio",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -7,6 +7,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "^4.0.1",
+    "styled-components": "^5.2.1",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
