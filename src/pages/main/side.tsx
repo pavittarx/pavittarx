@@ -10,6 +10,7 @@ const SidebarContent = () => {
     <section className="sidebar-content-container">
       <Info />
       <Update />
+      <NewsLetter />
     </section>
   );
 };
@@ -39,6 +40,17 @@ const Info = () => {
       <div className="headline-large">I build websites and apps.</div>
     </div>
   );
+};
+
+const NewsLetter = () => {
+  return <div className="newsletter-container">
+    <div className="heading"> Subscribe to my newsletter</div>
+    <div className="input-form">
+      <div className="input-container">
+        <input type="text" /> 
+      </div>
+    </div>
+  </div>;
 };
 
 const Sidebar = () => {

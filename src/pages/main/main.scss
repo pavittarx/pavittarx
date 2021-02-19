@@ -6,7 +6,6 @@
 }
 
 .sidebar-content-container {
-  height: 300px;
   padding: 24px;
   color: #222222bf;
 }
@@ -53,4 +52,11 @@
     font-size: 1.2rem;
     max-width: 400px;
   }
+}
+
+
+.newsletter-container{
+  border-top: var(--divider-border);
+  margin: 5px 0;
+  padding: 15px 0;
 }
