@@ -1,9 +1,9 @@
 .header-container {
   background: #fff;
-  border-bottom: 1px solid #a9a9a95c;
+  border-bottom: var(--divider-border);
   padding: 5px 10px;
 
-  .header-bar {
+  .header-bar {  
     display: flex;
     align-items: center;
     justify-content: space-between;

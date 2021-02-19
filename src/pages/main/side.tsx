@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "components/header";
+import Button from "components/button";
 import PlaceholderImage from "assets/images/profile-placeholder.jpg";
 
 import "./main.scss";
@@ -18,8 +19,12 @@ const Update = () => {
     <div className="update-container">
       <div className="heading gradient-text">Update: 2021</div>
       <div className="content">
-        I am currently available for freelance web design and development projects.
+        I am currently available for freelance web design and development
+        projects.
       </div>
+      <Button>
+        <div className="gradient-text button-text">Let's get in touch!</div>
+      </Button>
     </div>
   );
 };
