@@ -1,0 +1,19 @@
+.flex-container {
+  display: flex;
+  gap: 10px;
+
+  .left-container {
+    flex: 1;
+  }
+
+  .right-container {
+    flex: 2.5;
+  }
+
+  @media screen and (max-width: 700px) {
+    .right-container {
+      display: none;
+      flex: 0;
+    }
+  }
+}
