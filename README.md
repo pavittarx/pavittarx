@@ -1,34 +1,28 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<!--
+**pavittarx/pavittarx** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
-## Getting Started
+Here are some ideas to get you started:
 
-First, run the development server:
+- 🔭 I’m currently working on ...
+- 🌱 I’m currently learning ...
+- 👯 I’m looking to collaborate on ...
+- 🤔 I’m looking for help with ...
+- 💬 Ask me about ...
+- 📫 How to reach me: ...
+- 😄 Pronouns: ...
+- ⚡ Fun fact: ...
+-->
 
-```bash
-npm run dev
-# or
-yarn dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Intro
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+I am a fullstack developer. I write web apps in Javascript &/ Typescript. I love building interesting stuff in **React, Nodejs, Express, MongoDb, Firebase**.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+I am currently learning **Flutter** and **AI/ML**. And in the meantime, I am willing to collaborate on new and interesting ideas.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+You can find my github portfolio below. And, feel free to get in touch at any of the following channels.
 
-## Learn More
+Email: pavittarx@gmail.com
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+[![Linkedin Profile](https://pubx.s3-us-west-1.amazonaws.com/gh-linkedin.svg)](https://linkedin.in/in/pavittarx)
+[![FreeCodeCamp Profile](https://pubx.s3-us-west-1.amazonaws.com/gh-freecodecamp.svg)](https://freecodecamp.org/pavittarx)
