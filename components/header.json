@@ -1,0 +1,16 @@
+{
+  "links": [
+    {
+      "name": "projects",
+      "link": "/projects"
+    },
+    {
+      "name": "blogs",
+      "link": "https://pavittarx.hashnode.dev"
+    },
+    {
+      "name": "about me",
+      "link": "/about-me"
+    }
+  ]
+}

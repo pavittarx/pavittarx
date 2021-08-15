@@ -1,0 +1,48 @@
+.main-ctr {
+  padding: 32px;
+  color: var(--text);
+  user-select: none;
+
+  .top-ctr {
+    .heading {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    .text {
+      font-size: 1.25rem;
+      max-width: 32rem;
+      line-height: 1.85rem;
+    }
+
+    .social-icons-ctr {
+      margin-block: 1.5rem;
+
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+
+      gap: 1rem;
+
+      .social-icon {
+        cursor: pointer;
+
+        .icon {
+          padding: 0.8rem;
+          // border: 0.5px solid var(--border);
+          border-radius: 0.3rem;
+
+          &:hover {
+            box-shadow: 1px 1px 10px -3px rgba(0, 0, 0, 0.35);
+          }
+        }
+
+        .icon-text-ctr {
+          padding-inline: 0.5rem;
+        }
+
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+}
