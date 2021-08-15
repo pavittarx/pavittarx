@@ -77,3 +77,9 @@
     }
   }
 }
+
+@media (max-width: 500px) {
+  .main-ctr {
+    flex-direction: column;
+  }
+}
