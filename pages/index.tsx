@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { ReactPropTypes, useState } from "react";
 import { motion } from "framer-motion";
+import { gql, createClient } from "@urql/core";
 
+import { NextPageContext } from "next";
 import dynamic from "next/dynamic";
 
 import Layout from "@/_layouts/main";
 import styles from "@/_assets/scss/home.module.scss";
+import {BlogType} from "@/types/home";
 
 import GithubIcon from "@/_assets/icons/github.svg";
 import LinkedInIcon from "@/_assets/icons/linkedin.svg";
@@ -60,7 +63,7 @@ const SocialIcons = () => {
             <motion.div
               key={"social-icons" + index}
               className={styles["social-icon"]}
-              onClick={() => window.open(social.link, "_blank")}
+              onClick={() => setTimeout(() => window.open(social.link, "_blank"), 1000)}
               onMouseEnter={() => (index == 2 ? setIsEmailHovered(true) : null)}
               onMouseLeave={() => {
                 setIsEmailHovered(false);
@@ -124,7 +127,7 @@ const Skills = () => {
   ];
 
   return (
-    <>
+    <section className={styles["skills-block"]}>
       <h2> Skills </h2>
       <div className={styles["skills-ctr"]}>
         {skills.map((skill, index) => (
@@ -134,11 +137,25 @@ const Skills = () => {
           </div>
         ))}
       </div>
-    </>
+    </section>
   );
 };
 
-const Home = () => {
+const Blogs = ({ blogs }: { blogs: Array<BlogType> }) => {
+  return <> 
+  {blogs && blogs.length > 0 && blogs.map(blog => {
+    return <div className={styles["blog-box"]}>
+      <h5 className={styles.title}> {blog.title} </h5>
+      <div className={styles.brief}> {blog.brief} </div>
+    </div>
+
+  })}
+  </>;
+};
+
+const Home = ({ blogs }: { blogs: Array<BlogType> }) => {
+  console.log(blogs);
+
   return (
     <Layout title="Pavittar Singh">
       <div className={styles["main-ctr"]}>
@@ -146,18 +163,53 @@ const Home = () => {
           <div className={styles["top-ctr"]}>
             <div className={styles.heading}>Hey there, I'm Pavittar.</div>
             <div className={styles.text}>
-              I develop web apps. I write my apps in{" "}
+              I develop web apps. I write my apps in
               <b> React, Express, Nodejs, MongoDb, and Firebase. </b>
             </div>
             <SocialIcons />
-
             <Skills />
           </div>
         </div>
-        <div className={styles["right-ctr"]}>...</div>
+        <div className={styles["right-ctr"]}>
+          <h3>Recent Blogs</h3>
+          <Blogs blogs={blogs}/>
+        </div>
       </div>
     </Layout>
   );
 };
 
 export default Home;
+
+export async function getStaticProps(context: NextPageContext) {
+  const client = createClient({
+    url: "https://api.hashnode.com",
+  });
+
+  const BlogsQuery = gql`
+    {
+      user(username: "pavittarx") {
+        publication {
+          posts(page: 0) {
+            title
+            slug
+            brief
+          }
+        }
+      }
+    }
+  `;
+
+  let blogs = await client
+    .query(BlogsQuery)
+    .toPromise()
+    .then((result) => {
+      return result?.data?.user?.publication?.posts;
+    });
+
+  return {
+    props: {
+      blogs,
+    },
+  };
+}

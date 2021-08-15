@@ -10,7 +10,12 @@
     flex: 1;
   }
 
+  .left-ctr{
+    padding-top: 1rem;
+  }
+
   .top-ctr {
+
     .heading {
       font-size: 3rem;
       margin-bottom: 1rem;
@@ -78,8 +83,26 @@
   }
 }
 
-@media (max-width: 500px) {
+.blog-box{
+  padding: 1.25rem 1.5rem;
+  // border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  margin: 1rem;
+  color: var(--text);
+
+  &:hover{
+    box-shadow: 1px 1px 10px -3px rgba(0,0,0,0.35);
+  }
+}
+
+.skills-block{
+  margin-top: 4rem;
+  margin-bottom: 3.5rem;
+}
+
+@media (max-width: 700px) {
   .main-ctr {
     flex-direction: column;
+    gap: 2rem;
   }
 }
