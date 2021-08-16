@@ -1,13 +1,14 @@
-import { ReactPropTypes, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { gql, createClient } from "@urql/core";
 
+import { useRouter } from "next/router";
 import { NextPageContext } from "next";
 import dynamic from "next/dynamic";
 
 import Layout from "@/_layouts/main";
 import styles from "@/_assets/scss/home.module.scss";
-import {BlogType} from "@/types/home";
+import { BlogType } from "@/types/home";
 
 import GithubIcon from "@/_assets/icons/github.svg";
 import LinkedInIcon from "@/_assets/icons/linkedin.svg";
@@ -63,7 +64,9 @@ const SocialIcons = () => {
             <motion.div
               key={"social-icons" + index}
               className={styles["social-icon"]}
-              onClick={() => setTimeout(() => window.open(social.link, "_blank"), 1000)}
+              onClick={() =>
+                setTimeout(() => window.open(social.link, "_blank"), 1000)
+              }
               onMouseEnter={() => (index == 2 ? setIsEmailHovered(true) : null)}
               onMouseLeave={() => {
                 setIsEmailHovered(false);
@@ -142,20 +145,30 @@ const Skills = () => {
 };
 
 const Blogs = ({ blogs }: { blogs: Array<BlogType> }) => {
-  return <> 
-  {blogs && blogs.length > 0 && blogs.map(blog => {
-    return <div className={styles["blog-box"]}>
-      <h5 className={styles.title}> {blog.title} </h5>
-      <div className={styles.brief}> {blog.brief} </div>
-    </div>
+  const router = useRouter();
 
-  })}
-  </>;
+  return (
+    <>
+      {blogs &&
+        blogs.length > 0 &&
+        blogs.map((blog) => {
+          return (
+            <div
+              className={styles["blog-box"]}
+              onClick={() =>
+                router.push("https://pavittarx.hashnode.dev/" + blog.slug)
+              }
+            >
+              <h5 className={styles.title}> {blog.title} </h5>
+              <div className={styles.brief}> {blog.brief} </div>
+            </div>
+          );
+        })}
+    </>
+  );
 };
 
 const Home = ({ blogs }: { blogs: Array<BlogType> }) => {
-  console.log(blogs);
-
   return (
     <Layout title="Pavittar Singh">
       <div className={styles["main-ctr"]}>
@@ -172,7 +185,7 @@ const Home = ({ blogs }: { blogs: Array<BlogType> }) => {
         </div>
         <div className={styles["right-ctr"]}>
           <h3>Recent Blogs</h3>
-          <Blogs blogs={blogs}/>
+          <Blogs blogs={blogs} />
         </div>
       </div>
     </Layout>

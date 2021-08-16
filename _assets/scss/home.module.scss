@@ -10,12 +10,11 @@
     flex: 1;
   }
 
-  .left-ctr{
+  .left-ctr {
     padding-top: 1rem;
   }
 
   .top-ctr {
-
     .heading {
       font-size: 3rem;
       margin-bottom: 1rem;
@@ -45,6 +44,10 @@
 
           &:hover {
             box-shadow: 1px 1px 10px -3px rgba(0, 0, 0, 0.35);
+          }
+
+          &:active {
+            box-shadow: inset 1px 1px 10px -7px rgba(0, 0, 0, 0.25);
           }
         }
 
@@ -83,19 +86,25 @@
   }
 }
 
-.blog-box{
+.blog-box {
   padding: 1.25rem 1.5rem;
   // border: 1px solid #ccc;
   border-radius: 0.5rem;
   margin: 1rem;
   color: var(--text);
 
-  &:hover{
-    box-shadow: 1px 1px 10px -3px rgba(0,0,0,0.35);
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 1px 1px 10px -3px rgba(0, 0, 0, 0.35);
+  }
+
+  &:active {
+    box-shadow: inset 1px 1px 10px -3px rgba(0, 0, 0, 0.35);
   }
 }
 
-.skills-block{
+.skills-block {
   margin-top: 4rem;
   margin-bottom: 3.5rem;
 }
