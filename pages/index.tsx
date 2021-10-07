@@ -156,7 +156,7 @@ const Blogs = ({ blogs }: { blogs: Array<BlogType> }) => {
             <div
               className={styles["blog-box"]}
               onClick={() =>
-                router.push("https://pavittarx.hashnode.dev/" + blog.slug)
+                router.push("https://blog.pavittarx.com/" + blog.slug)
               }
             >
               <h5 className={styles.title}> {blog.title} </h5>
