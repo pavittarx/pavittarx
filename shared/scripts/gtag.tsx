@@ -1,5 +1,7 @@
 import Script from "next/script";
 
+declare const window: any;
+
 const GTagScript = () => {
 
   const initGTag = () => {
@@ -14,14 +16,14 @@ const GTagScript = () => {
 
     gtag("js", new Date());
     gtag("config", "G-7GLPMTL7EN");
+
+    return null;
   }
 
   return <> 
 <Script strategy="lazyOnload" src="https://www.googletagmanager.com/gtag/js?id=G-7GLPMTL7EN"></Script>
 <Script>
-  {
-    initGTag()
-  }
+  {initGTag()}
 </Script>
   </>;
 
