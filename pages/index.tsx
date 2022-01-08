@@ -203,7 +203,7 @@ export async function getStaticProps(context: NextPageContext) {
     {
       user(username: "pavittarx") {
         publication {
-          posts(page: 0) {
+          posts(page: 1) {
             title
             slug
             brief

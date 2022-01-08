@@ -1,5 +1,7 @@
 import type { AppProps } from "next/app";
 
+import GTagScript from "shared/scripts/gtag";
+
 import "@/_assets/styles/normalize.css";
 import "@/_assets/styles/index.css";
 import "@/_assets/styles/variables.css";
@@ -18,6 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         rel="stylesheet"
       ></link>
       <Component {...pageProps} />
+      <GTagScript />
     </>
   );
 }
