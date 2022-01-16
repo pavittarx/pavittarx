@@ -203,7 +203,7 @@ export async function getStaticProps(context: NextPageContext) {
     {
       user(username: "pavittarx") {
         publication {
-          posts(page: 1) {
+          posts(page: 0) {
             title
             slug
             brief
@@ -219,6 +219,8 @@ export async function getStaticProps(context: NextPageContext) {
     .then((result) => {
       return result?.data?.user?.publication?.posts;
     });
+
+  console.log(blogs);
 
   return {
     props: {
