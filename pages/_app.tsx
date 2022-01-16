@@ -1,5 +1,6 @@
 import type { AppProps } from "next/app";
 
+import { disableReactDevTools } from "shared/scripts/disableReactDevtools";
 import GTagScript from "shared/scripts/gtag";
 
 import "@/_assets/styles/normalize.css";
@@ -20,6 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         rel="stylesheet"
       ></link>
       <Component {...pageProps} />
+      {disableReactDevTools()}
       <GTagScript />
     </>
   );
