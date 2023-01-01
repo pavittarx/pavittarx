@@ -18,7 +18,7 @@ Here are some ideas to get you started:
 
 I am a fullstack developer. I write web apps in Javascript &/ Typescript. I love building interesting stuff in **React, Nodejs, Express, MongoDb, Firebase**.
 
-I am currently learning **Flutter** and **AI/ML**. And in the meantime, I am willing to collaborate on new and interesting ideas.
+I am currently learning **Data Science** and **AI/ML**. And in the meantime, I am willing to collaborate on new and interesting ideas.
 
 You can find my github portfolio below. And, feel free to get in touch at any of the following channels.
 
