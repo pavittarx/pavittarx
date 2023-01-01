@@ -12,17 +12,30 @@ Here are some ideas to get you started:
 - 😄 Pronouns: ...
 - ⚡ Fun fact: ...
 -->
+Hi there! I’m Pavittar Singh 👋
+I’m a Full Stack Developer specializing in TypeScript, JavaScript, and the MERN stack. With a passion for creating impactful and meaningful projects, I’m always eager to tackle real-world problems and drive positive change through technology.
 
+**🌟 Currently Working On:**
 
-### Intro
+- [nb](https://github.com/pavittarx/nb): a markdown based note taking web app.
 
-I am a fullstack developer. I write web apps in Javascript &/ Typescript. I love building interesting stuff in **React, Nodejs, Express, MongoDb, Firebase**.
+**🚀 Skills & Technologies:**
+Languages: TypeScript, JavaScript, Python
+Frameworks & Tools: Next.js, ReactJs, tRPC
+Databases: PostgreSQL, MongoDb, Firebase
+Deployment & Cloud: AWS EC2, Serverless Framework
 
-I am currently learning **Flutter** and **AI/ML**. And in the meantime, I am willing to collaborate on new and interesting ideas.
+**💼 Professional Experience:**
 
-You can find my github portfolio below. And, feel free to get in touch at any of the following channels.
+**Senior Software Engineer at KarmaSuite**: Developed and optimized web applications and permission management systems.
 
-Email: pavittarx@gmail.com
+**Kenko Health (Frontend)**: Designed and implemented high-performance web solutions and improved user experiences.
+💡 Fun Fact: I love contributing to open-source projects and exploring new technologies.
 
-[![Linkedin Profile](https://pubx.s3-us-west-1.amazonaws.com/gh-linkedin.svg)](https://linkedin.in/in/pavittarx)
-[![FreeCodeCamp Profile](https://pubx.s3-us-west-1.amazonaws.com/gh-freecodecamp.svg)](https://freecodecamp.org/pavittarx)
+Feel free to explore my repositories and reach out if you’d like to collaborate or discuss tech!
+
+Thanks for visiting, and happy coding! 🚀
+
+**📫 Connect With Me:**
+
+&nbsp; &nbsp; &nbsp; [![Email](./public//mail.svg)](mailto:pavittarx+gh@gmail.com) &nbsp; &nbsp;  [![Link: Linkedin Profile](./public//linkedin.svg)](https://linkedin.in/in/pavittarx) &nbsp; &nbsp; [![Link: FreeCodeCamp Profile](./public/freecodecamp.svg)](https://freecodecamp.org/pavittarx)
