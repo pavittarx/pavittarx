@@ -17,13 +17,14 @@ I’m a Full Stack Developer specializing in TypeScript, JavaScript, and the MER
 
 **🌟 Currently Working On:**
 
-- [nb](https://github.com/pavittarx/nb): a markdown based note taking web app.
+- [nb](https://github.com/pavittarx/nb) - a markdown based note taking web app.
 
 **🚀 Skills & Technologies:**
-Languages: TypeScript, JavaScript, Python
-Frameworks & Tools: Next.js, ReactJs, tRPC
-Databases: PostgreSQL, MongoDb, Firebase
-Deployment & Cloud: AWS EC2, Serverless Framework
+
+- **Languages**: TypeScript, JavaScript, Python <br/>
+- **Frameworks & Tools**: Next.js, ReactJs, tRPC <br/>
+- **Databases**: PostgreSQL, MongoDb, Firebase, Prisma <br/>
+- **Deployment & Cloud**: Vercel, AWS, Serverless Framework
 
 **💼 Professional Experience:**
 
