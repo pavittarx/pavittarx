@@ -36,6 +36,4 @@ Feel free to explore my repositories and reach out if you’d like to collaborat
 
 Thanks for visiting, and happy coding! 🚀
 
-**📫 Connect With Me:**
-
-&nbsp; &nbsp; &nbsp; [![Email](./public//mail.svg)](mailto:pavittarx+gh@gmail.com) &nbsp; &nbsp;  [![Link: Linkedin Profile](./public//linkedin.svg)](https://linkedin.in/in/pavittarx) &nbsp; &nbsp; [![Link: FreeCodeCamp Profile](./public/freecodecamp.svg)](https://freecodecamp.org/pavittarx)
+**📫 Connect With Me:** &nbsp; &nbsp; &nbsp; [![Email](./public//mail.svg)](mailto:pavittarx+gh@gmail.com) &nbsp; &nbsp;  [![Link: Linkedin Profile](./public//linkedin.svg)](https://linkedin.in/in/pavittarx) &nbsp; &nbsp; [![Link: FreeCodeCamp Profile](./public/freecodecamp.svg)](https://freecodecamp.org/pavittarx)
