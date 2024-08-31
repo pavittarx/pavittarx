@@ -15,9 +15,11 @@ Here are some ideas to get you started:
 Hi there! I’m Pavittar Singh 👋
 I’m a Full Stack Developer specializing in TypeScript, JavaScript, and the MERN stack. With a passion for creating impactful and meaningful projects, I’m always eager to tackle real-world problems and drive positive change through technology.
 
+<!--
 **🌟 Currently Working On:**
 
 - [nb](https://github.com/pavittarx/nb) - a markdown based note taking web app.
+-->
 
 **🚀 Skills & Technologies:**
 
