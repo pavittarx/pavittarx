@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { gql, createClient } from "@urql/core";
+import { gql, createClient, fetchExchange } from "urql";
 
 import { useRouter } from "next/router";
 import { NextPageContext } from "next";
@@ -196,17 +196,26 @@ export default Home;
 
 export async function getStaticProps(context: NextPageContext) {
   const client = createClient({
-    url: "https://api.hashnode.com",
+    url: "https://gql.hashnode.com",
+    exchanges: [fetchExchange],
   });
 
   const BlogsQuery = gql`
-    {
-      user(username: "pavittarx") {
-        publication {
-          posts(page: 0) {
-            title
-            slug
-            brief
+    query GetUserArticles($username: String!) {
+      user(username: $username) {
+        publications(first: 1) {
+          edges {
+            node {
+              posts(first: 10) {
+                edges {
+                  node {
+                    title
+                    slug
+                    brief
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -214,17 +223,24 @@ export async function getStaticProps(context: NextPageContext) {
   `;
 
   let blogs = await client
-    .query(BlogsQuery)
+    .query(BlogsQuery, { username: "pavittarx" })
     .toPromise()
     .then((result) => {
-      return result?.data?.user?.publication?.posts;
+      // Extract posts from the new API structure
+      const posts =
+        result?.data?.user?.publications?.edges?.[0]?.node?.posts?.edges?.map(
+          (edge: any) => edge.node
+        ) || [];
+      return posts;
+    })
+    .catch((error) => {
+      console.error("GraphQL Error:", error);
+      return [];
     });
-
-  console.log(blogs);
 
   return {
     props: {
-      blogs,
+      blogs: blogs || [],
     },
   };
 }
