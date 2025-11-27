@@ -1,5 +1,15 @@
 ---
 import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Pavittarx",
+  description = "Personal portfolio and timeline of Pavittarx.",
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -8,8 +18,15 @@ import "../styles/global.css";
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="pavittarx" content={Astro.generator} />
-    <title>Astro Basics</title>
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
   </head>
   <body>
     <slot />
