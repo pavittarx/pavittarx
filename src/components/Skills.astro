@@ -25,23 +25,6 @@ const skills: SkillCategory[] = [
     category: "Languages",
     items: [
       {
-        name: "HTML/CSS",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
-        level: 1,
-        children: [
-          {
-            name: "Tailwind CSS",
-            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
-            level: 2,
-          },
-          {
-            name: "styled-components",
-            icon: "https://skillicons.dev/icons?i=styledcomponents",
-            level: 2,
-          },
-        ],
-      },
-      {
         name: "JavaScript",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
         level: 1,
@@ -109,6 +92,23 @@ const skills: SkillCategory[] = [
         name: "Astro",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/astro/astro-original.svg",
         level: 1,
+      },
+      {
+        name: "HTML/CSS",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+        level: 1,
+        children: [
+          {
+            name: "Tailwind CSS",
+            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
+            level: 2,
+          },
+          {
+            name: "styled-components",
+            icon: "https://skillicons.dev/icons?i=styledcomponents",
+            level: 2,
+          },
+        ],
       },
     ],
   },
@@ -355,194 +355,611 @@ const positionedGroups = rawGroups;
 
 <section
   id="skills"
-  class="py-16 relative bg-[#0a0a0f] min-h-screen flex items-center justify-center"
+  class="relative bg-[#0a0a0f] h-screen w-full overflow-hidden select-none"
 >
-  <!-- Sci-fi Background (with overflow hidden to contain effects) -->
-  <div class="absolute inset-0 -z-10 h-full w-full overflow-hidden">
+  <!-- Sci-fi Background -->
+  <div class="absolute inset-0 -z-10 h-full w-full pointer-events-none">
     <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(37,117,252,0.05)_0%,transparent_70%)]"></div>
     <div class="absolute inset-0 bg-[linear-gradient(rgba(37,117,252,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(37,117,252,0.03)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_80%)]"></div>
-    <!-- Floating particles -->
-    <div class="absolute top-0 left-0 w-full h-full overflow-hidden">
-      <div class="absolute top-[20%] left-[20%] w-1 h-1 bg-[#2575FC] rounded-full animate-pulse opacity-40"></div>
-      <div class="absolute top-[60%] left-[80%] w-1 h-1 bg-[#2575FC] rounded-full animate-pulse opacity-30 delay-700"></div>
-      <div class="absolute top-[80%] left-[30%] w-1 h-1 bg-[#2575FC] rounded-full animate-pulse opacity-50 delay-300"></div>
-    </div>
   </div>
 
-  <div
-    class="relative w-full max-w-[1400px] h-[900px] mx-auto scale-50 sm:scale-75 md:scale-90 lg:scale-100 origin-center transition-transform duration-500"
-  >
-    <!-- Central Hub -->
+  <!-- Controls -->
+  <div class="absolute bottom-8 right-8 z-50 flex flex-col gap-2">
+    <button id="zoom-in" class="w-10 h-10 bg-[#0f111a] border border-[#2575FC]/30 text-[#2575FC] rounded-lg hover:bg-[#2575FC] hover:text-white transition-all flex items-center justify-center shadow-lg active:scale-95">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+      </svg>
+    </button>
+    <button id="zoom-out" class="w-10 h-10 bg-[#0f111a] border border-[#2575FC]/30 text-[#2575FC] rounded-lg hover:bg-[#2575FC] hover:text-white transition-all flex items-center justify-center shadow-lg active:scale-95">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
+      </svg>
+    </button>
+    <button id="reset-view" class="w-10 h-10 bg-[#0f111a] border border-[#2575FC]/30 text-[#2575FC] rounded-lg hover:bg-[#2575FC] hover:text-white transition-all flex items-center justify-center shadow-lg active:scale-95" title="Reset View">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Interactive Viewport -->
+  <div id="skill-tree-viewport" class="w-full h-full cursor-grab active:cursor-grabbing touch-none relative overflow-hidden">
+    <!-- Content Container -->
     <div
-      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 text-center"
+      id="skill-tree-content"
+      class="absolute top-0 left-0 w-[1400px] h-[900px] origin-top-left will-change-transform"
     >
+      <!-- Central Hub -->
       <div
-        class="w-32 h-32 flex items-center justify-center relative z-20 group"
+        id="central-hub"
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 text-center cursor-pointer hover:scale-110 transition-transform duration-300"
       >
-        <!-- Logo -->
-        <Image
-          src={logo}
-          alt="Core"
-          class="w-24 h-24 object-contain relative z-10 drop-shadow-[0_0_15px_rgba(37,117,252,0.8)]"
-        />
-        
-        <!-- Hexagonal frame -->
-        <div class="absolute inset-0 border border-[#2575FC]/30 clip-hex animate-spin-slow"></div>
-        <div class="absolute inset-2 border border-[#2575FC]/20 clip-hex animate-spin-reverse"></div>
+        <div
+          class="w-32 h-32 flex items-center justify-center relative z-20 group"
+        >
+          <!-- Logo -->
+          <Image
+            src={logo}
+            alt="Core"
+            class="w-24 h-24 object-contain relative z-10 drop-shadow-[0_0_15px_rgba(37,117,252,0.8)]"
+          />
+          
+          <!-- Hexagonal frame -->
+          <div class="absolute inset-0 border border-[#2575FC]/30 clip-hex animate-spin-slow"></div>
+          <div class="absolute inset-2 border border-[#2575FC]/20 clip-hex animate-spin-reverse"></div>
+        </div>
+
+        <!-- Energy Field -->
+        <div
+          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 border border-[#2575FC]/20 animate-ping-slow -z-10 clip-hex"
+        >
+        </div>
       </div>
 
-      <!-- Energy Field -->
-      <div
-        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 border border-[#2575FC]/20 animate-ping-slow -z-10 clip-hex"
-      >
-      </div>
-      <!-- Connecting energy lines -->
-      <div
-        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(37,117,252,0.08)_0%,transparent_70%)] -z-30 animate-pulse-slow"
-      >
-      </div>
-    </div>
+      <!-- SVG Connections -->
+      <svg class="absolute inset-0 w-full h-full pointer-events-none z-0">
+        <defs>
+          <linearGradient id="line-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#2575FC" stop-opacity="0.2"></stop>
+            <stop offset="100%" stop-color="#2575FC" stop-opacity="0.6"></stop>
+          </linearGradient>
+        </defs>
 
-    <!-- SVG Connections -->
-    <svg class="absolute inset-0 w-full h-full pointer-events-none z-0">
-      <defs>
-        <linearGradient id="line-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#2575FC" stop-opacity="0.2"></stop>
-          <stop offset="100%" stop-color="#2575FC" stop-opacity="0.6"></stop>
-        </linearGradient>
-      </defs>
+        {
+          positionedGroups.map((group, gIdx) => (
+            <>
+              {/* Line from Core to Category */}
+              <path
+                d={`M${centerX} ${centerY} L${group.x} ${group.y}`}
+                stroke="url(#line-gradient)"
+                stroke-width="3"
+                fill="none"
+                class="connection-line opacity-40 transition-opacity duration-700"
+                data-target={`cat-${gIdx}`}
+              />
 
-      {
-        positionedGroups.map((group) => (
-          <>
-            {/* Line from Core to Category */}
-            <path
-              d={`M${centerX} ${centerY} L${group.x} ${group.y}`}
-              stroke="url(#line-gradient)"
-              stroke-width="3"
-              fill="none"
-              class="opacity-40"
-            />
-
-            {/* Lines from Category to Level 1 Skills */}
-            {group.items.map((skill) => (
-              <>
-                <path
-                  d={`M${group.x} ${group.y} L${skill.x} ${skill.y}`}
-                  stroke="#2575FC"
-                  stroke-width="2"
-                  fill="none"
-                  class="opacity-30"
-                />
-
-                {/* Lines from Level 1 to Level 2 Skills */}
-                {skill.children.map((child) => (
+              {/* Lines from Category to Level 1 Skills */}
+              {group.items.map((skill, sIdx) => (
+                <>
                   <path
-                    d={`M${skill.x} ${skill.y} L${child.x} ${child.y}`}
+                    d={`M${group.x} ${group.y} L${skill.x} ${skill.y}`}
                     stroke="#2575FC"
-                    stroke-width="1"
+                    stroke-width="2"
                     fill="none"
-                    class="opacity-20"
+                    class="connection-line opacity-0 transition-opacity duration-700"
+                    data-target={`l1-${gIdx}-${sIdx}`}
                   />
+
+                  {/* Lines from Level 1 to Level 2 Skills */}
+                  {skill.children.map((child, cIdx) => (
+                    <path
+                      d={`M${skill.x} ${skill.y} L${child.x} ${child.y}`}
+                      stroke="#2575FC"
+                      stroke-width="1"
+                      fill="none"
+                      class="connection-line opacity-0 transition-opacity duration-700"
+                      data-target={`l2-${gIdx}-${sIdx}-${cIdx}`}
+                    />
+                  ))}
+                </>
+              ))}
+            </>
+          ))
+        }
+      </svg>
+
+      <!-- Nodes -->
+      {
+        positionedGroups.map((group, gIdx) => (
+          <>
+            <!-- Category Node -->
+            <div
+              id={`cat-${gIdx}`}
+              class="skill-node group absolute w-16 h-16 -ml-8 -mt-8 z-10 cursor-pointer hover:scale-110 hover:z-[200] transition-all duration-500"
+              style={`--tx: ${group.x}px; --ty: ${group.y}px;`}
+              data-type="category"
+              data-children-ids={group.items.map((_, i) => `l1-${gIdx}-${i}`).join(',')}
+            >
+              <!-- Visual Container (Clipped) -->
+              <div class="absolute inset-0 bg-[#0f111a] border border-[#2575FC] flex items-center justify-center shadow-[0_0_15px_rgba(37,117,252,0.2)] clip-corner">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-8 h-8 text-[#2575FC]"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d={getCategoryIcon(group.category)}
+                  />
+                </svg>
+              </div>
+
+              <!-- Category Label (Outside Clip) -->
+              <div
+                id={`cat-label-${gIdx}`}
+                class={`category-label absolute ${group.y < centerY ? "-top-10" : "-bottom-10"} left-1/2 -translate-x-1/2 whitespace-nowrap pointer-events-none group-hover:opacity-100 transition-opacity duration-300`}
+              >
+                <span class="text-[#2575FC] font-mono font-bold text-sm uppercase tracking-wider bg-[#0f111a]/90 px-3 py-1 border-l-2 border-r-2 border-[#2575FC] clip-corner-sm">
+                  {group.category}
+                </span>
+              </div>
+
+              <!-- Tooltip (Outside Clip) -->
+              <div class="tooltip-container absolute -bottom-16 left-1/2 -translate-x-1/2 bg-[#0f111a] text-[#2575FC] text-[10px] px-2 py-1 opacity-0 transition-opacity whitespace-nowrap border border-[#2575FC]/30 pointer-events-none clip-corner-sm font-mono tracking-wide shadow-[0_0_10px_rgba(37,117,252,0.5)] z-[200]">
+                Click to Toggle
+              </div>
+            </div>
+
+            <!-- Level 1 Skill Nodes -->
+            {group.items.map((skill, sIdx) => (
+              <>
+                <div
+                  id={`l1-${gIdx}-${sIdx}`}
+                  class={`skill-node collapsed group absolute w-14 h-14 -ml-7 -mt-7 z-[60] cursor-pointer hover:z-[200] transition-all duration-500`}
+                  style={`--tx: ${skill.x}px; --ty: ${skill.y}px;`}
+                  data-type="l1"
+                  data-children-ids={skill.children.map((_, i) => `l2-${gIdx}-${sIdx}-${i}`).join(',')}
+                >
+                  <!-- Visual Container (Clipped) -->
+                  <div class={`absolute inset-0 bg-[#0f111a] border ${skill.locked ? 'border-red-900/50' : 'border-gray-700'} group-hover:border-[#2575FC] flex items-center justify-center shadow-lg clip-corner transition-colors duration-300`}>
+                    <div class="absolute inset-0 bg-[#2575FC]/0 group-hover:bg-[#2575FC]/10 transition-colors duration-300"></div>
+                    
+                    {skill.locked && (
+                      <div class="absolute inset-0 flex items-center justify-center z-20 bg-black/60 backdrop-blur-[1px]">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-red-500/70">
+                          <path fill-rule="evenodd" d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z" clip-rule="evenodd" />
+                        </svg>
+                      </div>
+                    )}
+
+                    <img
+                      src={skill.icon}
+                      alt={skill.name}
+                      class={`w-7 h-7 object-contain transition-all duration-300 transform group-hover:scale-110 ${skill.locked ? 'opacity-20 grayscale' : 'opacity-100'}`}
+                    />
+                  </div>
+
+                  <!-- Tooltip (Outside Clip) -->
+                  <div class="tooltip-container absolute -bottom-10 left-1/2 -translate-x-1/2 bg-[#0f111a] text-[#2575FC] text-xs px-3 py-1 opacity-0 transition-opacity whitespace-nowrap border border-[#2575FC]/30 pointer-events-none clip-corner-sm font-mono tracking-wide shadow-[0_0_10px_rgba(37,117,252,0.5)] z-[200]">
+                    {skill.name} {skill.locked && "(Locked)"}
+                  </div>
+                </div>
+
+                <!-- Level 2 Skill Nodes -->
+                {skill.children.map((child: any, cIdx) => (
+                  <div
+                    id={`l2-${gIdx}-${sIdx}-${cIdx}`}
+                    class="skill-node collapsed group absolute w-10 h-10 -ml-5 -mt-5 z-[60] cursor-pointer hover:z-[200] transition-all duration-500"
+                    style={`--tx: ${child.x}px; --ty: ${child.y}px;`}
+                    data-type="l2"
+                  >
+                    <!-- Visual Container (Clipped) -->
+                    <div class="absolute inset-0 bg-[#0f111a] border border-gray-700 group-hover:border-[#2575FC] flex items-center justify-center shadow-md clip-corner transition-colors duration-300">
+                      <div class="absolute inset-0 bg-[#2575FC]/5 group-hover:bg-[#2575FC]/20 transition-colors duration-300"></div>
+                      <img
+                        src={child.icon}
+                        alt={child.name}
+                        class="w-5 h-5 object-contain opacity-100 transition-all duration-300 transform group-hover:scale-125"
+                      />
+                    </div>
+
+                    <!-- Tooltip (Outside Clip) -->
+                    <div class="tooltip-container absolute -bottom-8 left-1/2 -translate-x-1/2 bg-[#0f111a] text-[#2575FC] text-[10px] px-2 py-1 opacity-0 transition-opacity whitespace-nowrap border border-[#2575FC]/30 pointer-events-none clip-corner-sm font-mono tracking-wide shadow-[0_0_10px_rgba(37,117,252,0.5)] z-[200]">
+                      {child.name}
+                    </div>
+                  </div>
                 ))}
               </>
             ))}
           </>
         ))
       }
-    </svg>
-
-    <!-- Nodes -->
-    {
-      positionedGroups.map((group) => (
-        <>
-          <!-- Category Node -->
-          <div
-            class="absolute w-16 h-16 -ml-8 -mt-8 bg-[#0f111a] border border-[#2575FC] flex items-center justify-center z-10 shadow-[0_0_15px_rgba(37,117,252,0.2)] clip-corner"
-            style={`left: ${group.x}px; top: ${group.y}px;`}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-8 h-8 text-[#2575FC]"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d={getCategoryIcon(group.category)}
-              />
-            </svg>
-
-            <!-- Category Label -->
-            <div
-              class={`absolute ${group.y < centerY ? "-top-10" : "-bottom-10"} left-1/2 -translate-x-1/2 whitespace-nowrap`}
-            >
-              <span class="text-[#2575FC] font-mono font-bold text-sm uppercase tracking-wider bg-[#0f111a]/90 px-3 py-1 border-l-2 border-r-2 border-[#2575FC] clip-corner-sm">
-                {group.category}
-              </span>
-            </div>
-          </div>
-
-          <!-- Level 1 Skill Nodes -->
-          {group.items.map((skill) => (
-            <>
-              <div
-                class={`group absolute w-14 h-14 -ml-7 -mt-7 bg-[#0f111a] border ${skill.locked ? 'border-red-900/50' : 'border-gray-700'} hover:border-[#2575FC] hover:z-[60] transition-all duration-300 cursor-pointer flex items-center justify-center shadow-lg clip-corner`}
-                style={`left: ${skill.x}px; top: ${skill.y}px;`}
-              >
-                <div class="absolute inset-0 bg-[#2575FC]/0 group-hover:bg-[#2575FC]/10 transition-colors duration-300"></div>
-                
-                {skill.locked && (
-                  <div class="absolute inset-0 flex items-center justify-center z-20 bg-black/60 backdrop-blur-[1px]">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-red-500/70">
-                      <path fill-rule="evenodd" d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z" clip-rule="evenodd" />
-                    </svg>
-                  </div>
-                )}
-
-                <img
-                  src={skill.icon}
-                  alt={skill.name}
-                  class={`w-7 h-7 object-contain transition-all duration-300 transform group-hover:scale-110 ${skill.locked ? 'opacity-20 grayscale' : 'opacity-100'}`}
-                />
-
-                <!-- Tooltip -->
-                <div class="absolute -bottom-10 left-1/2 -translate-x-1/2 bg-[#0f111a] text-[#2575FC] text-xs px-3 py-1 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-[100] border border-[#2575FC]/30 pointer-events-none clip-corner-sm font-mono tracking-wide shadow-[0_0_10px_rgba(37,117,252,0.5)]">
-                  {skill.name} {skill.locked && "(Locked)"}
-                </div>
-              </div>
-
-              <!-- Level 2 Skill Nodes -->
-              {skill.children.map((child: any) => (
-                <div
-                  class="group absolute w-10 h-10 -ml-5 -mt-5 bg-[#0f111a] border border-gray-800 hover:border-[#2575FC] hover:z-[60] transition-all duration-300 cursor-pointer flex items-center justify-center shadow-md clip-corner"
-                  style={`left: ${child.x}px; top: ${child.y}px;`}
-                >
-                  <div class="absolute inset-0 bg-[#2575FC]/0 group-hover:bg-[#2575FC]/10 transition-colors duration-300"></div>
-                  <img
-                    src={child.icon}
-                    alt={child.name}
-                    class="w-5 h-5 object-contain opacity-30 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-300 transform group-hover:scale-110"
-                  />
-
-                  <!-- Tooltip -->
-                  <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-[#0f111a] text-[#2575FC] text-[10px] px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-[100] border border-[#2575FC]/30 pointer-events-none clip-corner-sm font-mono tracking-wide shadow-[0_0_10px_rgba(37,117,252,0.5)]">
-                    {child.name}
-                  </div>
-                </div>
-              ))}
-            </>
-          ))}
-        </>
-      ))
-    }
+    </div>
+  </div>
+  <!-- Interaction Instructions -->
+  <div class="absolute bottom-8 left-8 z-50 pointer-events-none">
+    <div class="bg-[#0f111a]/90 border border-[#2575FC]/30 p-4 rounded-lg shadow-[0_0_15px_rgba(37,117,252,0.2)] backdrop-blur-sm pointer-events-auto">
+      <h3 class="text-[#2575FC] font-mono text-sm font-bold mb-2 uppercase tracking-wider flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+        </svg>
+        System Guide
+      </h3>
+      <ul class="text-gray-400 text-xs font-mono space-y-1">
+        <li class="flex items-center gap-2">
+          <span class="w-1.5 h-1.5 bg-[#2575FC] rounded-full"></span>
+          <span><strong class="text-gray-300">Click Hub</strong>: Toggle All</span>
+        </li>
+        <li class="flex items-center gap-2">
+          <span class="w-1.5 h-1.5 bg-[#2575FC] rounded-full"></span>
+          <span><strong class="text-gray-300">Click Node</strong>: Expand/Collapse Branch</span>
+        </li>
+        <li class="flex items-center gap-2">
+          <span class="w-1.5 h-1.5 bg-[#2575FC] rounded-full"></span>
+          <span><strong class="text-gray-300">Drag</strong>: Pan View</span>
+        </li>
+        <li class="flex items-center gap-2">
+          <span class="w-1.5 h-1.5 bg-[#2575FC] rounded-full"></span>
+          <span><strong class="text-gray-300">Scroll/Pinch</strong>: Zoom</span>
+        </li>
+      </ul>
+    </div>
   </div>
 </section>
 
+<script>
+  const viewport = document.getElementById("skill-tree-viewport");
+  const content = document.getElementById("skill-tree-content");
+  const zoomInBtn = document.getElementById("zoom-in");
+  const zoomOutBtn = document.getElementById("zoom-out");
+  const resetBtn = document.getElementById("reset-view");
+  const centralHub = document.getElementById("central-hub");
+
+  // --- Audio System ---
+  const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+  
+  function playSkillSound(type: 'expand' | 'collapse' | 'hover') {
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    
+    const oscillator = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    
+    const now = audioCtx.currentTime;
+    
+    if (type === 'expand') {
+      // Sci-fi "Open" sound (rising pitch)
+      oscillator.type = 'sine';
+      oscillator.frequency.setValueAtTime(200, now);
+      oscillator.frequency.exponentialRampToValueAtTime(600, now + 0.15);
+      
+      gainNode.gain.setValueAtTime(0.05, now);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+      
+      oscillator.start(now);
+      oscillator.stop(now + 0.15);
+    } else if (type === 'collapse') {
+      // Sci-fi "Close" sound (falling pitch)
+      oscillator.type = 'sine';
+      oscillator.frequency.setValueAtTime(600, now);
+      oscillator.frequency.exponentialRampToValueAtTime(200, now + 0.15);
+      
+      gainNode.gain.setValueAtTime(0.05, now);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+      
+      oscillator.start(now);
+      oscillator.stop(now + 0.15);
+    } else if (type === 'hover') {
+      // Subtle blip
+      oscillator.type = 'triangle';
+      oscillator.frequency.setValueAtTime(800, now);
+      
+      gainNode.gain.setValueAtTime(0.01, now);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+      
+      oscillator.start(now);
+      oscillator.stop(now + 0.05);
+    }
+  }
+
+  // --- Pan/Zoom Logic ---
+  let state = {
+    scale: 1,
+    x: 0,
+    y: 0,
+    isDragging: false,
+    startX: 0,
+    startY: 0,
+  };
+
+  const CONTENT_WIDTH = 1400;
+  const CONTENT_HEIGHT = 900;
+
+  function updateTransform() {
+    if (content) {
+      content.style.transform = `translate(${state.x}px, ${state.y}px) scale(${state.scale})`;
+    }
+  }
+
+  function fitToScreen() {
+    if (!viewport) return;
+    const vw = viewport.clientWidth;
+    const vh = viewport.clientHeight;
+
+    // Calculate scale to fit with some padding
+    const scaleX = vw / CONTENT_WIDTH;
+    const scaleY = vh / CONTENT_HEIGHT;
+    const scale = Math.min(scaleX, scaleY) * 0.85; // 85% fit
+
+    // Center it
+    const x = (vw - CONTENT_WIDTH * scale) / 2;
+    const y = (vh - CONTENT_HEIGHT * scale) / 2;
+
+    state = { ...state, scale, x, y };
+    updateTransform();
+  }
+
+  // Initial fit
+  window.addEventListener("load", fitToScreen);
+  window.addEventListener("resize", fitToScreen);
+
+  // Pan Logic
+  if (viewport) {
+    viewport.addEventListener("mousedown", (e) => {
+      // Don't drag if clicking a node
+      if ((e.target as HTMLElement).closest('.skill-node') || (e.target as HTMLElement).closest('#central-hub')) return;
+      
+      state.isDragging = true;
+      state.startX = e.clientX - state.x;
+      state.startY = e.clientY - state.y;
+      viewport.style.cursor = "grabbing";
+    });
+
+    window.addEventListener("mousemove", (e) => {
+      if (!state.isDragging) return;
+      e.preventDefault();
+      state.x = e.clientX - state.startX;
+      state.y = e.clientY - state.startY;
+      updateTransform();
+    });
+
+    window.addEventListener("mouseup", () => {
+      state.isDragging = false;
+      if (viewport) viewport.style.cursor = "grab";
+    });
+
+    // Wheel Zoom
+    viewport.addEventListener("wheel", (e) => {
+      e.preventDefault();
+      const zoomIntensity = 0.1;
+      const direction = e.deltaY > 0 ? -1 : 1;
+      const factor = 1 + direction * zoomIntensity;
+      
+      const newScale = Math.max(0.1, Math.min(5, state.scale * factor));
+      
+      const rect = viewport.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+
+      state.x = mouseX - (mouseX - state.x) * (newScale / state.scale);
+      state.y = mouseY - (mouseY - state.y) * (newScale / state.scale);
+      state.scale = newScale;
+      
+      updateTransform();
+    }, { passive: false });
+  }
+
+  // Button Controls
+  zoomInBtn?.addEventListener("click", () => {
+    state.scale = Math.min(5, state.scale * 1.2);
+    if (viewport) {
+        const vw = viewport.clientWidth;
+        const vh = viewport.clientHeight;
+        state.x = (vw/2) - ((vw/2) - state.x) * 1.2;
+        state.y = (vh/2) - ((vh/2) - state.y) * 1.2;
+    }
+    updateTransform();
+  });
+
+  zoomOutBtn?.addEventListener("click", () => {
+    state.scale = Math.max(0.1, state.scale / 1.2);
+    if (viewport) {
+        const vw = viewport.clientWidth;
+        const vh = viewport.clientHeight;
+        state.x = (vw/2) - ((vw/2) - state.x) / 1.2;
+        state.y = (vh/2) - ((vh/2) - state.y) / 1.2;
+    }
+    updateTransform();
+  });
+
+  resetBtn?.addEventListener("click", fitToScreen);
+
+  // Touch Support
+  if (viewport) {
+    let lastTouchX = 0;
+    let lastTouchY = 0;
+    let initialPinchDistance = 0;
+    let initialScale = 1;
+
+    viewport.addEventListener("touchstart", (e) => {
+      if (e.touches.length === 1) {
+        if ((e.target as HTMLElement).closest('.skill-node') || (e.target as HTMLElement).closest('#central-hub')) return;
+        state.isDragging = true;
+        lastTouchX = e.touches[0].clientX;
+        lastTouchY = e.touches[0].clientY;
+      } else if (e.touches.length === 2) {
+        state.isDragging = false;
+        initialPinchDistance = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+        initialScale = state.scale;
+      }
+    }, { passive: false });
+
+    viewport.addEventListener("touchmove", (e) => {
+      e.preventDefault();
+      if (e.touches.length === 1 && state.isDragging) {
+        const deltaX = e.touches[0].clientX - lastTouchX;
+        const deltaY = e.touches[0].clientY - lastTouchY;
+        state.x += deltaX;
+        state.y += deltaY;
+        lastTouchX = e.touches[0].clientX;
+        lastTouchY = e.touches[0].clientY;
+        updateTransform();
+      } else if (e.touches.length === 2) {
+        const currentDistance = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+        const factor = currentDistance / initialPinchDistance;
+        state.scale = Math.max(0.1, Math.min(5, initialScale * factor));
+        updateTransform();
+      }
+    }, { passive: false });
+
+    viewport.addEventListener("touchend", () => {
+      state.isDragging = false;
+    });
+  }
+
+  // --- Expand/Collapse Logic ---
+  
+  function toggleNode(nodeId: string, expand: boolean, recursive: boolean = false) {
+    const node = document.getElementById(nodeId);
+    if (!node) return;
+
+    if (expand) {
+      node.classList.remove('collapsed');
+      // Show connecting line
+      const line = document.querySelector(`path[data-target="${nodeId}"]`);
+      if (line) line.classList.remove('opacity-0');
+      if (line) line.classList.add('opacity-40');
+      
+      if (recursive) {
+        const childrenIds = node.dataset.childrenIds;
+        if (childrenIds) {
+          childrenIds.split(',').forEach(childId => {
+            if (childId) toggleNode(childId, true, true);
+          });
+        }
+      }
+    } else {
+      node.classList.add('collapsed');
+      // Hide connecting line
+      const line = document.querySelector(`path[data-target="${nodeId}"]`);
+      if (line) line.classList.add('opacity-0');
+      if (line) line.classList.remove('opacity-40');
+      
+      // Recursively collapse children
+      const childrenIds = node.dataset.childrenIds;
+      if (childrenIds) {
+        childrenIds.split(',').forEach(childId => {
+          if (childId) toggleNode(childId, false, true);
+        });
+      }
+    }
+  }
+
+  // Central Hub Click
+  let categoriesExpanded = false;
+  centralHub?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+    categoriesExpanded = !categoriesExpanded;
+    
+    playSkillSound(categoriesExpanded ? 'expand' : 'collapse');
+
+    // Toggle all categories' sub-trees
+    const categories = document.querySelectorAll('.skill-node[data-type="category"]');
+    categories.forEach(cat => {
+      // Toggle Label Visibility
+      // If expanded -> Hide Label (opacity-0)
+      // If collapsed -> Show Label (remove opacity-0)
+      const labelId = cat.id.replace('cat-', 'cat-label-');
+      const label = document.getElementById(labelId);
+      if (label) {
+        if (categoriesExpanded) {
+          label.classList.add('opacity-0');
+        } else {
+          label.classList.remove('opacity-0');
+        }
+      }
+
+      const childrenIds = (cat as HTMLElement).dataset.childrenIds;
+      if (childrenIds) {
+        childrenIds.split(',').forEach(childId => {
+          if (childId) toggleNode(childId, categoriesExpanded, true);
+        });
+      }
+    });
+  });
+
+  // Node Clicks
+  document.querySelectorAll('.skill-node').forEach(node => {
+    // Hover Sound
+    node.addEventListener('mouseenter', () => {
+        playSkillSound('hover');
+    });
+
+    node.addEventListener('click', (e) => {
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      
+      const el = e.currentTarget as HTMLElement;
+      
+      // Handle Category Label Toggling
+      if (el.dataset.type === 'category') {
+        const labelId = el.id.replace('cat-', 'cat-label-');
+        const label = document.getElementById(labelId);
+        
+        // We need to check the state *before* we toggle, or rather, check what we are about to do.
+        // We can check if the first child is currently expanded.
+        const childrenIds = el.dataset.childrenIds;
+        if (childrenIds) {
+            const ids = childrenIds.split(',');
+            const firstChild = document.getElementById(ids[0]);
+            const isCurrentlyExpanded = firstChild && !firstChild.classList.contains('collapsed');
+            
+            // If currently expanded, we are about to collapse -> Show Label
+            // If currently collapsed, we are about to expand -> Hide Label
+            if (label) {
+                if (isCurrentlyExpanded) {
+                    label.classList.remove('opacity-0');
+                } else {
+                    label.classList.add('opacity-0');
+                }
+            }
+        }
+      }
+
+      const childrenIds = el.dataset.childrenIds;
+      
+      if (childrenIds) {
+        const ids = childrenIds.split(',');
+        // Check if first child is expanded to determine toggle state
+        const firstChild = document.getElementById(ids[0]);
+        const isExpanded = firstChild && !firstChild.classList.contains('collapsed');
+        
+        playSkillSound(!isExpanded ? 'expand' : 'collapse');
+
+        ids.forEach(id => {
+          if (id) toggleNode(id, !isExpanded, true);
+        });
+      }
+    });
+  });
+
+</script>
+
 <style>
+  /* ... Existing animations ... */
   @keyframes ping-slow {
     75%,
     100% {
@@ -619,5 +1036,29 @@ const positionedGroups = rawGroups;
       100% calc(100% - 4px), calc(100% - 4px) 100%,
       0 100%, 0 4px
     );
+  }
+
+  /* --- New Styles for Collapsible Nodes --- */
+  .skill-node {
+    /* Default Expanded State */
+    left: var(--tx);
+    top: var(--ty);
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  .skill-node.collapsed {
+    /* Collapsed State: Center of screen */
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) scale(0) !important;
+    opacity: 0 !important;
+    pointer-events: none;
+  }
+  
+  /* Tooltip Enhancements */
+  .skill-node:hover .tooltip-container {
+      opacity: 1;
+      pointer-events: auto;
   }
 </style>
