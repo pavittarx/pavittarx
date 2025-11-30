@@ -2,29 +2,157 @@
 const skills = [
   {
     category: "Languages",
-    items: ["TypeScript", "JavaScript", "Python", "SQL", "HTML/CSS"],
+    items: [
+      {
+        name: "TypeScript",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+      },
+      {
+        name: "JavaScript",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+      },
+      {
+        name: "Python",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+      },
+      {
+        name: "C++",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg",
+      },
+      {
+        name: "Bash",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg",
+      },
+      {
+        name: "SQL",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
+      }, // Using Postgres icon for generic SQL
+      {
+        name: "HTML/CSS",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+      },
+    ],
   },
   {
     category: "Frontend",
-    items: ["React", "Next.js", "Astro", "Tailwind CSS", "Angular"],
+    items: [
+      {
+        name: "React",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+      },
+      {
+        name: "Next.js",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
+      },
+      {
+        name: "Astro",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/astro/astro-original.svg",
+      }, // Astro icon might not be in devicon, using fallback or text if needed, but let's try this URL structure or a generic one. Actually devicon has astro now.
+      {
+        name: "Tailwind CSS",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
+      },
+      {
+        name: "Material UI",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/materialui/materialui-original.svg",
+      },
+      {
+        name: "shadcn/ui",
+        icon: "https://avatars.githubusercontent.com/u/139895814?s=200&v=4",
+      },
+      {
+        name: "styled-components",
+        icon: "https://skillicons.dev/icons?i=styledcomponents",
+      },
+      {
+        name: "Angular",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg",
+      },
+    ],
   },
   {
     category: "Backend",
-    items: ["Node.js", "NestJS", "Express", "tRPC", "Prisma"],
+    items: [
+      {
+        name: "Node.js",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
+      },
+      {
+        name: "NestJS",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nestjs/nestjs-original.svg",
+      },
+      {
+        name: "Express",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg",
+      },
+      { name: "tRPC", icon: "https://trpc.io/img/logo.svg" }, // tRPC doesn't have a devicon, using official logo
+      {
+        name: "Prisma",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prisma/prisma-original.svg",
+      },
+    ],
   },
   {
     category: "Database & Cloud",
-    items: ["PostgreSQL", "MongoDB", "AWS", "Firebase", "Docker"],
+    items: [
+      {
+        name: "PostgreSQL",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
+      },
+      {
+        name: "MySQL",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg",
+      },
+      {
+        name: "MongoDB",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
+      },
+      {
+        name: "AWS",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg",
+      },
+      {
+        name: "Firebase",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg",
+      },
+      {
+        name: "Docker",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
+      },
+      {
+        name: "Nginx",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg",
+      },
+      {
+        name: "Kafka",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apachekafka/apachekafka-original.svg",
+      },
+      {
+        name: "Grafana Loki",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/grafana/grafana-original.svg",
+      },
+      {
+        name: "Git",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
+      },
+      {
+        name: "GitHub",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg",
+      },
+    ],
   },
 ];
 ---
 
-<section id="skills" class="py-24 relative overflow-hidden">
+<section id="skills" class="py-16 relative overflow-hidden">
   <!-- Dynamic Background -->
-  <div class="absolute inset-0 -z-10 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>
-  
+  <div
+    class="absolute inset-0 -z-10 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]"
+  >
+  </div>
+
   <div class="px-6 mx-auto max-w-7xl lg:px-8">
-    <div class="mx-auto max-w-2xl text-center mb-20">
+    <div class="mx-auto max-w-2xl text-center mb-12">
       <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
         Tech Stack
       </h2>
@@ -33,29 +161,27 @@ const skills = [
       </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 max-w-5xl mx-auto">
+    <div class="flex flex-col gap-12 max-w-4xl mx-auto">
       {
         skills.map((group) => (
-          <div class="group relative bg-white rounded-2xl p-8 shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden">
-            <!-- Decorative Gradient Blob -->
-            <div class="absolute top-0 right-0 -mr-16 -mt-16 w-32 h-32 rounded-full bg-blue-50 group-hover:bg-blue-100 transition-colors duration-500 blur-2xl opacity-50"></div>
-            
-            <div class="relative">
-              <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-                <span class="w-1.5 h-6 rounded-full bg-[#2575FC] group-hover:h-10 transition-all duration-300"></span>
-                {group.category}
-              </h3>
-              
-              <div class="flex flex-wrap gap-3">
-                {group.items.map((skill) => (
-                  <span class="px-4 py-2 text-sm font-semibold text-gray-600 bg-gray-50 rounded-lg border border-gray-100 
-                  group-hover:border-blue-100 group-hover:bg-blue-50/50 group-hover:text-blue-700
-                  hover:!bg-[#2575FC] hover:!text-white hover:!border-[#2575FC] hover:!scale-105
-                  transition-all duration-300 cursor-default">
-                    {skill}
+          <div class="relative">
+            <h3 class="text-lg font-semibold text-gray-400 mb-4 uppercase tracking-wider text-sm pl-1">
+              {group.category}
+            </h3>
+
+            <div class="flex flex-wrap gap-3">
+              {group.items.map((skill) => (
+                <div class="group flex items-center gap-2 px-3 py-2 bg-white/50 hover:bg-white rounded-lg border border-gray-100 hover:border-blue-200 hover:shadow-sm transition-all duration-300 cursor-default">
+                  <img
+                    src={skill.icon}
+                    alt={skill.name}
+                    class="w-5 h-5 object-contain opacity-70 group-hover:opacity-100 transition-opacity duration-300"
+                  />
+                  <span class="text-sm font-medium text-gray-600 group-hover:text-gray-900">
+                    {skill.name}
                   </span>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           </div>
         ))
