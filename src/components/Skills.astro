@@ -1,35 +1,77 @@
 ---
-const skills = [
+import { Image } from "astro:assets";
+import logo from "../assets/pavittarx-logo.svg";
+
+// Define skill structure with dependencies
+// Level 0: Category Root (handled by layout)
+// Level 1: Base Skills
+// Level 2: Advanced/Dependent Skills
+
+interface SkillItem {
+  name: string;
+  icon: string;
+  level: number;
+  children?: SkillItem[];
+  locked?: boolean;
+}
+
+interface SkillCategory {
+  category: string;
+  items: SkillItem[];
+}
+
+const skills: SkillCategory[] = [
   {
     category: "Languages",
     items: [
       {
-        name: "TypeScript",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+        name: "HTML/CSS",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+        level: 1,
+        children: [
+          {
+            name: "Tailwind CSS",
+            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
+            level: 2,
+          },
+          {
+            name: "styled-components",
+            icon: "https://skillicons.dev/icons?i=styledcomponents",
+            level: 2,
+          },
+        ],
       },
       {
         name: "JavaScript",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+        level: 1,
+        children: [
+          {
+            name: "TypeScript",
+            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+            level: 2,
+          },
+        ],
       },
       {
         name: "Python",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+        level: 1,
       },
       {
         name: "C++",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg",
+        level: 1,
       },
       {
         name: "Bash",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg",
+        level: 1,
       },
       {
         name: "SQL",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
-      }, // Using Postgres icon for generic SQL
-      {
-        name: "HTML/CSS",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg",
+        level: 1,
       },
     ],
   },
@@ -39,34 +81,34 @@ const skills = [
       {
         name: "React",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-      },
-      {
-        name: "Next.js",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
-      },
-      {
-        name: "Astro",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/astro/astro-original.svg",
-      }, // Astro icon might not be in devicon, using fallback or text if needed, but let's try this URL structure or a generic one. Actually devicon has astro now.
-      {
-        name: "Tailwind CSS",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
-      },
-      {
-        name: "Material UI",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/materialui/materialui-original.svg",
-      },
-      {
-        name: "shadcn/ui",
-        icon: "https://avatars.githubusercontent.com/u/139895814?s=200&v=4",
-      },
-      {
-        name: "styled-components",
-        icon: "https://skillicons.dev/icons?i=styledcomponents",
+        level: 1,
+        children: [
+          {
+            name: "Next.js",
+            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
+            level: 2,
+          },
+          {
+            name: "Material UI",
+            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/materialui/materialui-original.svg",
+            level: 2,
+          },
+          {
+            name: "shadcn/ui",
+            icon: "https://avatars.githubusercontent.com/u/139895814?s=200&v=4",
+            level: 2,
+          },
+        ],
       },
       {
         name: "Angular",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg",
+        level: 1,
+      },
+      {
+        name: "Astro",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/astro/astro-original.svg",
+        level: 1,
       },
     ],
   },
@@ -76,19 +118,27 @@ const skills = [
       {
         name: "Node.js",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
+        level: 1,
+        children: [
+          {
+            name: "Express",
+            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg",
+            level: 2,
+          },
+          {
+            name: "NestJS",
+            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nestjs/nestjs-original.svg",
+            level: 2,
+          },
+        ],
       },
-      {
-        name: "NestJS",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nestjs/nestjs-original.svg",
-      },
-      {
-        name: "Express",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg",
-      },
-      { name: "tRPC", icon: "https://trpc.io/img/logo.svg" }, // tRPC doesn't have a devicon, using official logo
       {
         name: "Prisma",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prisma/prisma-original.svg",
+        level: 1,
+        children: [
+          { name: "tRPC", icon: "https://trpc.io/img/logo.svg", level: 2 },
+        ],
       },
     ],
   },
@@ -98,94 +148,476 @@ const skills = [
       {
         name: "PostgreSQL",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
-      },
-      {
-        name: "MySQL",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg",
+        level: 1,
       },
       {
         name: "MongoDB",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
+        level: 1,
       },
       {
         name: "AWS",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg",
-      },
-      {
-        name: "Firebase",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg",
+        level: 1,
       },
       {
         name: "Docker",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
-      },
-      {
-        name: "Nginx",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg",
-      },
-      {
-        name: "Kafka",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apachekafka/apachekafka-original.svg",
-      },
-      {
-        name: "Grafana Loki",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/grafana/grafana-original.svg",
+        level: 1,
       },
       {
         name: "Git",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
+        level: 1,
+        children: [
+          {
+            name: "GitHub",
+            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg",
+            level: 2,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    category: "AI & ML",
+    items: [
+      {
+        name: "TensorFlow",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg",
+        level: 1,
+        locked: true,
       },
       {
-        name: "GitHub",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg",
+        name: "PyTorch",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg",
+        level: 1,
+        locked: true,
+      },
+      {
+        name: "OpenAI API",
+        icon: "https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg",
+        level: 1,
+        locked: true,
+      },
+      {
+        name: "LangChain",
+        icon: "https://avatars.githubusercontent.com/u/126733545?s=200&v=4",
+        level: 1,
+        locked: true,
       },
     ],
   },
 ];
+
+// Helper to get category icons
+const getCategoryIcon = (category: string) => {
+  if (category === "Languages")
+    return "M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5";
+  if (category === "Frontend")
+    return "M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25";
+  if (category === "Backend")
+    return "M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9";
+  if (category === "Database & Cloud")
+    return "M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125";
+  if (category === "AI & ML")
+    return "M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z";
+  return "";
+};
+
+// Helper to calculate positions
+const centerX = 700;
+const centerY = 450;
+
+// Calculate total weight for proportional distribution
+// Weight = 1 (Category) + L1 items + (0.5 * L2 items)
+const getCategoryWeight = (category: SkillCategory) => {
+  let weight = 2; // Base weight for category node space
+  weight += category.items.length * 1.5; // L1 items
+  category.items.forEach(item => {
+    if (item.children) {
+      weight += item.children.length * 0.8; // L2 items
+    }
+  });
+  return weight;
+};
+
+const totalWeight = skills.reduce((acc, cat) => acc + getCategoryWeight(cat), 0);
+
+// Layout Configuration
+const BASE_CAT_RADIUS = 220;
+const BASE_L1_RADIUS = 140; // Relative to Category
+const BASE_L2_RADIUS = 90;  // Relative to L1
+
+let currentAngle = 270; // Start from top (270 degrees)
+
+// First pass: Initial Positioning based on Proportional Angles
+let rawGroups = skills.map((group) => {
+  const weight = getCategoryWeight(group);
+  const sectorAngle = (weight / totalWeight) * 360;
+  
+  // Center of this sector
+  const categoryAngleDeg = currentAngle + (sectorAngle / 2);
+  const categoryAngleRad = (categoryAngleDeg * Math.PI) / 180;
+  
+  // Position Category Node
+  // Push out slightly if it's a heavy category
+  const catRadius = BASE_CAT_RADIUS + (group.items.length > 4 ? 40 : 0);
+  const catX = centerX + catRadius * Math.cos(categoryAngleRad);
+  const catY = centerY + catRadius * Math.sin(categoryAngleRad);
+
+  // Position Level 1 Items
+  // Distribute them in an arc perpendicular to the category radius
+  const l1Items = group.items.map((item, i) => {
+    const totalL1 = group.items.length;
+    // Spread depends on number of items, max 160 degrees
+    const spread = Math.min(160, totalL1 * 25);
+    const startL1Angle = categoryAngleDeg - spread / 2;
+    const step = spread / (totalL1 > 1 ? totalL1 - 1 : 1);
+    const itemAngleDeg = totalL1 === 1 ? categoryAngleDeg : startL1Angle + (i * step);
+    const itemAngleRad = (itemAngleDeg * Math.PI) / 180;
+
+    // Calculate position relative to Category, but pointing outwards from Center
+    // We use vector addition: CategoryPos + Vector(Angle)
+    // Actually, let's just project from the category node outwards
+    const l1X = catX + BASE_L1_RADIUS * Math.cos(itemAngleRad);
+    const l1Y = catY + BASE_L1_RADIUS * Math.sin(itemAngleRad);
+
+    // Position Level 2 Items
+    const children = (item.children || []).map((child, j) => {
+      const totalL2 = item.children!.length;
+      const childSpread = Math.min(120, totalL2 * 30);
+      const startL2Angle = itemAngleDeg - childSpread / 2;
+      const childStep = childSpread / (totalL2 > 1 ? totalL2 - 1 : 1);
+      const childAngleDeg = totalL2 === 1 ? itemAngleDeg : startL2Angle + (j * childStep);
+      const childAngleRad = (childAngleDeg * Math.PI) / 180;
+
+      const l2X = l1X + BASE_L2_RADIUS * Math.cos(childAngleRad);
+      const l2Y = l1Y + BASE_L2_RADIUS * Math.sin(childAngleRad);
+
+      return { ...child, x: l2X, y: l2Y, r: 20 }; // r is collision radius
+    });
+
+    return { ...item, x: l1X, y: l1Y, children, r: 30 };
+  });
+
+  // Advance angle for next category
+  currentAngle += sectorAngle;
+
+  return { ...group, x: catX, y: catY, items: l1Items, r: 40 };
+});
+
+// Second pass: Collision Detection & Resolution
+// Simple iterative relaxation
+const iterations = 5;
+const minDistance = 60; // Minimum distance between nodes
+
+for (let iter = 0; iter < iterations; iter++) {
+  // Collect all nodes into a flat list for checking
+  let allNodes: any[] = [];
+  rawGroups.forEach(g => {
+    // allNodes.push(g); // Don't move categories for now, they are anchors
+    g.items.forEach(i => {
+      allNodes.push(i);
+      i.children.forEach(c => allNodes.push(c));
+    });
+  });
+
+  for (let i = 0; i < allNodes.length; i++) {
+    for (let j = i + 1; j < allNodes.length; j++) {
+      const n1 = allNodes[i];
+      const n2 = allNodes[j];
+      
+      const dx = n2.x - n1.x;
+      const dy = n2.y - n1.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      const minDist = n1.r + n2.r + 10; // Radius + padding
+
+      if (dist < minDist && dist > 0) {
+        // Collision detected! Push them apart
+        const overlap = minDist - dist;
+        const moveX = (dx / dist) * overlap * 0.5;
+        const moveY = (dy / dist) * overlap * 0.5;
+
+        // Move n2 away
+        n2.x += moveX;
+        n2.y += moveY;
+        // Move n1 opposite
+        n1.x -= moveX;
+        n1.y -= moveY;
+      }
+    }
+  }
+}
+
+const positionedGroups = rawGroups;
 ---
 
-<section id="skills" class="py-16 relative overflow-hidden">
-  <!-- Dynamic Background -->
-  <div
-    class="absolute inset-0 -z-10 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]"
-  >
+<section
+  id="skills"
+  class="py-16 relative bg-[#0a0a0f] min-h-screen flex items-center justify-center"
+>
+  <!-- Sci-fi Background (with overflow hidden to contain effects) -->
+  <div class="absolute inset-0 -z-10 h-full w-full overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(37,117,252,0.05)_0%,transparent_70%)]"></div>
+    <div class="absolute inset-0 bg-[linear-gradient(rgba(37,117,252,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(37,117,252,0.03)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_80%)]"></div>
+    <!-- Floating particles -->
+    <div class="absolute top-0 left-0 w-full h-full overflow-hidden">
+      <div class="absolute top-[20%] left-[20%] w-1 h-1 bg-[#2575FC] rounded-full animate-pulse opacity-40"></div>
+      <div class="absolute top-[60%] left-[80%] w-1 h-1 bg-[#2575FC] rounded-full animate-pulse opacity-30 delay-700"></div>
+      <div class="absolute top-[80%] left-[30%] w-1 h-1 bg-[#2575FC] rounded-full animate-pulse opacity-50 delay-300"></div>
+    </div>
   </div>
 
-  <div class="px-6 mx-auto max-w-7xl lg:px-8">
-    <div class="mx-auto max-w-2xl text-center mb-12">
-      <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-        Tech Stack
-      </h2>
-      <p class="mt-4 text-lg leading-8 text-gray-600">
-        My preferred weapons of choice for building digital products.
-      </p>
+  <div
+    class="relative w-full max-w-[1400px] h-[900px] mx-auto scale-50 sm:scale-75 md:scale-90 lg:scale-100 origin-center transition-transform duration-500"
+  >
+    <!-- Central Hub -->
+    <div
+      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 text-center"
+    >
+      <div
+        class="w-32 h-32 flex items-center justify-center relative z-20 group"
+      >
+        <!-- Logo -->
+        <Image
+          src={logo}
+          alt="Core"
+          class="w-24 h-24 object-contain relative z-10 drop-shadow-[0_0_15px_rgba(37,117,252,0.8)]"
+        />
+        
+        <!-- Hexagonal frame -->
+        <div class="absolute inset-0 border border-[#2575FC]/30 clip-hex animate-spin-slow"></div>
+        <div class="absolute inset-2 border border-[#2575FC]/20 clip-hex animate-spin-reverse"></div>
+      </div>
+
+      <!-- Energy Field -->
+      <div
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 border border-[#2575FC]/20 animate-ping-slow -z-10 clip-hex"
+      >
+      </div>
+      <!-- Connecting energy lines -->
+      <div
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(37,117,252,0.08)_0%,transparent_70%)] -z-30 animate-pulse-slow"
+      >
+      </div>
     </div>
 
-    <div class="flex flex-col gap-12 max-w-4xl mx-auto">
-      {
-        skills.map((group) => (
-          <div class="relative">
-            <h3 class="text-lg font-semibold text-gray-400 mb-4 uppercase tracking-wider text-sm pl-1">
-              {group.category}
-            </h3>
+    <!-- SVG Connections -->
+    <svg class="absolute inset-0 w-full h-full pointer-events-none z-0">
+      <defs>
+        <linearGradient id="line-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#2575FC" stop-opacity="0.2"></stop>
+          <stop offset="100%" stop-color="#2575FC" stop-opacity="0.6"></stop>
+        </linearGradient>
+      </defs>
 
-            <div class="flex flex-wrap gap-3">
-              {group.items.map((skill) => (
-                <div class="group flex items-center gap-2 px-3 py-2 bg-white/50 hover:bg-white rounded-lg border border-gray-100 hover:border-blue-200 hover:shadow-sm transition-all duration-300 cursor-default">
-                  <img
-                    src={skill.icon}
-                    alt={skill.name}
-                    class="w-5 h-5 object-contain opacity-70 group-hover:opacity-100 transition-opacity duration-300"
+      {
+        positionedGroups.map((group) => (
+          <>
+            {/* Line from Core to Category */}
+            <path
+              d={`M${centerX} ${centerY} L${group.x} ${group.y}`}
+              stroke="url(#line-gradient)"
+              stroke-width="3"
+              fill="none"
+              class="opacity-40"
+            />
+
+            {/* Lines from Category to Level 1 Skills */}
+            {group.items.map((skill) => (
+              <>
+                <path
+                  d={`M${group.x} ${group.y} L${skill.x} ${skill.y}`}
+                  stroke="#2575FC"
+                  stroke-width="2"
+                  fill="none"
+                  class="opacity-30"
+                />
+
+                {/* Lines from Level 1 to Level 2 Skills */}
+                {skill.children.map((child) => (
+                  <path
+                    d={`M${skill.x} ${skill.y} L${child.x} ${child.y}`}
+                    stroke="#2575FC"
+                    stroke-width="1"
+                    fill="none"
+                    class="opacity-20"
                   />
-                  <span class="text-sm font-medium text-gray-600 group-hover:text-gray-900">
-                    {skill.name}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
+                ))}
+              </>
+            ))}
+          </>
         ))
       }
-    </div>
+    </svg>
+
+    <!-- Nodes -->
+    {
+      positionedGroups.map((group) => (
+        <>
+          <!-- Category Node -->
+          <div
+            class="absolute w-16 h-16 -ml-8 -mt-8 bg-[#0f111a] border border-[#2575FC] flex items-center justify-center z-10 shadow-[0_0_15px_rgba(37,117,252,0.2)] clip-corner"
+            style={`left: ${group.x}px; top: ${group.y}px;`}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-8 h-8 text-[#2575FC]"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d={getCategoryIcon(group.category)}
+              />
+            </svg>
+
+            <!-- Category Label -->
+            <div
+              class={`absolute ${group.y < centerY ? "-top-10" : "-bottom-10"} left-1/2 -translate-x-1/2 whitespace-nowrap`}
+            >
+              <span class="text-[#2575FC] font-mono font-bold text-sm uppercase tracking-wider bg-[#0f111a]/90 px-3 py-1 border-l-2 border-r-2 border-[#2575FC] clip-corner-sm">
+                {group.category}
+              </span>
+            </div>
+          </div>
+
+          <!-- Level 1 Skill Nodes -->
+          {group.items.map((skill) => (
+            <>
+              <div
+                class={`group absolute w-14 h-14 -ml-7 -mt-7 bg-[#0f111a] border ${skill.locked ? 'border-red-900/50' : 'border-gray-700'} hover:border-[#2575FC] hover:z-[60] transition-all duration-300 cursor-pointer flex items-center justify-center shadow-lg clip-corner`}
+                style={`left: ${skill.x}px; top: ${skill.y}px;`}
+              >
+                <div class="absolute inset-0 bg-[#2575FC]/0 group-hover:bg-[#2575FC]/10 transition-colors duration-300"></div>
+                
+                {skill.locked && (
+                  <div class="absolute inset-0 flex items-center justify-center z-20 bg-black/60 backdrop-blur-[1px]">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-red-500/70">
+                      <path fill-rule="evenodd" d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z" clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                )}
+
+                <img
+                  src={skill.icon}
+                  alt={skill.name}
+                  class={`w-7 h-7 object-contain transition-all duration-300 transform group-hover:scale-110 ${skill.locked ? 'opacity-20 grayscale' : 'opacity-100'}`}
+                />
+
+                <!-- Tooltip -->
+                <div class="absolute -bottom-10 left-1/2 -translate-x-1/2 bg-[#0f111a] text-[#2575FC] text-xs px-3 py-1 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-[100] border border-[#2575FC]/30 pointer-events-none clip-corner-sm font-mono tracking-wide shadow-[0_0_10px_rgba(37,117,252,0.5)]">
+                  {skill.name} {skill.locked && "(Locked)"}
+                </div>
+              </div>
+
+              <!-- Level 2 Skill Nodes -->
+              {skill.children.map((child: any) => (
+                <div
+                  class="group absolute w-10 h-10 -ml-5 -mt-5 bg-[#0f111a] border border-gray-800 hover:border-[#2575FC] hover:z-[60] transition-all duration-300 cursor-pointer flex items-center justify-center shadow-md clip-corner"
+                  style={`left: ${child.x}px; top: ${child.y}px;`}
+                >
+                  <div class="absolute inset-0 bg-[#2575FC]/0 group-hover:bg-[#2575FC]/10 transition-colors duration-300"></div>
+                  <img
+                    src={child.icon}
+                    alt={child.name}
+                    class="w-5 h-5 object-contain opacity-30 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-300 transform group-hover:scale-110"
+                  />
+
+                  <!-- Tooltip -->
+                  <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-[#0f111a] text-[#2575FC] text-[10px] px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-[100] border border-[#2575FC]/30 pointer-events-none clip-corner-sm font-mono tracking-wide shadow-[0_0_10px_rgba(37,117,252,0.5)]">
+                    {child.name}
+                  </div>
+                </div>
+              ))}
+            </>
+          ))}
+        </>
+      ))
+    }
   </div>
 </section>
+
+<style>
+  @keyframes ping-slow {
+    75%,
+    100% {
+      transform: translate(-50%, -50%) scale(1.5);
+      opacity: 0;
+    }
+  }
+  @keyframes ping-slower {
+    75%,
+    100% {
+      transform: translate(-50%, -50%) scale(2);
+      opacity: 0;
+    }
+  }
+  @keyframes spin-slow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes spin-reverse {
+    from {
+      transform: rotate(360deg);
+    }
+    to {
+      transform: rotate(0deg);
+    }
+  }
+  @keyframes pulse-slow {
+    0%,
+    100% {
+      opacity: 0.5;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+      opacity: 0.8;
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+  }
+
+  .animate-ping-slow {
+    animation: ping-slow 3s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+  .animate-ping-slower {
+    animation: ping-slower 4s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+  .animate-spin-slow {
+    animation: spin-slow 10s linear infinite;
+  }
+  .animate-spin-reverse {
+    animation: spin-reverse 15s linear infinite;
+  }
+  .animate-pulse-slow {
+    animation: pulse-slow 4s ease-in-out infinite;
+  }
+  
+  .clip-hex {
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  }
+  
+  .clip-corner {
+    clip-path: polygon(
+      10px 0, 100% 0,
+      100% calc(100% - 10px), calc(100% - 10px) 100%,
+      0 100%, 0 10px
+    );
+  }
+  
+  .clip-corner-sm {
+    clip-path: polygon(
+      4px 0, 100% 0,
+      100% calc(100% - 4px), calc(100% - 4px) 100%,
+      0 100%, 0 4px
+    );
+  }
+</style>

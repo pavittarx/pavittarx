@@ -1,4 +1,10 @@
 ---
+interface Props {
+  initialFilter?: string;
+}
+
+const { initialFilter = "all" } = Astro.props;
+
 const events = [
   {
     year: "2025",
@@ -290,179 +296,160 @@ const events = [
 <style>
   #timeline {
     --theme-primary: #2575fc;
-    --theme-bg: #eff6ff; /* blue-50 */
-    --theme-ring: #dbeafe; /* blue-100 */
     position: relative;
     overflow: hidden;
   }
 
-  /* Apply variables to elements */
-  .theme-text {
-    color: var(--theme-primary);
-  }
-  .theme-bg {
-    background-color: var(--theme-primary);
-  }
-  .theme-bg-light {
-    background-color: var(--theme-bg);
-  }
-  .theme-ring {
-    --tw-ring-color: var(--theme-ring);
-  }
-  .theme-hover-text:hover {
-    color: var(--theme-primary);
+  .clip-corner {
+    clip-path: polygon(
+      10px 0, 100% 0,
+      100% calc(100% - 10px), calc(100% - 10px) 100%,
+      0 100%, 0 10px
+    );
   }
 
-  /* Specific overrides for the filter buttons when active */
+  .clip-corner-sm {
+    clip-path: polygon(
+      4px 0, 100% 0,
+      100% calc(100% - 4px), calc(100% - 4px) 100%,
+      0 100%, 0 4px
+    );
+  }
+
+  /* Custom Scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    height: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #0f111a;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #2575fc;
+    border-radius: 3px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #4a90e2;
+  }
+
   .filter-btn.active {
-    background-color: var(--theme-primary) !important;
-    color: white !important;
-  }
-
-  .content-container {
-    position: relative;
-    z-index: 1;
+    background-color: rgba(37, 117, 252, 0.2);
+    border-color: #2575fc;
+    color: #2575fc;
+    box-shadow: 0 0 15px rgba(37, 117, 252, 0.3);
   }
 </style>
 
-<section id="timeline" class="py-24 bg-white">
-  <div class="content-container px-6 mx-auto max-w-7xl lg:px-8">
-    <div class="mx-auto max-w-2xl text-center mb-16">
-      <div class="flex items-center justify-center gap-4">
-        <span
-          class="inline-flex items-center justify-center p-2 theme-bg-light rounded-xl theme-text ring-1 theme-ring transition-colors duration-1000"
+<section
+  id="timeline"
+  class="py-16 bg-[#0a0a0f] min-h-screen flex flex-col"
+  data-initial-filter={initialFilter}
+>
+  <!-- Sci-fi Background -->
+  <div class="absolute inset-0 -z-10 h-full w-full overflow-hidden pointer-events-none">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(37,117,252,0.05)_0%,transparent_70%)]"></div>
+    <div class="absolute inset-0 bg-[linear-gradient(rgba(37,117,252,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(37,117,252,0.03)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:linear-gradient(to_bottom,black_40%,transparent_90%)]"></div>
+  </div>
+
+  <div class="container mx-auto px-6 z-10 flex-1 flex flex-col">
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <div class="inline-flex items-center justify-center p-3 border border-[#2575FC]/30 bg-[#0f111a]/80 backdrop-blur-sm clip-corner mb-4">
+        <svg
+          class="w-6 h-6 text-[#2575FC]"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
         >
-          <svg
-            class="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-            ></path>
-          </svg>
-        </span>
-        <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-          Building & Learning Timeline
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+          ></path>
+        </svg>
+        <h2 class="ml-3 text-2xl font-bold tracking-wider text-white font-mono uppercase">
+          Mission Log
         </h2>
       </div>
-      <p class="mt-4 text-lg leading-8 text-gray-600">
-        My professional journey, milestones, and technical articles.
+      <p class="text-gray-400 max-w-2xl mx-auto font-mono text-sm">
+        // CHRONOLOGICAL RECORD OF OPERATIONS AND DEPLOYMENTS
       </p>
     </div>
 
-    <div class="flex flex-wrap justify-center gap-3 mb-16">
-      <button
-        class="filter-btn active px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
-        data-filter="all"
-      >
-        All
-      </button>
-      <button
-        class="filter-btn px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 bg-white text-gray-600 ring-1 ring-gray-200 hover:bg-gray-50 hover:ring-gray-300"
-        data-filter="work"
-      >
-        Work
-      </button>
-      <button
-        class="filter-btn px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 bg-white text-gray-600 ring-1 ring-gray-200 hover:bg-gray-50 hover:ring-gray-300"
-        data-filter="blog"
-      >
-        Blogs
-      </button>
-      <button
-        class="filter-btn px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 bg-white text-gray-600 ring-1 ring-gray-200 hover:bg-gray-50 hover:ring-gray-300"
-        data-filter="education"
-      >
-        Education
-      </button>
-      <button
-        class="filter-btn px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 bg-white text-gray-600 ring-1 ring-gray-200 hover:bg-gray-50 hover:ring-gray-300"
-        data-filter="project"
-      >
-        Projects
-      </button>
-      <button
-        class="filter-btn px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 bg-white text-gray-600 ring-1 ring-gray-200 hover:bg-gray-50 hover:ring-gray-300"
-        data-filter="certification"
-      >
-        Certifications
-      </button>
+    <!-- Filters -->
+    <div class="flex flex-wrap justify-center gap-4 mb-12">
+      {['all', 'work', 'blog', 'education', 'project', 'certification'].map((filter) => (
+        <button
+          class={`filter-btn px-6 py-2 text-sm font-mono uppercase tracking-wider border border-gray-800 bg-[#0f111a] text-gray-400 hover:text-[#2575FC] hover:border-[#2575FC]/50 transition-all duration-300 clip-corner-sm ${filter === 'all' ? 'active' : ''}`}
+          data-filter={filter}
+        >
+          [{filter}]
+        </button>
+      ))}
     </div>
 
-    <div class="mx-auto max-w-3xl">
-      <ol class="relative border-l border-gray-200 ml-3 sm:ml-0">
-        {
-          events.map((group) => (
-            <li class="mb-10 ml-6 sm:ml-8">
-              <span class="absolute flex items-center justify-center w-6 h-6 theme-bg-light rounded-full -left-3 ring-8 ring-white transition-colors duration-1000">
-                <div class="w-3 h-3 theme-bg rounded-full transition-colors duration-1000" />
-              </span>
+    <!-- Horizontal Timeline Container -->
+    <div class="relative flex-1 overflow-hidden">
+      <!-- Central Line -->
+      <div class="absolute top-1/2 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#2575FC]/30 to-transparent -translate-y-1/2 z-0"></div>
 
-              <time class="sticky top-24 block mb-6 text-sm font-bold leading-none theme-text uppercase tracking-wider transition-colors duration-1000 bg-white/95 backdrop-blur-sm py-2 z-10 w-fit pr-4 rounded-r-lg">
-                {group.year}
-              </time>
-
-              {group.items.map((item) => (
-                <div
-                  class="timeline-item mt-6 mb-10 last:mb-0"
-                  data-category={item.category}
-                >
-                  <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mb-2">
-                    {item.date && (
-                      <span class="text-sm font-semibold theme-text tracking-wide uppercase transition-colors duration-1000">
-                        {item.date}
-                      </span>
-                    )}
-                    <span
-                      class:list={[
-                        "px-2.5 py-0.5 rounded-full text-xs font-medium capitalize",
-                        {
-                          "bg-purple-100 text-purple-800":
-                            item.category === "work",
-                          "bg-green-100 text-green-800":
-                            item.category === "project",
-                          "bg-yellow-100 text-yellow-800":
-                            item.category === "education",
-                          "bg-pink-100 text-pink-800": item.category === "blog",
-                          "bg-teal-100 text-teal-800":
-                            item.category === "certification",
-                        },
-                      ]}
-                    >
-                      {item.category}
-                    </span>
+      <!-- Scrollable Area -->
+      <div class="overflow-x-auto custom-scrollbar pb-12 h-full flex items-center px-12 snap-x snap-mandatory">
+        <div class="flex gap-24 items-center min-w-max px-12">
+          {
+            events.map((group) => (
+              <div class="relative flex flex-col items-center gap-8 snap-center group">
+                <!-- Year Marker -->
+                <div class="relative z-10">
+                  <div class="w-16 h-16 flex items-center justify-center bg-[#0f111a] border-2 border-[#2575FC] rounded-full shadow-[0_0_20px_rgba(37,117,252,0.3)] group-hover:scale-110 transition-transform duration-300">
+                    <span class="text-[#2575FC] font-bold font-mono">{group.year}</span>
                   </div>
-                  <h3 class="text-xl font-bold text-gray-900 mb-3">
-                    {item.link ? (
-                      <a
-                        href={item.link}
-                        target="_blank"
-                        class="theme-hover-text transition-colors duration-300"
-                      >
-                        {item.title}
-                      </a>
-                    ) : (
-                      item.title
-                    )}
-                  </h3>
-                  {item.description && (
-                    <p
-                      class="text-base font-normal text-gray-500 leading-relaxed"
-                      set:html={item.description}
-                    />
-                  )}
+                  <!-- Vertical Line Connector -->
+                  <div class="absolute top-16 left-1/2 w-[1px] h-full bg-[#2575FC]/30 -translate-x-1/2"></div>
                 </div>
-              ))}
-            </li>
-          ))
-        }
-      </ol>
+
+                <!-- Events Grid for this Year -->
+                <div class="grid grid-flow-col grid-rows-2 gap-6 mt-4">
+                  {group.items.map((item) => (
+                    <div
+                      class="timeline-item w-80 bg-[#0f111a]/90 border border-gray-800 hover:border-[#2575FC] p-5 clip-corner transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_15px_rgba(37,117,252,0.15)] backdrop-blur-sm"
+                      data-category={item.category}
+                    >
+                      <div class="flex justify-between items-start mb-3">
+                        <span class={`text-[10px] font-mono uppercase px-2 py-1 border ${
+                          item.category === 'work' ? 'border-purple-500/50 text-purple-400' :
+                          item.category === 'project' ? 'border-green-500/50 text-green-400' :
+                          item.category === 'blog' ? 'border-pink-500/50 text-pink-400' :
+                          'border-blue-500/50 text-blue-400'
+                        } clip-corner-sm`}>
+                          {item.category}
+                        </span>
+                        {item.date && (
+                          <span class="text-xs text-gray-500 font-mono">{item.date}</span>
+                        )}
+                      </div>
+
+                      <h3 class="text-lg font-bold text-white mb-2 line-clamp-2 group-hover:text-[#2575FC] transition-colors">
+                        {item.link ? (
+                          <a href={item.link} target="_blank" class="hover:underline decoration-[#2575FC] underline-offset-4">
+                            {item.title}
+                          </a>
+                        ) : (
+                          item.title
+                        )}
+                      </h3>
+
+                      {item.description && (
+                        <p class="text-sm text-gray-400 leading-relaxed line-clamp-3" set:html={item.description} />
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -473,54 +460,43 @@ const events = [
   const years = document.querySelectorAll("ol > li");
   const timelineSection = document.getElementById("timeline");
 
+  function applyFilter(filter: string) {
+    // Update buttons
+    buttons.forEach((b) => {
+      if ((b as HTMLElement).dataset.filter === filter) {
+        b.classList.add("active");
+      } else {
+        b.classList.remove("active");
+      }
+    });
+
+    // Filter items
+    items.forEach((item) => {
+      if (
+        filter === "all" ||
+        (item as HTMLElement).dataset.category === filter
+      ) {
+        (item as HTMLElement).style.display = "block";
+        (item as HTMLElement).style.opacity = "1";
+        (item as HTMLElement).style.transform = "scale(1)";
+      } else {
+        (item as HTMLElement).style.display = "none";
+        (item as HTMLElement).style.opacity = "0";
+        (item as HTMLElement).style.transform = "scale(0.95)";
+      }
+    });
+  }
+
   buttons.forEach((btn) => {
     btn.addEventListener("click", () => {
-      // Remove active class from all
-      buttons.forEach((b) => {
-        b.classList.remove("active");
-        b.classList.add(
-          "bg-white",
-          "text-gray-600",
-          "ring-1",
-          "ring-gray-200",
-          "hover:bg-gray-50",
-          "hover:ring-gray-300"
-        );
-      });
-
-      // Add active class to clicked
-      btn.classList.remove(
-        "bg-white",
-        "text-gray-600",
-        "ring-1",
-        "ring-gray-200",
-        "hover:bg-gray-50",
-        "hover:ring-gray-300"
-      );
-      btn.classList.add("active");
-
       const filter = (btn as HTMLElement).dataset.filter;
-
-      items.forEach((item) => {
-        if (
-          filter === "all" ||
-          (item as HTMLElement).dataset.category === filter
-        ) {
-          (item as HTMLElement).style.display = "block";
-        } else {
-          (item as HTMLElement).style.display = "none";
-        }
-      });
-
-      // Hide empty years
-      years.forEach((year) => {
-        const children = Array.from(year.querySelectorAll(".timeline-item"));
-        const hasVisible = children.some(
-          (child) => (child as HTMLElement).style.display !== "none"
-        );
-        (year as HTMLElement).style.display = hasVisible ? "block" : "none";
-      });
+      if (filter) applyFilter(filter);
     });
   });
+
+  // Apply initial filter
+  if (timelineSection && timelineSection.dataset.initialFilter) {
+    applyFilter(timelineSection.dataset.initialFilter);
+  }
 </script>
 ```
