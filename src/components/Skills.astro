@@ -475,7 +475,7 @@ const positionedGroups = rawGroups;
             <!-- Category Node -->
             <div
               id={`cat-${gIdx}`}
-              class="skill-node group absolute w-16 h-16 -ml-8 -mt-8 z-10 cursor-pointer hover:scale-110 hover:z-[200] transition-all duration-500"
+              class="skill-node group absolute w-16 h-16 -ml-8 -mt-8 z-[70] cursor-pointer hover:scale-110 hover:z-[200] transition-all duration-500"
               style={`--tx: ${group.x}px; --ty: ${group.y}px;`}
               data-type="category"
               data-children-ids={group.items.map((_, i) => `l1-${gIdx}-${i}`).join(',')}
