@@ -363,6 +363,22 @@ const positionedGroups = rawGroups;
     <div class="absolute inset-0 bg-[linear-gradient(rgba(37,117,252,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(37,117,252,0.03)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_80%)]"></div>
   </div>
 
+  <!-- Top View Toggle -->
+  <div class="absolute top-24 left-1/2 -translate-x-1/2 z-[80] flex bg-[#0f111a]/90 border border-[#2575FC]/30 rounded-full p-1 backdrop-blur-sm shadow-[0_0_15px_rgba(37,117,252,0.2)]">
+    <button
+      id="btn-map-view"
+      class="px-6 py-2 rounded-full text-sm font-mono font-bold transition-all duration-300 bg-[#2575FC] text-white shadow-lg"
+    >
+      Skills Map
+    </button>
+    <button
+      id="btn-list-view"
+      class="px-6 py-2 rounded-full text-sm font-mono font-bold transition-all duration-300 text-gray-400 hover:text-white"
+    >
+      List View
+    </button>
+  </div>
+
   <!-- Controls -->
   <div class="absolute bottom-8 right-8 z-[80] flex flex-col gap-2">
     <button id="zoom-in" class="w-10 h-10 bg-[#0f111a] border border-[#2575FC]/30 text-[#2575FC] rounded-lg hover:bg-[#2575FC] hover:text-white transition-all flex items-center justify-center shadow-lg active:scale-95">
@@ -378,11 +394,6 @@ const positionedGroups = rawGroups;
     <button id="reset-view" class="w-10 h-10 bg-[#0f111a] border border-[#2575FC]/30 text-[#2575FC] rounded-lg hover:bg-[#2575FC] hover:text-white transition-all flex items-center justify-center shadow-lg active:scale-95" title="Reset View">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
-      </svg>
-    </button>
-    <button id="toggle-view" class="w-10 h-10 bg-[#0f111a] border border-[#2575FC]/30 text-[#2575FC] rounded-lg hover:bg-[#2575FC] hover:text-white transition-all flex items-center justify-center shadow-lg active:scale-95" title="Switch to List View">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
       </svg>
     </button>
   </div>
@@ -587,7 +598,7 @@ const positionedGroups = rawGroups;
   </div>
 
   <!-- Flat View (Hidden by default) -->
-  <div id="flat-view" class="absolute inset-0 z-[60] bg-[#0a0a0f] overflow-y-auto opacity-0 pointer-events-none transition-opacity duration-500 pt-24 pb-10 px-6 lg:px-20">
+  <div id="flat-view" class="absolute inset-0 z-[60] bg-[#0a0a0f] overflow-y-auto opacity-0 pointer-events-none transition-opacity duration-500 pt-32 pb-10 px-6 lg:px-20">
     <div class="max-w-7xl mx-auto">
       <h2 class="text-3xl font-bold text-white mb-10 font-mono border-l-4 border-[#2575FC] pl-4">All Skills</h2>
       
@@ -693,43 +704,50 @@ const positionedGroups = rawGroups;
   const zoomOutBtn = document.getElementById("zoom-out");
   const resetBtn = document.getElementById("reset-view");
   const centralHub = document.getElementById("central-hub");
-  const toggleViewBtn = document.getElementById("toggle-view");
+  const btnMapView = document.getElementById("btn-map-view");
+  const btnListView = document.getElementById("btn-list-view");
   const flatView = document.getElementById("flat-view");
   const instructions = document.querySelector('.absolute.bottom-8.left-8');
 
   // --- View Toggle Logic ---
   let isFlatView = false;
   
-  toggleViewBtn?.addEventListener('click', () => {
-    isFlatView = !isFlatView;
-    
+  function updateView() {
     if (isFlatView) {
       // Show Flat View
       flatView?.classList.remove('opacity-0', 'pointer-events-none');
       viewport?.classList.add('opacity-0', 'pointer-events-none');
       if (instructions) instructions.classList.add('opacity-0');
       
-      // Update Button Icon (Grid -> Map)
-      toggleViewBtn.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z" />
-        </svg>
-      `;
-      toggleViewBtn.title = "Switch to Map View";
+      // Update Buttons
+      btnListView?.classList.add('bg-[#2575FC]', 'text-white', 'shadow-lg');
+      btnListView?.classList.remove('text-gray-400', 'hover:text-white');
+      
+      btnMapView?.classList.remove('bg-[#2575FC]', 'text-white', 'shadow-lg');
+      btnMapView?.classList.add('text-gray-400', 'hover:text-white');
     } else {
       // Show Map View
       flatView?.classList.add('opacity-0', 'pointer-events-none');
       viewport?.classList.remove('opacity-0', 'pointer-events-none');
       if (instructions) instructions.classList.remove('opacity-0');
       
-      // Update Button Icon (Map -> Grid)
-      toggleViewBtn.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
-        </svg>
-      `;
-      toggleViewBtn.title = "Switch to List View";
+      // Update Buttons
+      btnMapView?.classList.add('bg-[#2575FC]', 'text-white', 'shadow-lg');
+      btnMapView?.classList.remove('text-gray-400', 'hover:text-white');
+      
+      btnListView?.classList.remove('bg-[#2575FC]', 'text-white', 'shadow-lg');
+      btnListView?.classList.add('text-gray-400', 'hover:text-white');
     }
+  }
+
+  btnMapView?.addEventListener('click', () => {
+    isFlatView = false;
+    updateView();
+  });
+
+  btnListView?.addEventListener('click', () => {
+    isFlatView = true;
+    updateView();
   });
 
   // --- Audio System ---
