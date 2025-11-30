@@ -364,7 +364,7 @@ const positionedGroups = rawGroups;
   </div>
 
   <!-- Controls -->
-  <div class="absolute bottom-8 right-8 z-50 flex flex-col gap-2">
+  <div class="absolute bottom-8 right-8 z-[80] flex flex-col gap-2">
     <button id="zoom-in" class="w-10 h-10 bg-[#0f111a] border border-[#2575FC]/30 text-[#2575FC] rounded-lg hover:bg-[#2575FC] hover:text-white transition-all flex items-center justify-center shadow-lg active:scale-95">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -380,10 +380,15 @@ const positionedGroups = rawGroups;
         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
       </svg>
     </button>
+    <button id="toggle-view" class="w-10 h-10 bg-[#0f111a] border border-[#2575FC]/30 text-[#2575FC] rounded-lg hover:bg-[#2575FC] hover:text-white transition-all flex items-center justify-center shadow-lg active:scale-95" title="Switch to List View">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+      </svg>
+    </button>
   </div>
 
   <!-- Interactive Viewport -->
-  <div id="skill-tree-viewport" class="w-full h-full cursor-grab active:cursor-grabbing touch-none relative overflow-hidden">
+  <div id="skill-tree-viewport" class="w-full h-full cursor-grab active:cursor-grabbing touch-none relative overflow-hidden transition-opacity duration-500">
     <!-- Content Container -->
     <div
       id="skill-tree-content"
@@ -580,6 +585,76 @@ const positionedGroups = rawGroups;
       }
     </div>
   </div>
+
+  <!-- Flat View (Hidden by default) -->
+  <div id="flat-view" class="absolute inset-0 z-[60] bg-[#0a0a0f] overflow-y-auto opacity-0 pointer-events-none transition-opacity duration-500 pt-24 pb-10 px-6 lg:px-20">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-3xl font-bold text-white mb-10 font-mono border-l-4 border-[#2575FC] pl-4">All Skills</h2>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {skills.map((category) => (
+          <>
+            {/* Category Header as a full-width item or just part of the flow? 
+                User asked for "single list". Let's make it a flat grid of ALL items, 
+                maybe with the Category as a tag on the card. 
+            */}
+            {category.items.map((skill) => (
+              <>
+                {/* Level 1 Skill */}
+                <div class={`bg-[#0f111a]/80 border rounded-lg p-4 flex items-center gap-4 transition-all duration-300 group ${
+                  skill.locked 
+                    ? 'border-red-900/30 opacity-50 grayscale cursor-not-allowed' 
+                    : 'border-gray-800 hover:border-[#2575FC]/50 hover:bg-[#2575FC]/5'
+                }`}>
+                  <div class={`w-10 h-10 flex-shrink-0 bg-[#0a0a0f] rounded-md border flex items-center justify-center ${
+                    skill.locked ? 'border-red-900/30' : 'border-gray-800 group-hover:border-[#2575FC]/30'
+                  }`}>
+                    <img src={skill.icon} alt={skill.name} class="w-6 h-6 object-contain" />
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2">
+                      <h4 class={`font-medium truncate transition-colors ${
+                        skill.locked ? 'text-gray-500' : 'text-white group-hover:text-[#2575FC]'
+                      }`}>{skill.name}</h4>
+                      {skill.locked && <span class="text-[10px] text-red-500 border border-red-500/30 px-1 rounded bg-red-500/10">Locked</span>}
+                    </div>
+                    <p class="text-xs text-gray-500 truncate">{category.category}</p>
+                  </div>
+                </div>
+
+                {/* Level 2 Skills (Children) */}
+                {skill.children && skill.children.map((child) => (
+                  <div class={`bg-[#0f111a]/80 border rounded-lg p-4 flex items-center gap-4 transition-all duration-300 group ml-4 sm:ml-0 relative ${
+                    child.locked 
+                      ? 'border-red-900/30 opacity-50 grayscale cursor-not-allowed' 
+                      : 'border-gray-800 hover:border-[#2575FC]/50 hover:bg-[#2575FC]/5'
+                  }`}>
+                    {/* Visual indicator for sub-skill in mobile view */}
+                    <div class={`absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 rounded-r sm:hidden ${
+                      child.locked ? 'bg-red-900/30' : 'bg-[#2575FC]/20'
+                    }`}></div>
+                    
+                    <div class={`w-10 h-10 flex-shrink-0 bg-[#0a0a0f] rounded-md border flex items-center justify-center ${
+                      child.locked ? 'border-red-900/30' : 'border-gray-800 group-hover:border-[#2575FC]/30'
+                    }`}>
+                      <img src={child.icon} alt={child.name} class="w-5 h-5 object-contain" />
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <h4 class={`font-medium truncate transition-colors ${
+                        child.locked ? 'text-gray-500' : 'text-white group-hover:text-[#2575FC]'
+                      }`}>{child.name}</h4>
+                      <p class="text-xs text-gray-500 truncate">{skill.name} Ecosystem</p>
+                    </div>
+                  </div>
+                ))}
+              </>
+            ))}
+          </>
+        ))}
+      </div>
+    </div>
+  </div>
+
   <!-- Interaction Instructions -->
   <div class="absolute bottom-8 left-8 z-50 pointer-events-none">
     <div class="bg-[#0f111a]/90 border border-[#2575FC]/30 p-4 rounded-lg shadow-[0_0_15px_rgba(37,117,252,0.2)] backdrop-blur-sm pointer-events-auto">
@@ -618,6 +693,44 @@ const positionedGroups = rawGroups;
   const zoomOutBtn = document.getElementById("zoom-out");
   const resetBtn = document.getElementById("reset-view");
   const centralHub = document.getElementById("central-hub");
+  const toggleViewBtn = document.getElementById("toggle-view");
+  const flatView = document.getElementById("flat-view");
+  const instructions = document.querySelector('.absolute.bottom-8.left-8');
+
+  // --- View Toggle Logic ---
+  let isFlatView = false;
+  
+  toggleViewBtn?.addEventListener('click', () => {
+    isFlatView = !isFlatView;
+    
+    if (isFlatView) {
+      // Show Flat View
+      flatView?.classList.remove('opacity-0', 'pointer-events-none');
+      viewport?.classList.add('opacity-0', 'pointer-events-none');
+      if (instructions) instructions.classList.add('opacity-0');
+      
+      // Update Button Icon (Grid -> Map)
+      toggleViewBtn.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z" />
+        </svg>
+      `;
+      toggleViewBtn.title = "Switch to Map View";
+    } else {
+      // Show Map View
+      flatView?.classList.add('opacity-0', 'pointer-events-none');
+      viewport?.classList.remove('opacity-0', 'pointer-events-none');
+      if (instructions) instructions.classList.remove('opacity-0');
+      
+      // Update Button Icon (Map -> Grid)
+      toggleViewBtn.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+        </svg>
+      `;
+      toggleViewBtn.title = "Switch to List View";
+    }
+  });
 
   // --- Audio System ---
   const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
