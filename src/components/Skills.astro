@@ -1,6 +1,8 @@
 ---
 import { Image } from "astro:assets";
 import logo from "../assets/pavittarx-logo.svg";
+import antigravityIcon from "../assets/antigravity.png";
+import copilotIcon from "../assets/copilot.png";
 
 // Define skill structure with dependencies
 // Level 0: Category Root (handled by layout)
@@ -205,6 +207,16 @@ const skills: SkillCategory[] = [
         icon: "https://avatars.githubusercontent.com/u/126733545?s=200&v=4",
         level: 1,
         locked: true,
+      },
+      {
+        name: "GitHub Copilot",
+        icon: copilotIcon.src,
+        level: 1,
+      },
+      {
+        name: "Antigravity",
+        icon: antigravityIcon.src,
+        level: 1,
       },
     ],
   },
@@ -602,65 +614,70 @@ const positionedGroups = rawGroups;
     <div class="max-w-7xl mx-auto">
       <h2 class="text-3xl font-bold text-white mb-10 font-mono border-l-4 border-[#2575FC] pl-4">All Skills</h2>
       
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div class="space-y-12">
         {skills.map((category) => (
-          <>
-            {/* Category Header as a full-width item or just part of the flow? 
-                User asked for "single list". Let's make it a flat grid of ALL items, 
-                maybe with the Category as a tag on the card. 
-            */}
-            {category.items.map((skill) => (
-              <>
-                {/* Level 1 Skill */}
-                <div class={`bg-[#0f111a]/80 border rounded-lg p-4 flex items-center gap-4 transition-all duration-300 group ${
-                  skill.locked 
-                    ? 'border-red-900/30 opacity-50 grayscale cursor-not-allowed' 
-                    : 'border-gray-800 hover:border-[#2575FC]/50 hover:bg-[#2575FC]/5'
-                }`}>
-                  <div class={`w-10 h-10 flex-shrink-0 bg-[#0a0a0f] rounded-md border flex items-center justify-center ${
-                    skill.locked ? 'border-red-900/30' : 'border-gray-800 group-hover:border-[#2575FC]/30'
-                  }`}>
-                    <img src={skill.icon} alt={skill.name} class="w-6 h-6 object-contain" />
-                  </div>
-                  <div class="flex-1 min-w-0">
-                    <div class="flex items-center gap-2">
-                      <h4 class={`font-medium truncate transition-colors ${
-                        skill.locked ? 'text-gray-500' : 'text-white group-hover:text-[#2575FC]'
-                      }`}>{skill.name}</h4>
-                      {skill.locked && <span class="text-[10px] text-red-500 border border-red-500/30 px-1 rounded bg-red-500/10">Locked</span>}
-                    </div>
-                    <p class="text-xs text-gray-500 truncate">{category.category}</p>
-                  </div>
-                </div>
-
-                {/* Level 2 Skills (Children) */}
-                {skill.children && skill.children.map((child) => (
-                  <div class={`bg-[#0f111a]/80 border rounded-lg p-4 flex items-center gap-4 transition-all duration-300 group ml-4 sm:ml-0 relative ${
-                    child.locked 
+          <div>
+            <h3 class="text-xl font-bold text-[#2575FC] mb-6 font-mono flex items-center gap-3 border-b border-[#2575FC]/20 pb-2">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d={getCategoryIcon(category.category)} />
+              </svg>
+              {category.category}
+            </h3>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {category.items.map((skill) => (
+                <>
+                  {/* Level 1 Skill */}
+                  <div class={`bg-[#0f111a]/80 border rounded-lg p-4 flex items-center gap-4 transition-all duration-300 group ${
+                    skill.locked 
                       ? 'border-red-900/30 opacity-50 grayscale cursor-not-allowed' 
                       : 'border-gray-800 hover:border-[#2575FC]/50 hover:bg-[#2575FC]/5'
                   }`}>
-                    {/* Visual indicator for sub-skill in mobile view */}
-                    <div class={`absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 rounded-r sm:hidden ${
-                      child.locked ? 'bg-red-900/30' : 'bg-[#2575FC]/20'
-                    }`}></div>
-                    
                     <div class={`w-10 h-10 flex-shrink-0 bg-[#0a0a0f] rounded-md border flex items-center justify-center ${
-                      child.locked ? 'border-red-900/30' : 'border-gray-800 group-hover:border-[#2575FC]/30'
+                      skill.locked ? 'border-red-900/30' : 'border-gray-800 group-hover:border-[#2575FC]/30'
                     }`}>
-                      <img src={child.icon} alt={child.name} class="w-5 h-5 object-contain" />
+                      <img src={skill.icon} alt={skill.name} class="w-6 h-6 object-contain" />
                     </div>
                     <div class="flex-1 min-w-0">
-                      <h4 class={`font-medium truncate transition-colors ${
-                        child.locked ? 'text-gray-500' : 'text-white group-hover:text-[#2575FC]'
-                      }`}>{child.name}</h4>
-                      <p class="text-xs text-gray-500 truncate">{skill.name} Ecosystem</p>
+                      <div class="flex items-center gap-2">
+                        <h4 class={`font-medium truncate transition-colors ${
+                          skill.locked ? 'text-gray-500' : 'text-white group-hover:text-[#2575FC]'
+                        }`}>{skill.name}</h4>
+                        {skill.locked && <span class="text-[10px] text-red-500 border border-red-500/30 px-1 rounded bg-red-500/10">Locked</span>}
+                      </div>
+                      <p class="text-xs text-gray-500 truncate">{category.category}</p>
                     </div>
                   </div>
-                ))}
-              </>
-            ))}
-          </>
+
+                  {/* Level 2 Skills (Children) */}
+                  {skill.children && skill.children.map((child) => (
+                    <div class={`bg-[#0f111a]/80 border rounded-lg p-4 flex items-center gap-4 transition-all duration-300 group ml-4 sm:ml-0 relative ${
+                      child.locked 
+                        ? 'border-red-900/30 opacity-50 grayscale cursor-not-allowed' 
+                        : 'border-gray-800 hover:border-[#2575FC]/50 hover:bg-[#2575FC]/5'
+                    }`}>
+                      {/* Visual indicator for sub-skill in mobile view */}
+                      <div class={`absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 rounded-r sm:hidden ${
+                        child.locked ? 'bg-red-900/30' : 'bg-[#2575FC]/20'
+                      }`}></div>
+                      
+                      <div class={`w-10 h-10 flex-shrink-0 bg-[#0a0a0f] rounded-md border flex items-center justify-center ${
+                        child.locked ? 'border-red-900/30' : 'border-gray-800 group-hover:border-[#2575FC]/30'
+                      }`}>
+                        <img src={child.icon} alt={child.name} class="w-5 h-5 object-contain" />
+                      </div>
+                      <div class="flex-1 min-w-0">
+                        <h4 class={`font-medium truncate transition-colors ${
+                          child.locked ? 'text-gray-500' : 'text-white group-hover:text-[#2575FC]'
+                        }`}>{child.name}</h4>
+                        <p class="text-xs text-gray-500 truncate">{skill.name} Ecosystem</p>
+                      </div>
+                    </div>
+                  ))}
+                </>
+              ))}
+            </div>
+          </div>
         ))}
       </div>
     </div>
