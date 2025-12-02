@@ -376,18 +376,20 @@ const positionedGroups = rawGroups;
   </div>
 
   <!-- Top View Toggle -->
-  <div class="absolute top-24 left-1/2 -translate-x-1/2 z-[80] flex bg-[#0f111a]/90 border border-[#2575FC]/30 rounded-full p-1 backdrop-blur-sm shadow-[0_0_15px_rgba(37,117,252,0.2)]">
+  <!-- Top View Toggle -->
+  <div class="absolute top-24 left-1/2 -translate-x-1/2 z-[80] flex bg-[#0f111a] border border-gray-800 clip-corner-sm p-1">
     <button
       id="btn-map-view"
-      class="px-6 py-2 rounded-full text-sm font-mono font-bold transition-all duration-300 bg-[#2575FC] text-white shadow-lg"
+      class="view-toggle-btn active px-6 py-2 text-sm font-mono font-bold uppercase tracking-wider transition-all duration-300 text-gray-400 hover:text-[#2575FC]"
     >
-      Skills Map
+      [Skills Tree]
     </button>
+    <div class="w-[1px] bg-gray-800 my-1"></div>
     <button
       id="btn-list-view"
-      class="px-6 py-2 rounded-full text-sm font-mono font-bold transition-all duration-300 text-gray-400 hover:text-white"
+      class="view-toggle-btn px-6 py-2 text-sm font-mono font-bold uppercase tracking-wider transition-all duration-300 text-gray-400 hover:text-[#2575FC]"
     >
-      List View
+      [List View]
     </button>
   </div>
 
@@ -610,9 +612,9 @@ const positionedGroups = rawGroups;
   </div>
 
   <!-- Flat View (Hidden by default) -->
-  <div id="flat-view" class="absolute inset-0 z-[60] bg-[#0a0a0f] overflow-y-auto opacity-0 pointer-events-none transition-opacity duration-500 pt-32 pb-10 px-6 lg:px-20">
+  <div id="flat-view" class="absolute inset-0 z-40 bg-[#0a0a0f] overflow-y-auto opacity-0 pointer-events-none transition-opacity duration-500 pt-32 pb-10 px-6 lg:px-20">
     <div class="max-w-7xl mx-auto">
-      <h2 class="text-3xl font-bold text-white mb-10 font-mono border-l-4 border-[#2575FC] pl-4">All Skills</h2>
+      <h2 class="text-3xl font-bold text-white mb-10 font-mono border-l-4 border-[#2575FC] pl-4">Weapons</h2>
       
       <div class="space-y-12">
         {skills.map((category) => (
@@ -737,11 +739,8 @@ const positionedGroups = rawGroups;
       if (instructions) instructions.classList.add('opacity-0');
       
       // Update Buttons
-      btnListView?.classList.add('bg-[#2575FC]', 'text-white', 'shadow-lg');
-      btnListView?.classList.remove('text-gray-400', 'hover:text-white');
-      
-      btnMapView?.classList.remove('bg-[#2575FC]', 'text-white', 'shadow-lg');
-      btnMapView?.classList.add('text-gray-400', 'hover:text-white');
+      btnListView?.classList.add('active');
+      btnMapView?.classList.remove('active');
     } else {
       // Show Map View
       flatView?.classList.add('opacity-0', 'pointer-events-none');
@@ -749,11 +748,8 @@ const positionedGroups = rawGroups;
       if (instructions) instructions.classList.remove('opacity-0');
       
       // Update Buttons
-      btnMapView?.classList.add('bg-[#2575FC]', 'text-white', 'shadow-lg');
-      btnMapView?.classList.remove('text-gray-400', 'hover:text-white');
-      
-      btnListView?.classList.remove('bg-[#2575FC]', 'text-white', 'shadow-lg');
-      btnListView?.classList.add('text-gray-400', 'hover:text-white');
+      btnMapView?.classList.add('active');
+      btnListView?.classList.remove('active');
     }
   }
 
@@ -1208,5 +1204,11 @@ const positionedGroups = rawGroups;
   .skill-node:hover .tooltip-container {
       opacity: 1;
       pointer-events: auto;
+  }
+
+  .view-toggle-btn.active {
+    background-color: rgba(37, 117, 252, 0.15);
+    color: #2575fc;
+    text-shadow: 0 0 10px rgba(37, 117, 252, 0.5);
   }
 </style>
