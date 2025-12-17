@@ -1,46 +1,25 @@
-# Astro Starter Kit: Basics
+# Hi there, I'm Pavittar 👋# Pavittarx Portfolio
 
-```sh
-pnpm create astro@latest -- --template basics
-```
+Senior Software Engineer based in India 🇮🇳. I architect scalable backends, optimize cloud infrastructure, and build robust web applications with a focus on performance and user experience.Senior Software Engineer based in India. I architect scalable backends, optimize cloud infrastructure, and build robust web applications with a focus on performance and user experience.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+- 🔭 I’m currently working on scalable backend architectures and distributed systems.
 
-## 🚀 Project Structure
+- 🌱 I’m currently learning about advanced distributed patterns and system design.
 
-Inside of your Astro project, you'll see the following folders and files:
+- 💬 Ask me about **Backend Development, Distributed Systems, and Cloud Infrastructure**.- 
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+- 📫 How to reach me: [pavittarx@gmail.com](mailto:pavittarx@gmail.com)- 
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+- ⚡ Fun fact: I love building tools that automate mundane tasks.-
+## 🔗 Connect with Me
+<a href="https://linkedin.com/in/pavittarx" target="_blank">
+    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
+</a>
 
-## 🧞 Commands
+<a href="https://pavittarx.com" target="_blank">
+    <img src="https://img.shields.io/badge/Website-2575FC?style=for-the-badge&logo=firefox&logoColor=white" alt="Website" />
+</a>
 
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+<a href="mailto:pavittarx@gmail.com">
+    <img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" />
+</a>
