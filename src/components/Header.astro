@@ -1,0 +1,77 @@
+---
+import { Image } from "astro:assets";
+import logo from "../assets/pavittarx-logo.svg";
+
+interface Props {
+  alwaysVisible?: boolean;
+}
+
+const { alwaysVisible = false } = Astro.props;
+
+const headerClass = alwaysVisible
+  ? "fixed top-0 left-0 right-0 z-50 transition-all duration-500 transform translate-y-0 opacity-100"
+  : "fixed top-0 left-0 right-0 z-50 transition-all duration-500 transform -translate-y-full opacity-0";
+---
+
+<header
+  id="sticky-header"
+  class={headerClass}
+  data-always-visible={alwaysVisible}
+>
+  <div class="mx-auto max-w-5xl px-6 lg:px-8 mt-6">
+    <nav
+      class="flex items-center justify-between px-6 py-3 bg-[#0f111a]/80 backdrop-blur-xl rounded-full shadow-lg border border-gray-800/50 ring-1 ring-white/5"
+    >
+      <div class="flex lg:flex-1">
+        <a href="/" class="-m-1.5 p-1.5 flex items-center gap-3 group">
+          <Image
+            src={logo}
+            alt="Pavittarx"
+            class="h-8 w-auto group-hover:scale-110 transition-transform duration-300"
+          />
+          <span class="font-bold text-[#2575FC] text-lg tracking-tight"
+            >Pavittar</span
+          >
+        </a>
+      </div>
+      <div class="flex items-center gap-x-6">
+        <a
+          href="#contact"
+          class="rounded-full bg-[#2575FC] px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 hover:shadow-[0_0_15px_rgba(37,117,252,0.5)] hover:-translate-y-0.5 transition-all duration-300"
+          >Contact</a
+        >
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.getElementById("sticky-header");
+  const heroSection = document.querySelector("section"); // Assuming Hero is the first section
+  const alwaysVisible = header?.dataset.alwaysVisible === "true";
+
+  if (header && heroSection && !alwaysVisible) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            // Hero is out of view, show header
+            header.classList.remove("-translate-y-full", "opacity-0");
+            header.classList.add("translate-y-0", "opacity-100");
+          } else {
+            // Hero is in view, hide header
+            header.classList.add("-translate-y-full", "opacity-0");
+            header.classList.remove("translate-y-0", "opacity-100");
+          }
+        });
+      },
+      {
+        root: null,
+        threshold: 0.1, // Trigger when 10% of hero is visible (leaving)
+        rootMargin: "-100px 0px 0px 0px", // Offset to trigger slightly before/after
+      },
+    );
+
+    observer.observe(heroSection);
+  }
+</script>

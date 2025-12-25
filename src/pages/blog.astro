@@ -1,0 +1,12 @@
+---
+import Layout from "../layouts/Layout.astro";
+import TimelineComponent from "../components/Timeline.astro";
+import Header from "../components/Header.astro";
+---
+
+<Layout title="Blog Updates | Pavittarx">
+  <Header alwaysVisible={true} />
+  <div class="pt-20">
+    <TimelineComponent initialFilter="blog" />
+  </div>
+</Layout>

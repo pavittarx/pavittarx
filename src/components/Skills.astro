@@ -1,0 +1,1214 @@
+---
+import { Image } from "astro:assets";
+import logo from "../assets/pavittarx-logo.svg";
+import antigravityIcon from "../assets/antigravity.png";
+import copilotIcon from "../assets/copilot.png";
+
+// Define skill structure with dependencies
+// Level 0: Category Root (handled by layout)
+// Level 1: Base Skills
+// Level 2: Advanced/Dependent Skills
+
+interface SkillItem {
+  name: string;
+  icon: string;
+  level: number;
+  children?: SkillItem[];
+  locked?: boolean;
+}
+
+interface SkillCategory {
+  category: string;
+  items: SkillItem[];
+}
+
+const skills: SkillCategory[] = [
+  {
+    category: "Languages",
+    items: [
+      {
+        name: "JavaScript",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+        level: 1,
+        children: [
+          {
+            name: "TypeScript",
+            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+            level: 2,
+          },
+        ],
+      },
+      {
+        name: "Python",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+        level: 1,
+      },
+      {
+        name: "C++",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg",
+        level: 1,
+      },
+      {
+        name: "Bash",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg",
+        level: 1,
+      },
+      {
+        name: "SQL",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg",
+        level: 1,
+      },
+    ],
+  },
+  {
+    category: "Frontend",
+    items: [
+      {
+        name: "React",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+        level: 1,
+        children: [
+          {
+            name: "Next.js",
+            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
+            level: 2,
+          },
+          {
+            name: "Material UI",
+            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/materialui/materialui-original.svg",
+            level: 2,
+          },
+          {
+            name: "shadcn/ui",
+            icon: "https://avatars.githubusercontent.com/u/139895814?s=200&v=4",
+            level: 2,
+          },
+        ],
+      },
+      {
+        name: "Angular",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg",
+        level: 1,
+      },
+      {
+        name: "Astro",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/astro/astro-original.svg",
+        level: 1,
+      },
+      {
+        name: "HTML/CSS",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+        level: 1,
+        children: [
+          {
+            name: "Tailwind CSS",
+            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
+            level: 2,
+          },
+          {
+            name: "styled-components",
+            icon: "https://skillicons.dev/icons?i=styledcomponents",
+            level: 2,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    category: "Backend",
+    items: [
+      {
+        name: "Node.js",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
+        level: 1,
+        children: [
+          {
+            name: "Express",
+            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg",
+            level: 2,
+          },
+          {
+            name: "NestJS",
+            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nestjs/nestjs-original.svg",
+            level: 2,
+          },
+        ],
+      },
+      {
+        name: "Prisma",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prisma/prisma-original.svg",
+        level: 1,
+        children: [
+          { name: "tRPC", icon: "https://trpc.io/img/logo.svg", level: 2 },
+        ],
+      },
+    ],
+  },
+  {
+    category: "Database & Cloud",
+    items: [
+      {
+        name: "PostgreSQL",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
+        level: 1,
+      },
+      {
+        name: "MongoDB",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
+        level: 1,
+      },
+      {
+        name: "AWS",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg",
+        level: 1,
+      },
+      {
+        name: "Docker",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
+        level: 1,
+      },
+      {
+        name: "Git",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
+        level: 1,
+        children: [
+          {
+            name: "GitHub",
+            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg",
+            level: 2,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    category: "AI & ML",
+    items: [
+      {
+        name: "TensorFlow",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg",
+        level: 1,
+        locked: true,
+      },
+      {
+        name: "PyTorch",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg",
+        level: 1,
+        locked: true,
+      },
+      {
+        name: "OpenAI API",
+        icon: "https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg",
+        level: 1,
+        locked: true,
+      },
+      {
+        name: "LangChain",
+        icon: "https://avatars.githubusercontent.com/u/126733545?s=200&v=4",
+        level: 1,
+        locked: true,
+      },
+      {
+        name: "GitHub Copilot",
+        icon: copilotIcon.src,
+        level: 1,
+      },
+      {
+        name: "Antigravity",
+        icon: antigravityIcon.src,
+        level: 1,
+      },
+    ],
+  },
+];
+
+// Helper to get category icons
+const getCategoryIcon = (category: string) => {
+  if (category === "Languages")
+    return "M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5";
+  if (category === "Frontend")
+    return "M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25";
+  if (category === "Backend")
+    return "M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9";
+  if (category === "Database & Cloud")
+    return "M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125";
+  if (category === "AI & ML")
+    return "M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z";
+  return "";
+};
+
+// Helper to calculate positions
+const centerX = 700;
+const centerY = 450;
+
+// Calculate total weight for proportional distribution
+// Weight = 1 (Category) + L1 items + (0.5 * L2 items)
+const getCategoryWeight = (category: SkillCategory) => {
+  let weight = 2; // Base weight for category node space
+  weight += category.items.length * 1.5; // L1 items
+  category.items.forEach(item => {
+    if (item.children) {
+      weight += item.children.length * 0.8; // L2 items
+    }
+  });
+  return weight;
+};
+
+const totalWeight = skills.reduce((acc, cat) => acc + getCategoryWeight(cat), 0);
+
+// Layout Configuration
+const BASE_CAT_RADIUS = 220;
+const BASE_L1_RADIUS = 140; // Relative to Category
+const BASE_L2_RADIUS = 90;  // Relative to L1
+
+let currentAngle = 270; // Start from top (270 degrees)
+
+// First pass: Initial Positioning based on Proportional Angles
+let rawGroups = skills.map((group) => {
+  const weight = getCategoryWeight(group);
+  const sectorAngle = (weight / totalWeight) * 360;
+  
+  // Center of this sector
+  const categoryAngleDeg = currentAngle + (sectorAngle / 2);
+  const categoryAngleRad = (categoryAngleDeg * Math.PI) / 180;
+  
+  // Position Category Node
+  // Push out slightly if it's a heavy category
+  const catRadius = BASE_CAT_RADIUS + (group.items.length > 4 ? 40 : 0);
+  const catX = centerX + catRadius * Math.cos(categoryAngleRad);
+  const catY = centerY + catRadius * Math.sin(categoryAngleRad);
+
+  // Position Level 1 Items
+  // Distribute them in an arc perpendicular to the category radius
+  const l1Items = group.items.map((item, i) => {
+    const totalL1 = group.items.length;
+    // Spread depends on number of items, max 160 degrees
+    const spread = Math.min(160, totalL1 * 25);
+    const startL1Angle = categoryAngleDeg - spread / 2;
+    const step = spread / (totalL1 > 1 ? totalL1 - 1 : 1);
+    const itemAngleDeg = totalL1 === 1 ? categoryAngleDeg : startL1Angle + (i * step);
+    const itemAngleRad = (itemAngleDeg * Math.PI) / 180;
+
+    // Calculate position relative to Category, but pointing outwards from Center
+    // We use vector addition: CategoryPos + Vector(Angle)
+    // Actually, let's just project from the category node outwards
+    const l1X = catX + BASE_L1_RADIUS * Math.cos(itemAngleRad);
+    const l1Y = catY + BASE_L1_RADIUS * Math.sin(itemAngleRad);
+
+    // Position Level 2 Items
+    const children = (item.children || []).map((child, j) => {
+      const totalL2 = item.children!.length;
+      const childSpread = Math.min(120, totalL2 * 30);
+      const startL2Angle = itemAngleDeg - childSpread / 2;
+      const childStep = childSpread / (totalL2 > 1 ? totalL2 - 1 : 1);
+      const childAngleDeg = totalL2 === 1 ? itemAngleDeg : startL2Angle + (j * childStep);
+      const childAngleRad = (childAngleDeg * Math.PI) / 180;
+
+      const l2X = l1X + BASE_L2_RADIUS * Math.cos(childAngleRad);
+      const l2Y = l1Y + BASE_L2_RADIUS * Math.sin(childAngleRad);
+
+      return { ...child, x: l2X, y: l2Y, r: 20 }; // r is collision radius
+    });
+
+    return { ...item, x: l1X, y: l1Y, children, r: 30 };
+  });
+
+  // Advance angle for next category
+  currentAngle += sectorAngle;
+
+  return { ...group, x: catX, y: catY, items: l1Items, r: 40 };
+});
+
+// Second pass: Collision Detection & Resolution
+// Simple iterative relaxation
+const iterations = 5;
+const minDistance = 60; // Minimum distance between nodes
+
+for (let iter = 0; iter < iterations; iter++) {
+  // Collect all nodes into a flat list for checking
+  let allNodes: any[] = [];
+  rawGroups.forEach(g => {
+    // allNodes.push(g); // Don't move categories for now, they are anchors
+    g.items.forEach(i => {
+      allNodes.push(i);
+      i.children.forEach(c => allNodes.push(c));
+    });
+  });
+
+  for (let i = 0; i < allNodes.length; i++) {
+    for (let j = i + 1; j < allNodes.length; j++) {
+      const n1 = allNodes[i];
+      const n2 = allNodes[j];
+      
+      const dx = n2.x - n1.x;
+      const dy = n2.y - n1.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      const minDist = n1.r + n2.r + 10; // Radius + padding
+
+      if (dist < minDist && dist > 0) {
+        // Collision detected! Push them apart
+        const overlap = minDist - dist;
+        const moveX = (dx / dist) * overlap * 0.5;
+        const moveY = (dy / dist) * overlap * 0.5;
+
+        // Move n2 away
+        n2.x += moveX;
+        n2.y += moveY;
+        // Move n1 opposite
+        n1.x -= moveX;
+        n1.y -= moveY;
+      }
+    }
+  }
+}
+
+const positionedGroups = rawGroups;
+---
+
+<section
+  id="skills"
+  class="relative bg-[#0a0a0f] h-screen w-full overflow-hidden select-none"
+>
+  <!-- Sci-fi Background -->
+  <div class="absolute inset-0 -z-10 h-full w-full pointer-events-none">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(37,117,252,0.05)_0%,transparent_70%)]"></div>
+    <div class="absolute inset-0 bg-[linear-gradient(rgba(37,117,252,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(37,117,252,0.03)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_80%)]"></div>
+  </div>
+
+  <!-- Top View Toggle -->
+  <!-- Top View Toggle -->
+  <div class="absolute top-24 left-1/2 -translate-x-1/2 z-[80] flex bg-[#0f111a] border border-gray-800 clip-corner-sm p-1">
+    <button
+      id="btn-map-view"
+      class="view-toggle-btn active px-6 py-2 text-sm font-mono font-bold uppercase tracking-wider transition-all duration-300 text-gray-400 hover:text-[#2575FC]"
+    >
+      [Skills Tree]
+    </button>
+    <div class="w-[1px] bg-gray-800 my-1"></div>
+    <button
+      id="btn-list-view"
+      class="view-toggle-btn px-6 py-2 text-sm font-mono font-bold uppercase tracking-wider transition-all duration-300 text-gray-400 hover:text-[#2575FC]"
+    >
+      [List View]
+    </button>
+  </div>
+
+  <!-- Controls -->
+  <div class="absolute bottom-8 right-8 z-[80] flex flex-col gap-2">
+    <button id="zoom-in" class="w-10 h-10 bg-[#0f111a] border border-[#2575FC]/30 text-[#2575FC] rounded-lg hover:bg-[#2575FC] hover:text-white transition-all flex items-center justify-center shadow-lg active:scale-95">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+      </svg>
+    </button>
+    <button id="zoom-out" class="w-10 h-10 bg-[#0f111a] border border-[#2575FC]/30 text-[#2575FC] rounded-lg hover:bg-[#2575FC] hover:text-white transition-all flex items-center justify-center shadow-lg active:scale-95">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
+      </svg>
+    </button>
+    <button id="reset-view" class="w-10 h-10 bg-[#0f111a] border border-[#2575FC]/30 text-[#2575FC] rounded-lg hover:bg-[#2575FC] hover:text-white transition-all flex items-center justify-center shadow-lg active:scale-95" title="Reset View">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Interactive Viewport -->
+  <div id="skill-tree-viewport" class="w-full h-full cursor-grab active:cursor-grabbing touch-none relative overflow-hidden transition-opacity duration-500">
+    <!-- Content Container -->
+    <div
+      id="skill-tree-content"
+      class="absolute top-0 left-0 w-[1400px] h-[900px] origin-top-left will-change-transform"
+    >
+      <!-- Central Hub -->
+      <div
+        id="central-hub"
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 text-center cursor-pointer hover:scale-110 transition-transform duration-300"
+      >
+        <div
+          class="w-32 h-32 flex items-center justify-center relative z-20 group"
+        >
+          <!-- Logo -->
+          <Image
+            src={logo}
+            alt="Core"
+            class="w-24 h-24 object-contain relative z-10 drop-shadow-[0_0_15px_rgba(37,117,252,0.8)]"
+          />
+          
+          <!-- Hexagonal frame -->
+          <div class="absolute inset-0 border border-[#2575FC]/30 clip-hex animate-spin-slow"></div>
+          <div class="absolute inset-2 border border-[#2575FC]/20 clip-hex animate-spin-reverse"></div>
+        </div>
+
+        <!-- Energy Field -->
+        <div
+          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 border border-[#2575FC]/20 animate-ping-slow -z-10 clip-hex"
+        >
+        </div>
+      </div>
+
+      <!-- SVG Connections -->
+      <svg class="absolute inset-0 w-full h-full pointer-events-none z-0">
+        <defs>
+          <linearGradient id="line-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#2575FC" stop-opacity="0.2"></stop>
+            <stop offset="100%" stop-color="#2575FC" stop-opacity="0.6"></stop>
+          </linearGradient>
+        </defs>
+
+        {
+          positionedGroups.map((group, gIdx) => (
+            <>
+              {/* Line from Core to Category */}
+              <path
+                d={`M${centerX} ${centerY} L${group.x} ${group.y}`}
+                stroke="url(#line-gradient)"
+                stroke-width="3"
+                fill="none"
+                class="connection-line opacity-40 transition-opacity duration-700"
+                data-target={`cat-${gIdx}`}
+              />
+
+              {/* Lines from Category to Level 1 Skills */}
+              {group.items.map((skill, sIdx) => (
+                <>
+                  <path
+                    d={`M${group.x} ${group.y} L${skill.x} ${skill.y}`}
+                    stroke="#2575FC"
+                    stroke-width="2"
+                    fill="none"
+                    class="connection-line opacity-0 transition-opacity duration-700"
+                    data-target={`l1-${gIdx}-${sIdx}`}
+                  />
+
+                  {/* Lines from Level 1 to Level 2 Skills */}
+                  {skill.children.map((child, cIdx) => (
+                    <path
+                      d={`M${skill.x} ${skill.y} L${child.x} ${child.y}`}
+                      stroke="#2575FC"
+                      stroke-width="1"
+                      fill="none"
+                      class="connection-line opacity-0 transition-opacity duration-700"
+                      data-target={`l2-${gIdx}-${sIdx}-${cIdx}`}
+                    />
+                  ))}
+                </>
+              ))}
+            </>
+          ))
+        }
+      </svg>
+
+      <!-- Nodes -->
+      {
+        positionedGroups.map((group, gIdx) => (
+          <>
+            <!-- Category Node -->
+            <div
+              id={`cat-${gIdx}`}
+              class="skill-node group absolute w-16 h-16 -ml-8 -mt-8 z-[70] cursor-pointer hover:scale-110 hover:z-[200] transition-all duration-500"
+              style={`--tx: ${group.x}px; --ty: ${group.y}px;`}
+              data-type="category"
+              data-children-ids={group.items.map((_, i) => `l1-${gIdx}-${i}`).join(',')}
+            >
+              <!-- Visual Container (Clipped) -->
+              <div class="absolute inset-0 bg-[#0f111a] border border-[#2575FC] flex items-center justify-center shadow-[0_0_15px_rgba(37,117,252,0.2)] clip-corner">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-8 h-8 text-[#2575FC]"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d={getCategoryIcon(group.category)}
+                  />
+                </svg>
+              </div>
+
+              <!-- Category Label (Outside Clip) -->
+              <div
+                id={`cat-label-${gIdx}`}
+                class={`category-label absolute ${group.y < centerY ? "-top-10" : "-bottom-10"} left-1/2 -translate-x-1/2 whitespace-nowrap pointer-events-none group-hover:opacity-100 transition-opacity duration-300`}
+              >
+                <span class="text-[#2575FC] font-mono font-bold text-sm uppercase tracking-wider bg-[#0f111a]/90 px-3 py-1 border-l-2 border-r-2 border-[#2575FC] clip-corner-sm">
+                  {group.category}
+                </span>
+              </div>
+
+              <!-- Tooltip (Outside Clip) -->
+              <div class="tooltip-container absolute -bottom-16 left-1/2 -translate-x-1/2 bg-[#0f111a] text-[#2575FC] text-[10px] px-2 py-1 opacity-0 transition-opacity whitespace-nowrap border border-[#2575FC]/30 pointer-events-none clip-corner-sm font-mono tracking-wide shadow-[0_0_10px_rgba(37,117,252,0.5)] z-[200]">
+                Click to Toggle
+              </div>
+            </div>
+
+            <!-- Level 1 Skill Nodes -->
+            {group.items.map((skill, sIdx) => (
+              <>
+                <div
+                  id={`l1-${gIdx}-${sIdx}`}
+                  class={`skill-node collapsed group absolute w-14 h-14 -ml-7 -mt-7 z-[60] cursor-pointer hover:z-[200] transition-all duration-500`}
+                  style={`--tx: ${skill.x}px; --ty: ${skill.y}px;`}
+                  data-type="l1"
+                  data-children-ids={skill.children.map((_, i) => `l2-${gIdx}-${sIdx}-${i}`).join(',')}
+                >
+                  <!-- Visual Container (Clipped) -->
+                  <div class={`absolute inset-0 bg-[#0f111a] border ${skill.locked ? 'border-red-900/50' : 'border-gray-700'} group-hover:border-[#2575FC] flex items-center justify-center shadow-lg clip-corner transition-colors duration-300`}>
+                    <div class="absolute inset-0 bg-[#2575FC]/0 group-hover:bg-[#2575FC]/10 transition-colors duration-300"></div>
+                    
+                    {skill.locked && (
+                      <div class="absolute inset-0 flex items-center justify-center z-20 bg-black/60 backdrop-blur-[1px]">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-red-500/70">
+                          <path fill-rule="evenodd" d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z" clip-rule="evenodd" />
+                        </svg>
+                      </div>
+                    )}
+
+                    <img
+                      src={skill.icon}
+                      alt={skill.name}
+                      class={`w-7 h-7 object-contain transition-all duration-300 transform group-hover:scale-110 ${skill.locked ? 'opacity-20 grayscale' : 'opacity-100'}`}
+                    />
+                  </div>
+
+                  <!-- Tooltip (Outside Clip) -->
+                  <div class="tooltip-container absolute -bottom-10 left-1/2 -translate-x-1/2 bg-[#0f111a] text-[#2575FC] text-xs px-3 py-1 opacity-0 transition-opacity whitespace-nowrap border border-[#2575FC]/30 pointer-events-none clip-corner-sm font-mono tracking-wide shadow-[0_0_10px_rgba(37,117,252,0.5)] z-[200]">
+                    {skill.name} {skill.locked && "(Locked)"}
+                  </div>
+                </div>
+
+                <!-- Level 2 Skill Nodes -->
+                {skill.children.map((child: any, cIdx) => (
+                  <div
+                    id={`l2-${gIdx}-${sIdx}-${cIdx}`}
+                    class="skill-node collapsed group absolute w-10 h-10 -ml-5 -mt-5 z-[60] cursor-pointer hover:z-[200] transition-all duration-500"
+                    style={`--tx: ${child.x}px; --ty: ${child.y}px;`}
+                    data-type="l2"
+                  >
+                    <!-- Visual Container (Clipped) -->
+                    <div class="absolute inset-0 bg-[#0f111a] border border-gray-700 group-hover:border-[#2575FC] flex items-center justify-center shadow-md clip-corner transition-colors duration-300">
+                      <div class="absolute inset-0 bg-[#2575FC]/5 group-hover:bg-[#2575FC]/20 transition-colors duration-300"></div>
+                      <img
+                        src={child.icon}
+                        alt={child.name}
+                        class="w-5 h-5 object-contain opacity-100 transition-all duration-300 transform group-hover:scale-125"
+                      />
+                    </div>
+
+                    <!-- Tooltip (Outside Clip) -->
+                    <div class="tooltip-container absolute -bottom-8 left-1/2 -translate-x-1/2 bg-[#0f111a] text-[#2575FC] text-[10px] px-2 py-1 opacity-0 transition-opacity whitespace-nowrap border border-[#2575FC]/30 pointer-events-none clip-corner-sm font-mono tracking-wide shadow-[0_0_10px_rgba(37,117,252,0.5)] z-[200]">
+                      {child.name}
+                    </div>
+                  </div>
+                ))}
+              </>
+            ))}
+          </>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- Flat View (Hidden by default) -->
+  <div id="flat-view" class="absolute inset-0 z-40 bg-[#0a0a0f] overflow-y-auto opacity-0 pointer-events-none transition-opacity duration-500 pt-32 pb-10 px-6 lg:px-20">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-3xl font-bold text-white mb-10 font-mono border-l-4 border-[#2575FC] pl-4">Weapons</h2>
+      
+      <div class="space-y-12">
+        {skills.map((category) => (
+          <div>
+            <h3 class="text-xl font-bold text-[#2575FC] mb-6 font-mono flex items-center gap-3 border-b border-[#2575FC]/20 pb-2">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d={getCategoryIcon(category.category)} />
+              </svg>
+              {category.category}
+            </h3>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {category.items.map((skill) => (
+                <>
+                  {/* Level 1 Skill */}
+                  <div class={`bg-[#0f111a]/80 border rounded-lg p-4 flex items-center gap-4 transition-all duration-300 group ${
+                    skill.locked 
+                      ? 'border-red-900/30 opacity-50 grayscale cursor-not-allowed' 
+                      : 'border-gray-800 hover:border-[#2575FC]/50 hover:bg-[#2575FC]/5'
+                  }`}>
+                    <div class={`w-10 h-10 flex-shrink-0 bg-[#0a0a0f] rounded-md border flex items-center justify-center ${
+                      skill.locked ? 'border-red-900/30' : 'border-gray-800 group-hover:border-[#2575FC]/30'
+                    }`}>
+                      <img src={skill.icon} alt={skill.name} class="w-6 h-6 object-contain" />
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <div class="flex items-center gap-2">
+                        <h4 class={`font-medium truncate transition-colors ${
+                          skill.locked ? 'text-gray-500' : 'text-white group-hover:text-[#2575FC]'
+                        }`}>{skill.name}</h4>
+                        {skill.locked && <span class="text-[10px] text-red-500 border border-red-500/30 px-1 rounded bg-red-500/10">Locked</span>}
+                      </div>
+                      <p class="text-xs text-gray-500 truncate">{category.category}</p>
+                    </div>
+                  </div>
+
+                  {/* Level 2 Skills (Children) */}
+                  {skill.children && skill.children.map((child) => (
+                    <div class={`bg-[#0f111a]/80 border rounded-lg p-4 flex items-center gap-4 transition-all duration-300 group ml-4 sm:ml-0 relative ${
+                      child.locked 
+                        ? 'border-red-900/30 opacity-50 grayscale cursor-not-allowed' 
+                        : 'border-gray-800 hover:border-[#2575FC]/50 hover:bg-[#2575FC]/5'
+                    }`}>
+                      {/* Visual indicator for sub-skill in mobile view */}
+                      <div class={`absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 rounded-r sm:hidden ${
+                        child.locked ? 'bg-red-900/30' : 'bg-[#2575FC]/20'
+                      }`}></div>
+                      
+                      <div class={`w-10 h-10 flex-shrink-0 bg-[#0a0a0f] rounded-md border flex items-center justify-center ${
+                        child.locked ? 'border-red-900/30' : 'border-gray-800 group-hover:border-[#2575FC]/30'
+                      }`}>
+                        <img src={child.icon} alt={child.name} class="w-5 h-5 object-contain" />
+                      </div>
+                      <div class="flex-1 min-w-0">
+                        <h4 class={`font-medium truncate transition-colors ${
+                          child.locked ? 'text-gray-500' : 'text-white group-hover:text-[#2575FC]'
+                        }`}>{child.name}</h4>
+                        <p class="text-xs text-gray-500 truncate">{skill.name} Ecosystem</p>
+                      </div>
+                    </div>
+                  ))}
+                </>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Interaction Instructions -->
+  <div class="absolute bottom-8 left-8 z-50 pointer-events-none">
+    <div class="bg-[#0f111a]/90 border border-[#2575FC]/30 p-4 rounded-lg shadow-[0_0_15px_rgba(37,117,252,0.2)] backdrop-blur-sm pointer-events-auto">
+      <h3 class="text-[#2575FC] font-mono text-sm font-bold mb-2 uppercase tracking-wider flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+        </svg>
+        System Guide
+      </h3>
+      <ul class="text-gray-400 text-xs font-mono space-y-1">
+        <li class="flex items-center gap-2">
+          <span class="w-1.5 h-1.5 bg-[#2575FC] rounded-full"></span>
+          <span><strong class="text-gray-300">Click Hub</strong>: Toggle All</span>
+        </li>
+        <li class="flex items-center gap-2">
+          <span class="w-1.5 h-1.5 bg-[#2575FC] rounded-full"></span>
+          <span><strong class="text-gray-300">Click Node</strong>: Expand/Collapse Branch</span>
+        </li>
+        <li class="flex items-center gap-2">
+          <span class="w-1.5 h-1.5 bg-[#2575FC] rounded-full"></span>
+          <span><strong class="text-gray-300">Drag</strong>: Pan View</span>
+        </li>
+        <li class="flex items-center gap-2">
+          <span class="w-1.5 h-1.5 bg-[#2575FC] rounded-full"></span>
+          <span><strong class="text-gray-300">Scroll/Pinch</strong>: Zoom</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<script>
+  const viewport = document.getElementById("skill-tree-viewport");
+  const content = document.getElementById("skill-tree-content");
+  const zoomInBtn = document.getElementById("zoom-in");
+  const zoomOutBtn = document.getElementById("zoom-out");
+  const resetBtn = document.getElementById("reset-view");
+  const centralHub = document.getElementById("central-hub");
+  const btnMapView = document.getElementById("btn-map-view");
+  const btnListView = document.getElementById("btn-list-view");
+  const flatView = document.getElementById("flat-view");
+  const instructions = document.querySelector('.absolute.bottom-8.left-8');
+
+  // --- View Toggle Logic ---
+  let isFlatView = false;
+  
+  function updateView() {
+    if (isFlatView) {
+      // Show Flat View
+      flatView?.classList.remove('opacity-0', 'pointer-events-none');
+      viewport?.classList.add('opacity-0', 'pointer-events-none');
+      if (instructions) instructions.classList.add('opacity-0');
+      
+      // Update Buttons
+      btnListView?.classList.add('active');
+      btnMapView?.classList.remove('active');
+    } else {
+      // Show Map View
+      flatView?.classList.add('opacity-0', 'pointer-events-none');
+      viewport?.classList.remove('opacity-0', 'pointer-events-none');
+      if (instructions) instructions.classList.remove('opacity-0');
+      
+      // Update Buttons
+      btnMapView?.classList.add('active');
+      btnListView?.classList.remove('active');
+    }
+  }
+
+  btnMapView?.addEventListener('click', () => {
+    isFlatView = false;
+    updateView();
+  });
+
+  btnListView?.addEventListener('click', () => {
+    isFlatView = true;
+    updateView();
+  });
+
+  // --- Audio System ---
+  const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+  
+  function playSkillSound(type: 'expand' | 'collapse' | 'hover') {
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    
+    const oscillator = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    
+    const now = audioCtx.currentTime;
+    
+    if (type === 'expand') {
+      // Sci-fi "Open" sound (rising pitch)
+      oscillator.type = 'sine';
+      oscillator.frequency.setValueAtTime(200, now);
+      oscillator.frequency.exponentialRampToValueAtTime(600, now + 0.15);
+      
+      gainNode.gain.setValueAtTime(0.05, now);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+      
+      oscillator.start(now);
+      oscillator.stop(now + 0.15);
+    } else if (type === 'collapse') {
+      // Sci-fi "Close" sound (falling pitch)
+      oscillator.type = 'sine';
+      oscillator.frequency.setValueAtTime(600, now);
+      oscillator.frequency.exponentialRampToValueAtTime(200, now + 0.15);
+      
+      gainNode.gain.setValueAtTime(0.05, now);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+      
+      oscillator.start(now);
+      oscillator.stop(now + 0.15);
+    } else if (type === 'hover') {
+      // Subtle blip
+      oscillator.type = 'triangle';
+      oscillator.frequency.setValueAtTime(800, now);
+      
+      gainNode.gain.setValueAtTime(0.01, now);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+      
+      oscillator.start(now);
+      oscillator.stop(now + 0.05);
+    }
+  }
+
+  // --- Pan/Zoom Logic ---
+  let state = {
+    scale: 1,
+    x: 0,
+    y: 0,
+    isDragging: false,
+    startX: 0,
+    startY: 0,
+  };
+
+  const CONTENT_WIDTH = 1400;
+  const CONTENT_HEIGHT = 900;
+
+  function updateTransform() {
+    if (content) {
+      content.style.transform = `translate(${state.x}px, ${state.y}px) scale(${state.scale})`;
+    }
+  }
+
+  function fitToScreen() {
+    if (!viewport) return;
+    const vw = viewport.clientWidth;
+    const vh = viewport.clientHeight;
+
+    // Calculate scale to fit with some padding
+    const scaleX = vw / CONTENT_WIDTH;
+    const scaleY = vh / CONTENT_HEIGHT;
+    const scale = Math.min(scaleX, scaleY) * 0.85; // 85% fit
+
+    // Center it
+    const x = (vw - CONTENT_WIDTH * scale) / 2;
+    const y = (vh - CONTENT_HEIGHT * scale) / 2;
+
+    state = { ...state, scale, x, y };
+    updateTransform();
+  }
+
+  // Initial fit
+  window.addEventListener("load", fitToScreen);
+  window.addEventListener("resize", fitToScreen);
+
+  // Pan Logic
+  if (viewport) {
+    viewport.addEventListener("mousedown", (e) => {
+      // Don't drag if clicking a node
+      if ((e.target as HTMLElement).closest('.skill-node') || (e.target as HTMLElement).closest('#central-hub')) return;
+      
+      state.isDragging = true;
+      state.startX = e.clientX - state.x;
+      state.startY = e.clientY - state.y;
+      viewport.style.cursor = "grabbing";
+    });
+
+    window.addEventListener("mousemove", (e) => {
+      if (!state.isDragging) return;
+      e.preventDefault();
+      state.x = e.clientX - state.startX;
+      state.y = e.clientY - state.startY;
+      updateTransform();
+    });
+
+    window.addEventListener("mouseup", () => {
+      state.isDragging = false;
+      if (viewport) viewport.style.cursor = "grab";
+    });
+
+    // Wheel Zoom
+    viewport.addEventListener("wheel", (e) => {
+      e.preventDefault();
+      const zoomIntensity = 0.1;
+      const direction = e.deltaY > 0 ? -1 : 1;
+      const factor = 1 + direction * zoomIntensity;
+      
+      const newScale = Math.max(0.1, Math.min(5, state.scale * factor));
+      
+      const rect = viewport.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+
+      state.x = mouseX - (mouseX - state.x) * (newScale / state.scale);
+      state.y = mouseY - (mouseY - state.y) * (newScale / state.scale);
+      state.scale = newScale;
+      
+      updateTransform();
+    }, { passive: false });
+  }
+
+  // Button Controls
+  zoomInBtn?.addEventListener("click", () => {
+    state.scale = Math.min(5, state.scale * 1.2);
+    if (viewport) {
+        const vw = viewport.clientWidth;
+        const vh = viewport.clientHeight;
+        state.x = (vw/2) - ((vw/2) - state.x) * 1.2;
+        state.y = (vh/2) - ((vh/2) - state.y) * 1.2;
+    }
+    updateTransform();
+  });
+
+  zoomOutBtn?.addEventListener("click", () => {
+    state.scale = Math.max(0.1, state.scale / 1.2);
+    if (viewport) {
+        const vw = viewport.clientWidth;
+        const vh = viewport.clientHeight;
+        state.x = (vw/2) - ((vw/2) - state.x) / 1.2;
+        state.y = (vh/2) - ((vh/2) - state.y) / 1.2;
+    }
+    updateTransform();
+  });
+
+  resetBtn?.addEventListener("click", fitToScreen);
+
+  // Touch Support
+  if (viewport) {
+    let lastTouchX = 0;
+    let lastTouchY = 0;
+    let initialPinchDistance = 0;
+    let initialScale = 1;
+
+    viewport.addEventListener("touchstart", (e) => {
+      if (e.touches.length === 1) {
+        if ((e.target as HTMLElement).closest('.skill-node') || (e.target as HTMLElement).closest('#central-hub')) return;
+        state.isDragging = true;
+        lastTouchX = e.touches[0].clientX;
+        lastTouchY = e.touches[0].clientY;
+      } else if (e.touches.length === 2) {
+        state.isDragging = false;
+        initialPinchDistance = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+        initialScale = state.scale;
+      }
+    }, { passive: false });
+
+    viewport.addEventListener("touchmove", (e) => {
+      e.preventDefault();
+      if (e.touches.length === 1 && state.isDragging) {
+        const deltaX = e.touches[0].clientX - lastTouchX;
+        const deltaY = e.touches[0].clientY - lastTouchY;
+        state.x += deltaX;
+        state.y += deltaY;
+        lastTouchX = e.touches[0].clientX;
+        lastTouchY = e.touches[0].clientY;
+        updateTransform();
+      } else if (e.touches.length === 2) {
+        const currentDistance = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+        const factor = currentDistance / initialPinchDistance;
+        state.scale = Math.max(0.1, Math.min(5, initialScale * factor));
+        updateTransform();
+      }
+    }, { passive: false });
+
+    viewport.addEventListener("touchend", () => {
+      state.isDragging = false;
+    });
+  }
+
+  // --- Expand/Collapse Logic ---
+  
+  function toggleNode(nodeId: string, expand: boolean, recursive: boolean = false) {
+    const node = document.getElementById(nodeId);
+    if (!node) return;
+
+    if (expand) {
+      node.classList.remove('collapsed');
+      // Show connecting line
+      const line = document.querySelector(`path[data-target="${nodeId}"]`);
+      if (line) line.classList.remove('opacity-0');
+      if (line) line.classList.add('opacity-40');
+      
+      if (recursive) {
+        const childrenIds = node.dataset.childrenIds;
+        if (childrenIds) {
+          childrenIds.split(',').forEach(childId => {
+            if (childId) toggleNode(childId, true, true);
+          });
+        }
+      }
+    } else {
+      node.classList.add('collapsed');
+      // Hide connecting line
+      const line = document.querySelector(`path[data-target="${nodeId}"]`);
+      if (line) line.classList.add('opacity-0');
+      if (line) line.classList.remove('opacity-40');
+      
+      // Recursively collapse children
+      const childrenIds = node.dataset.childrenIds;
+      if (childrenIds) {
+        childrenIds.split(',').forEach(childId => {
+          if (childId) toggleNode(childId, false, true);
+        });
+      }
+    }
+  }
+
+  // Central Hub Click
+  let categoriesExpanded = false;
+  centralHub?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+    categoriesExpanded = !categoriesExpanded;
+    
+    playSkillSound(categoriesExpanded ? 'expand' : 'collapse');
+
+    // Toggle all categories' sub-trees
+    const categories = document.querySelectorAll('.skill-node[data-type="category"]');
+    categories.forEach(cat => {
+      // Toggle Label Visibility
+      // If expanded -> Hide Label (opacity-0)
+      // If collapsed -> Show Label (remove opacity-0)
+      const labelId = cat.id.replace('cat-', 'cat-label-');
+      const label = document.getElementById(labelId);
+      if (label) {
+        if (categoriesExpanded) {
+          label.classList.add('opacity-0');
+        } else {
+          label.classList.remove('opacity-0');
+        }
+      }
+
+      const childrenIds = (cat as HTMLElement).dataset.childrenIds;
+      if (childrenIds) {
+        childrenIds.split(',').forEach(childId => {
+          if (childId) toggleNode(childId, categoriesExpanded, true);
+        });
+      }
+    });
+  });
+
+  // Node Clicks
+  document.querySelectorAll('.skill-node').forEach(node => {
+    // Hover Sound
+    node.addEventListener('mouseenter', () => {
+        playSkillSound('hover');
+    });
+
+    node.addEventListener('click', (e) => {
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      
+      const el = e.currentTarget as HTMLElement;
+      
+      // Handle Category Label Toggling
+      if (el.dataset.type === 'category') {
+        const labelId = el.id.replace('cat-', 'cat-label-');
+        const label = document.getElementById(labelId);
+        
+        // We need to check the state *before* we toggle, or rather, check what we are about to do.
+        // We can check if the first child is currently expanded.
+        const childrenIds = el.dataset.childrenIds;
+        if (childrenIds) {
+            const ids = childrenIds.split(',');
+            const firstChild = document.getElementById(ids[0]);
+            const isCurrentlyExpanded = firstChild && !firstChild.classList.contains('collapsed');
+            
+            // If currently expanded, we are about to collapse -> Show Label
+            // If currently collapsed, we are about to expand -> Hide Label
+            if (label) {
+                if (isCurrentlyExpanded) {
+                    label.classList.remove('opacity-0');
+                } else {
+                    label.classList.add('opacity-0');
+                }
+            }
+        }
+      }
+
+      const childrenIds = el.dataset.childrenIds;
+      
+      if (childrenIds) {
+        const ids = childrenIds.split(',');
+        // Check if first child is expanded to determine toggle state
+        const firstChild = document.getElementById(ids[0]);
+        const isExpanded = firstChild && !firstChild.classList.contains('collapsed');
+        
+        playSkillSound(!isExpanded ? 'expand' : 'collapse');
+
+        ids.forEach(id => {
+          if (id) toggleNode(id, !isExpanded, true);
+        });
+      }
+    });
+  });
+
+</script>
+
+<style>
+  /* ... Existing animations ... */
+  @keyframes ping-slow {
+    75%,
+    100% {
+      transform: translate(-50%, -50%) scale(1.5);
+      opacity: 0;
+    }
+  }
+  @keyframes ping-slower {
+    75%,
+    100% {
+      transform: translate(-50%, -50%) scale(2);
+      opacity: 0;
+    }
+  }
+  @keyframes spin-slow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes spin-reverse {
+    from {
+      transform: rotate(360deg);
+    }
+    to {
+      transform: rotate(0deg);
+    }
+  }
+  @keyframes pulse-slow {
+    0%,
+    100% {
+      opacity: 0.5;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+      opacity: 0.8;
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+  }
+
+  .animate-ping-slow {
+    animation: ping-slow 3s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+  .animate-ping-slower {
+    animation: ping-slower 4s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+  .animate-spin-slow {
+    animation: spin-slow 10s linear infinite;
+  }
+  .animate-spin-reverse {
+    animation: spin-reverse 15s linear infinite;
+  }
+  .animate-pulse-slow {
+    animation: pulse-slow 4s ease-in-out infinite;
+  }
+  
+  .clip-hex {
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  }
+  
+  .clip-corner {
+    clip-path: polygon(
+      10px 0, 100% 0,
+      100% calc(100% - 10px), calc(100% - 10px) 100%,
+      0 100%, 0 10px
+    );
+  }
+  
+  .clip-corner-sm {
+    clip-path: polygon(
+      4px 0, 100% 0,
+      100% calc(100% - 4px), calc(100% - 4px) 100%,
+      0 100%, 0 4px
+    );
+  }
+
+  /* --- New Styles for Collapsible Nodes --- */
+  .skill-node {
+    /* Default Expanded State */
+    left: var(--tx);
+    top: var(--ty);
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  .skill-node.collapsed {
+    /* Collapsed State: Center of screen */
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) scale(0) !important;
+    opacity: 0 !important;
+    pointer-events: none;
+  }
+  
+  /* Tooltip Enhancements */
+  .skill-node:hover .tooltip-container {
+      opacity: 1;
+      pointer-events: auto;
+  }
+
+  .view-toggle-btn.active {
+    background-color: rgba(37, 117, 252, 0.15);
+    color: #2575fc;
+    text-shadow: 0 0 10px rgba(37, 117, 252, 0.5);
+  }
+</style>

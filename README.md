@@ -1,42 +1,27 @@
-<!--
-**pavittarx/pavittarx** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+# Hi there, I'm Pavittar 👋
 
-Here are some ideas to get you started:
+Senior Software Engineer based in India 🇮🇳. I architect scalable backends, optimize cloud infrastructure, and build robust web applications with a focus on performance and user experience.Senior Software Engineer based in India. I architect scalable backends, optimize cloud infrastructure, and build robust web applications with a focus on performance and user experience.
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
-Hi there! I’m Pavittar Singh 👋
-I’m a Full Stack Developer specializing in TypeScript, JavaScript, and the MERN stack. With a passion for creating impactful and meaningful projects, I’m always eager to tackle real-world problems and drive positive change through technology.
+- 🔭 I’m currently working on scalable backend architectures and distributed systems.
 
-<!--
-**🌟 Currently Working On:**
+- 🌱 I’m currently learning about advanced distributed patterns and system design.
 
-- [nb](https://github.com/pavittarx/nb) - a markdown based note taking web app.
--->
+- 💬 Ask me about **Backend Development, Distributed Systems, and Cloud Infrastructure**.-
 
-**🚀 Skills & Technologies:**
+- 📫 How to reach me: [pavittarx@gmail.com](mailto:pavittarx@gmail.com)-
 
-- **Languages**: TypeScript, JavaScript, Python <br/>
-- **Frameworks & Tools**: Next.js, ReactJs, tRPC <br/>
-- **Databases**: PostgreSQL, MongoDb, Firebase, Prisma <br/>
-- **Deployment & Cloud**: Vercel, AWS, Serverless Framework
+- ⚡ Fun fact: I love building tools that automate mundane tasks.-
 
-**💼 Professional Experience:**
+## 🔗 Connect with Me
 
-**Senior Software Engineer at KarmaSuite**: Developed and optimized web applications and permission management systems.
+<a href="https://linkedin.com/in/pavittarx" target="_blank">
+    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
+</a>
 
-**Kenko Health (Frontend)**: Designed and implemented high-performance web solutions and improved user experiences.
-💡 Fun Fact: I love contributing to open-source projects and exploring new technologies.
+<a href="https://pavittarx.com" target="_blank">
+    <img src="https://img.shields.io/badge/Website-2575FC?style=for-the-badge&logo=firefox&logoColor=white" alt="Website" />
+</a>
 
-Feel free to explore my repositories and reach out if you’d like to collaborate or discuss tech!
-
-Thanks for visiting, and happy coding! 🚀
-
-**📫 Connect With Me:** &nbsp; &nbsp; &nbsp; [![Email](./public//mail.svg)](mailto:pavittarx+gh@gmail.com) &nbsp; &nbsp;  [![Link: Linkedin Profile](./public//linkedin.svg)](https://linkedin.in/in/pavittarx) &nbsp; &nbsp; [![Link: FreeCodeCamp Profile](./public/freecodecamp.svg)](https://freecodecamp.org/pavittarx)
+<a href="mailto:pavittarx@gmail.com">
+    <img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" />
+</a>
