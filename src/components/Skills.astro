@@ -1,7 +1,6 @@
 ---
 import { Image } from "astro:assets";
 import logo from "../assets/pavittarx-logo.svg";
-import antigravityIcon from "../assets/antigravity.png";
 import copilotIcon from "../assets/copilot.png";
 
 // Define skill structure with dependencies
@@ -44,11 +43,6 @@ const skills: SkillCategory[] = [
         level: 1,
       },
       {
-        name: "C++",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg",
-        level: 1,
-      },
-      {
         name: "Bash",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg",
         level: 1,
@@ -74,21 +68,16 @@ const skills: SkillCategory[] = [
             level: 2,
           },
           {
-            name: "Material UI",
-            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/materialui/materialui-original.svg",
+            name: "Redux",
+            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg",
             level: 2,
           },
           {
-            name: "shadcn/ui",
-            icon: "https://avatars.githubusercontent.com/u/139895814?s=200&v=4",
+            name: "React Query",
+            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/reactquery/reactquery-original.svg",
             level: 2,
           },
         ],
-      },
-      {
-        name: "Angular",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg",
-        level: 1,
       },
       {
         name: "Astro",
@@ -106,8 +95,13 @@ const skills: SkillCategory[] = [
             level: 2,
           },
           {
-            name: "styled-components",
-            icon: "https://skillicons.dev/icons?i=styledcomponents",
+            name: "Material UI",
+            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/materialui/materialui-original.svg",
+            level: 2,
+          },
+          {
+            name: "Radix UI",
+            icon: "https://avatars.githubusercontent.com/u/75042455?s=200&v=4",
             level: 2,
           },
         ],
@@ -123,13 +117,13 @@ const skills: SkillCategory[] = [
         level: 1,
         children: [
           {
-            name: "Express",
-            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg",
+            name: "NestJS",
+            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nestjs/nestjs-original.svg",
             level: 2,
           },
           {
-            name: "NestJS",
-            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nestjs/nestjs-original.svg",
+            name: "Express",
+            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg",
             level: 2,
           },
         ],
@@ -142,11 +136,6 @@ const skills: SkillCategory[] = [
           { name: "tRPC", icon: "https://trpc.io/img/logo.svg", level: 2 },
         ],
       },
-    ],
-  },
-  {
-    category: "Database & Cloud",
-    items: [
       {
         name: "PostgreSQL",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
@@ -158,6 +147,21 @@ const skills: SkillCategory[] = [
         level: 1,
       },
       {
+        name: "MySQL",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg",
+        level: 1,
+      },
+      {
+        name: "Firebase",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg",
+        level: 1,
+      },
+    ],
+  },
+  {
+    category: "DevOps & Cloud",
+    items: [
+      {
         name: "AWS",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg",
         level: 1,
@@ -165,6 +169,11 @@ const skills: SkillCategory[] = [
       {
         name: "Docker",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
+        level: 1,
+      },
+      {
+        name: "Vercel",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg",
         level: 1,
       },
       {
@@ -177,36 +186,29 @@ const skills: SkillCategory[] = [
             icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg",
             level: 2,
           },
+          {
+            name: "GitHub Actions",
+            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/githubactions/githubactions-original.svg",
+            level: 2,
+          },
         ],
       },
     ],
   },
   {
-    category: "AI & ML",
+    category: "AI & Tooling",
     items: [
       {
-        name: "TensorFlow",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg",
+        name: "Claude SDK",
+        icon: "https://avatars.githubusercontent.com/u/76263028?s=200&v=4",
         level: 1,
-        locked: true,
-      },
-      {
-        name: "PyTorch",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg",
-        level: 1,
-        locked: true,
-      },
-      {
-        name: "OpenAI API",
-        icon: "https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg",
-        level: 1,
-        locked: true,
-      },
-      {
-        name: "LangChain",
-        icon: "https://avatars.githubusercontent.com/u/126733545?s=200&v=4",
-        level: 1,
-        locked: true,
+        children: [
+          {
+            name: "Claude Code",
+            icon: "https://avatars.githubusercontent.com/u/76263028?s=200&v=4",
+            level: 2,
+          },
+        ],
       },
       {
         name: "GitHub Copilot",
@@ -214,8 +216,23 @@ const skills: SkillCategory[] = [
         level: 1,
       },
       {
-        name: "Antigravity",
-        icon: antigravityIcon.src,
+        name: "Jest",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jest/jest-plain.svg",
+        level: 1,
+      },
+      {
+        name: "Playwright",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/playwright/playwright-original.svg",
+        level: 1,
+      },
+      {
+        name: "Sentry",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sentry/sentry-original.svg",
+        level: 1,
+      },
+      {
+        name: "ESLint",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/eslint/eslint-original.svg",
         level: 1,
       },
     ],
@@ -230,9 +247,9 @@ const getCategoryIcon = (category: string) => {
     return "M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25";
   if (category === "Backend")
     return "M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9";
-  if (category === "Database & Cloud")
+  if (category === "DevOps & Cloud")
     return "M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125";
-  if (category === "AI & ML")
+  if (category === "AI & Tooling")
     return "M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z";
   return "";
 };
