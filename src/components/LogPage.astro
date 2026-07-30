@@ -1,0 +1,25 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageShell from "./PageShell.astro";
+import TimelineComponent from "./Timeline.astro";
+import { LOG_VIEWS, type LogViewId } from "../config/log-views";
+
+interface Props {
+  readonly view: LogViewId;
+}
+
+const { view } = Astro.props;
+const config = LOG_VIEWS[view];
+---
+
+<Layout title={config.title} description={config.description}>
+  <PageShell
+    heading={config.heading}
+    strap={config.strap}
+    sheetId={config.sheetId}
+    fig={config.fig}
+    current={config.current}
+  >
+    <TimelineComponent initialFilter={config.filter} />
+  </PageShell>
+</Layout>

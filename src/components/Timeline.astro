@@ -1,6 +1,8 @@
 ---
+import type { LogFilter } from "../config/log-views";
+
 interface Props {
-  initialFilter?: string;
+  readonly initialFilter?: LogFilter;
 }
 
 const { initialFilter = "all" } = Astro.props;

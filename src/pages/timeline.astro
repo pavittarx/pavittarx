@@ -1,20 +1,5 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import PageShell from "../components/PageShell.astro";
-import TimelineComponent from "../components/Timeline.astro";
+import LogPage from "../components/LogPage.astro";
 ---
 
-<Layout
-  title="Timeline — Pavittar Singh"
-  description="A chronological record of Pavittar Singh's engineering work, writing and releases from 2018 to today."
->
-  <PageShell
-    heading="Mission Log"
-    strap="// Chronological record of operations and deployments"
-    sheetId="Pavittarx // Mission Log"
-    fig="Fig. 02"
-    current="Timeline"
-  >
-    <TimelineComponent initialFilter="all" />
-  </PageShell>
-</Layout>
+<LogPage view="timeline" />
