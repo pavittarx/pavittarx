@@ -1,12 +1,17 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import PageShell from "../components/PageShell.astro";
 import TimelineComponent from "../components/Timeline.astro";
-import Header from "../components/Header.astro";
 ---
 
 <Layout title="Timeline | Pavittarx">
-  <Header alwaysVisible={true} />
-  <div class="pt-20">
+  <PageShell
+    heading="Mission Log"
+    strap="// Chronological record of operations and deployments"
+    sheetId="Pavittarx // Mission Log"
+    fig="Fig. 02"
+    current="Timeline"
+  >
     <TimelineComponent initialFilter="all" />
-  </div>
+  </PageShell>
 </Layout>

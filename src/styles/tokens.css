@@ -1,0 +1,518 @@
+/*
+ * Design system — Material 3 Expressive tokens, sourced from the brand blue #2575FC.
+ *
+ * Layer 1  reference   --md-ref-*    tonal palettes (raw, never used in components)
+ * Layer 2  system      --md-sys-*    semantic roles (colour / type / shape / motion / elevation)
+ * Layer 3  component   local styles consume layer 2 only
+ *
+ * Scheme is dark-only: surface tones are anchored on the existing #0a0a0f shell.
+ */
+
+:root {
+  /* ── Layer 1: reference tonal palettes ─────────────────────────────── */
+
+  /* Primary — hue 218, from #2575FC */
+  --md-ref-primary-0: #000000;
+  --md-ref-primary-10: #0a1529;
+  --md-ref-primary-20: #0c285a;
+  --md-ref-primary-30: #093b90;
+  --md-ref-primary-40: #064cc6;
+  --md-ref-primary-50: #045ffb;
+  --md-ref-primary-60: #367ffc;
+  --md-ref-primary-70: #6b9ffa;
+  --md-ref-primary-80: #9fc0f9;
+  --md-ref-primary-90: #d2e0f9;
+  --md-ref-primary-95: #e9f0fb;
+  --md-ref-primary-100: #ffffff;
+
+  /* Secondary — desaturated primary hue */
+  --md-ref-secondary-10: #15181e;
+  --md-ref-secondary-20: #28303e;
+  --md-ref-secondary-30: #3b485e;
+  --md-ref-secondary-40: #4c5f80;
+  --md-ref-secondary-70: #9fadc6;
+  --md-ref-secondary-80: #c0c9d8;
+  --md-ref-secondary-90: #e0e4eb;
+
+  /* Tertiary — violet, the existing gradient's far end */
+  --md-ref-tertiary-10: #1b1221;
+  --md-ref-tertiary-20: #372145;
+  --md-ref-tertiary-30: #532d6c;
+  --md-ref-tertiary-70: #b991d4;
+  --md-ref-tertiary-80: #d0b7e1;
+  --md-ref-tertiary-90: #e7dcef;
+
+  /* Neutral — blue-cast greys; tone 6 is the existing page background */
+  --md-ref-neutral-0: #000000;
+  --md-ref-neutral-4: #07070c;
+  --md-ref-neutral-6: #0a0a0f;
+  --md-ref-neutral-10: #101119;
+  --md-ref-neutral-12: #14151e;
+  --md-ref-neutral-17: #1b1c27;
+  --md-ref-neutral-22: #232433;
+  --md-ref-neutral-80: #c9cacf;
+  --md-ref-neutral-90: #e4e5e7;
+
+  --md-ref-neutral-variant-30: #444855;
+  --md-ref-neutral-variant-50: #70768f;
+  --md-ref-neutral-variant-60: #8d92a5;
+  --md-ref-neutral-variant-80: #c6c9d2;
+
+  /* Accent — the yellow already in the logo mark (#FFC31D) */
+  --md-ref-accent-10: #241a00;
+  --md-ref-accent-20: #3d2d00;
+  --md-ref-accent-30: #5c4400;
+  --md-ref-accent-40: #8a6600;
+  --md-ref-accent-60: #d9a300;
+  --md-ref-accent-70: #ffc31d;
+  --md-ref-accent-80: #ffd45c;
+  --md-ref-accent-90: #ffe7a8;
+
+  --md-ref-error-20: #531a13;
+  --md-ref-error-70: #ec8479;
+  --md-ref-error-80: #f0afa8;
+
+  /* Colour roles live in the scheme blocks below :root, so the same token
+     names resolve differently per theme. Everything else here is shared. */
+
+  /* ── Layer 2: typography ───────────────────────────────────────────── */
+
+  --md-sys-typescale-display-font: "Anton", "Arial Narrow", sans-serif;
+  --md-sys-typescale-body-font: "Outfit", system-ui, sans-serif;
+  --md-sys-typescale-mono-font: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* Display — Anton only. Fluid, so the schematic scales with the frame. */
+  --md-sys-typescale-display-large-size: clamp(2.5rem, 6.2vw, 5rem);
+  --md-sys-typescale-display-large-line: 0.92;
+  --md-sys-typescale-display-large-tracking: 0.01em;
+  --md-sys-typescale-display-medium-size: clamp(2rem, 5.5vw, 4rem);
+  --md-sys-typescale-display-medium-line: 0.96;
+  --md-sys-typescale-display-small-size: clamp(1.5rem, 3.5vw, 2.5rem);
+  --md-sys-typescale-display-small-line: 1;
+
+  --md-sys-typescale-headline-large-size: 2rem;
+  --md-sys-typescale-headline-medium-size: 1.5rem;
+  --md-sys-typescale-headline-small-size: 1.25rem;
+
+  --md-sys-typescale-title-large-size: 1.375rem;
+  --md-sys-typescale-title-medium-size: 1rem;
+  --md-sys-typescale-title-small-size: 0.875rem;
+
+  --md-sys-typescale-body-large-size: 1.0625rem;
+  --md-sys-typescale-body-large-line: 1.6;
+  --md-sys-typescale-body-medium-size: 0.9375rem;
+  --md-sys-typescale-body-medium-line: 1.55;
+  --md-sys-typescale-body-small-size: 0.8125rem;
+
+  /* Label — always mono, always uppercase, always tracked out.
+     This is the schematic voice: figure numbers, callouts, keycaps. */
+  --md-sys-typescale-label-large-size: 0.8125rem;
+  --md-sys-typescale-label-medium-size: 0.6875rem;
+  --md-sys-typescale-label-small-size: 0.625rem;
+  --md-sys-typescale-label-tracking: 0.18em;
+
+  /* ── Layer 2: shape scale ──────────────────────────────────────────── */
+  /* Expressive uses shape as a state signal — components morph on interaction.
+     The morph here is a CHAMFER, not a radius: corners are cut on the
+     diagonal, the way a drawing breaks an edge. Nothing rounds, nothing pills. */
+
+  --md-sys-shape-cut-none: 0px;
+  --md-sys-shape-cut-extra-small: 4px;
+  --md-sys-shape-cut-small: 6px;
+  --md-sys-shape-cut-medium: 10px;
+  --md-sys-shape-cut-large: 14px;
+  --md-sys-shape-cut-extra-large: 22px;
+  --md-sys-shape-cut-extra-extra-large: 32px;
+
+  /* ── Layer 2: motion ───────────────────────────────────────────────── */
+  /* Expressive springs: overshoot on spatial moves, no overshoot on effects. */
+
+  --md-sys-motion-spring-fast-spatial: 350ms cubic-bezier(0.27, 1.06, 0.18, 1);
+  --md-sys-motion-spring-default-spatial: 500ms cubic-bezier(0.27, 1.06, 0.18, 1);
+  --md-sys-motion-spring-slow-spatial: 750ms cubic-bezier(0.27, 1.06, 0.18, 1);
+  --md-sys-motion-spring-fast-effects: 150ms cubic-bezier(0.31, 0.94, 0.34, 1);
+  --md-sys-motion-spring-default-effects: 200ms cubic-bezier(0.31, 0.94, 0.34, 1);
+  --md-sys-motion-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --md-sys-motion-duration-short: 200ms;
+  --md-sys-motion-duration-medium: 400ms;
+  --md-sys-motion-duration-long: 600ms;
+
+  /* ── Layer 2: elevation & state ────────────────────────────────────── */
+
+  --md-sys-elevation-0: none;
+  --md-sys-elevation-1: 0 1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+  --md-sys-elevation-2: 0 1px 2px rgba(0, 0, 0, 0.5), 0 2px 6px 2px rgba(0, 0, 0, 0.3);
+  --md-sys-elevation-3: 0 4px 8px 3px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.5);
+  --md-sys-elevation-glow: 0 0 0 1px rgba(54, 127, 252, 0.45), 0 8px 32px rgba(37, 117, 252, 0.3);
+
+  --md-sys-state-hover-opacity: 0.08;
+  --md-sys-state-focus-opacity: 0.1;
+  --md-sys-state-pressed-opacity: 0.1;
+
+  /* ── Layer 2: spacing & frame ──────────────────────────────────────── */
+
+  --md-sys-spacing-1: 4px;
+  --md-sys-spacing-2: 8px;
+  --md-sys-spacing-3: 12px;
+  --md-sys-spacing-4: 16px;
+  --md-sys-spacing-6: 24px;
+  --md-sys-spacing-8: 32px;
+  --md-sys-spacing-12: 48px;
+  --md-sys-spacing-16: 64px;
+
+  --md-sys-frame-inset: clamp(12px, 2.5vw, 28px);
+  --md-sys-frame-rule: 1px;
+}
+
+/* ── Scheme: dark (default) ──────────────────────────────────────────── */
+/* A head script resolves the stored choice or the OS preference and stamps
+   data-theme before first paint, so there is no flash. The bare :root here
+   is the no-JS fallback. */
+:root,
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* P60, not P70 — P70 read washed. 4.9:1 on surface, still AA for body. */
+  --md-sys-color-primary: var(--md-ref-primary-60);
+  --md-sys-color-on-primary: var(--md-ref-primary-10);
+  --md-sys-color-primary-container: var(--md-ref-primary-30);
+  --md-sys-color-on-primary-container: var(--md-ref-primary-90);
+  --md-sys-color-primary-muted: var(--md-ref-primary-70);
+
+  /* Accent — instrumentation, not interaction. 11:1 on surface. */
+  --md-sys-color-accent: var(--md-ref-accent-70);
+  --md-sys-color-on-accent: var(--md-ref-accent-10);
+  --md-sys-color-accent-container: var(--md-ref-accent-20);
+  --md-sys-color-on-accent-container: var(--md-ref-accent-90);
+
+  /* Brand-true blue. Filled surfaces only, white text at >=18px bold. */
+  --md-sys-color-brand: #2575fc;
+  --md-sys-color-on-brand: #ffffff;
+
+  --md-sys-color-secondary: var(--md-ref-secondary-80);
+  --md-sys-color-on-secondary: var(--md-ref-secondary-20);
+  --md-sys-color-secondary-container: var(--md-ref-secondary-30);
+  --md-sys-color-on-secondary-container: var(--md-ref-secondary-90);
+
+  --md-sys-color-tertiary: var(--md-ref-tertiary-80);
+  --md-sys-color-on-tertiary: var(--md-ref-tertiary-20);
+  --md-sys-color-tertiary-container: var(--md-ref-tertiary-30);
+  --md-sys-color-on-tertiary-container: var(--md-ref-tertiary-90);
+  --md-sys-color-gradient-end: #8b46b9;
+
+  --md-sys-color-error: var(--md-ref-error-80);
+  --md-sys-color-on-error: var(--md-ref-error-20);
+
+  --md-sys-color-surface: var(--md-ref-neutral-6);
+  --md-sys-color-on-surface: var(--md-ref-neutral-90);
+  --md-sys-color-on-surface-variant: var(--md-ref-neutral-variant-80);
+
+  --md-sys-color-surface-container-lowest: var(--md-ref-neutral-4);
+  --md-sys-color-surface-container-low: var(--md-ref-neutral-10);
+  --md-sys-color-surface-container: var(--md-ref-neutral-12);
+  --md-sys-color-surface-container-high: var(--md-ref-neutral-17);
+  --md-sys-color-surface-container-highest: var(--md-ref-neutral-22);
+
+  --md-sys-color-outline: var(--md-ref-neutral-variant-60);
+  --md-sys-color-outline-variant: #34374a;
+
+  --md-sys-color-inverse-surface: var(--md-ref-neutral-90);
+  --md-sys-color-inverse-on-surface: var(--md-ref-neutral-10);
+
+  /* Tints — barely-there fills behind coded tags. */
+  --md-sys-color-primary-tint: var(--md-ref-primary-10);
+  --md-sys-color-tertiary-tint: var(--md-ref-tertiary-10);
+  --md-sys-color-accent-tint: var(--md-ref-accent-10);
+
+  /* Blueprint layer — the schematic grid and its rules. */
+  --md-sys-color-blueprint-rule: rgba(54, 127, 252, 0.32);
+  --md-sys-color-blueprint-grid: rgba(54, 127, 252, 0.13);
+
+  /* Life cells and the mark's fill wash. */
+  --md-sys-color-life-new: rgba(255, 195, 29, 0.34);
+  --md-sys-color-life-settled: rgba(54, 127, 252, 0.2);
+  --md-sys-color-wash: rgba(255, 195, 29, 0.16);
+
+  --md-sys-scanline-ink: rgba(0, 0, 0, 0.14);
+  --md-sys-scanline-opacity: 0.4;
+
+  /* Halo behind the filled mark. Dark ground can carry a strong glow. */
+  --md-sys-mark-halo: drop-shadow(0 0 18px rgba(255, 195, 29, 0.35))
+    drop-shadow(0 0 36px rgba(37, 117, 252, 0.65));
+}
+
+/* ── Scheme: light ───────────────────────────────────────────────────── */
+/* Not an inversion. Ink-on-paper needs darker chroma to hold contrast, so
+   primary drops to P40 and the accent yellow drops to A40 — #FFC31D on
+   white is 1.7:1 and unusable for anything but large fills. */
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --md-sys-color-primary: var(--md-ref-primary-40);
+  --md-sys-color-on-primary: #ffffff;
+  --md-sys-color-primary-container: var(--md-ref-primary-90);
+  --md-sys-color-on-primary-container: var(--md-ref-primary-10);
+  --md-sys-color-primary-muted: var(--md-ref-primary-30);
+
+  --md-sys-color-accent: var(--md-ref-accent-40);
+  --md-sys-color-on-accent: #ffffff;
+  --md-sys-color-accent-container: var(--md-ref-accent-90);
+  --md-sys-color-on-accent-container: var(--md-ref-accent-10);
+
+  --md-sys-color-brand: #2575fc;
+  --md-sys-color-on-brand: #ffffff;
+
+  --md-sys-color-secondary: var(--md-ref-secondary-40);
+  --md-sys-color-on-secondary: #ffffff;
+  --md-sys-color-secondary-container: var(--md-ref-secondary-90);
+  --md-sys-color-on-secondary-container: var(--md-ref-secondary-10);
+
+  --md-sys-color-tertiary: #6f3a92;
+  --md-sys-color-on-tertiary: #ffffff;
+  --md-sys-color-tertiary-container: var(--md-ref-tertiary-90);
+  --md-sys-color-on-tertiary-container: var(--md-ref-tertiary-10);
+  --md-sys-color-gradient-end: #6f3a92;
+
+  --md-sys-color-error: #b32819;
+  --md-sys-color-on-error: #ffffff;
+
+  --md-sys-color-surface: #fbfcfe;
+  --md-sys-color-on-surface: #16171c;
+  --md-sys-color-on-surface-variant: var(--md-ref-neutral-variant-30);
+
+  --md-sys-color-surface-container-lowest: #ffffff;
+  --md-sys-color-surface-container-low: #f5f6fa;
+  --md-sys-color-surface-container: #eef0f6;
+  --md-sys-color-surface-container-high: #e7eaf2;
+  --md-sys-color-surface-container-highest: #dfe3ed;
+
+  --md-sys-color-outline: var(--md-ref-neutral-variant-50);
+  --md-sys-color-outline-variant: #c8ccd8;
+
+  --md-sys-color-inverse-surface: var(--md-ref-neutral-10);
+  --md-sys-color-inverse-on-surface: #f2f2f3;
+
+  --md-sys-color-primary-tint: #e8effc;
+  --md-sys-color-tertiary-tint: #f3edf7;
+  --md-sys-color-accent-tint: #fdf3d9;
+
+  --md-sys-color-blueprint-rule: rgba(6, 76, 198, 0.3);
+  --md-sys-color-blueprint-grid: rgba(6, 76, 198, 0.11);
+
+  --md-sys-color-life-new: rgba(138, 102, 0, 0.5);
+  --md-sys-color-life-settled: rgba(6, 76, 198, 0.26);
+  --md-sys-color-wash: rgba(255, 195, 29, 0.3);
+
+  /* On paper the sweep reads as a light rake, not dark banding. */
+  --md-sys-scanline-ink: rgba(0, 0, 0, 0.05);
+  --md-sys-scanline-opacity: 0.5;
+
+  --md-sys-elevation-1: 0 1px 2px rgba(16, 17, 25, 0.12),
+    0 1px 3px 1px rgba(16, 17, 25, 0.06);
+  --md-sys-elevation-2: 0 1px 2px rgba(16, 17, 25, 0.12),
+    0 2px 6px 2px rgba(16, 17, 25, 0.08);
+  --md-sys-elevation-3: 0 4px 8px 3px rgba(16, 17, 25, 0.08),
+    0 1px 3px rgba(16, 17, 25, 0.12);
+  --md-sys-elevation-glow: 0 0 0 1px rgba(6, 76, 198, 0.35),
+    0 8px 24px rgba(6, 76, 198, 0.18);
+
+  /* On paper a glow reads as a smudge, so it drops to a soft cast shadow. */
+  --md-sys-mark-halo: drop-shadow(0 2px 6px rgba(6, 76, 198, 0.24));
+}
+
+/* ── Typography utility classes ──────────────────────────────────────── */
+
+.md-display-large,
+.md-display-medium,
+.md-display-small {
+  font-family: var(--md-sys-typescale-display-font);
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--md-sys-color-on-surface);
+}
+.md-display-large {
+  font-size: var(--md-sys-typescale-display-large-size);
+  line-height: var(--md-sys-typescale-display-large-line);
+  letter-spacing: var(--md-sys-typescale-display-large-tracking);
+}
+.md-display-medium {
+  font-size: var(--md-sys-typescale-display-medium-size);
+  line-height: var(--md-sys-typescale-display-medium-line);
+}
+.md-display-small {
+  font-size: var(--md-sys-typescale-display-small-size);
+  line-height: var(--md-sys-typescale-display-small-line);
+}
+
+.md-title-large,
+.md-title-medium,
+.md-title-small {
+  font-family: var(--md-sys-typescale-body-font);
+  font-weight: 600;
+  color: var(--md-sys-color-on-surface);
+}
+.md-title-large {
+  font-size: var(--md-sys-typescale-title-large-size);
+}
+.md-title-medium {
+  font-size: var(--md-sys-typescale-title-medium-size);
+}
+.md-title-small {
+  font-size: var(--md-sys-typescale-title-small-size);
+}
+
+.md-body-large,
+.md-body-medium,
+.md-body-small {
+  font-family: var(--md-sys-typescale-body-font);
+  font-weight: 300;
+  color: var(--md-sys-color-on-surface-variant);
+}
+.md-body-large {
+  font-size: var(--md-sys-typescale-body-large-size);
+  line-height: var(--md-sys-typescale-body-large-line);
+}
+.md-body-medium {
+  font-size: var(--md-sys-typescale-body-medium-size);
+  line-height: var(--md-sys-typescale-body-medium-line);
+}
+.md-body-small {
+  font-size: var(--md-sys-typescale-body-small-size);
+  line-height: 1.5;
+}
+
+.md-label-large,
+.md-label-medium,
+.md-label-small {
+  font-family: var(--md-sys-typescale-mono-font);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--md-sys-typescale-label-tracking);
+  color: var(--md-sys-color-on-surface-variant);
+}
+.md-label-large {
+  font-size: var(--md-sys-typescale-label-large-size);
+}
+.md-label-medium {
+  font-size: var(--md-sys-typescale-label-medium-size);
+}
+.md-label-small {
+  font-size: var(--md-sys-typescale-label-small-size);
+}
+
+/* ── Shape primitive ─────────────────────────────────────────────────── */
+
+/* Registered so --cut interpolates — an unregistered custom property would
+   snap between chamfer sizes instead of morphing. */
+@property --wash {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --cut {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+/* Two opposing corners cut: top-left and bottom-right. Set --cut per
+   component, and change it on hover/focus to morph the shape. */
+.md-cut {
+  --cut: var(--md-sys-shape-cut-medium);
+  clip-path: polygon(
+    var(--cut) 0,
+    100% 0,
+    100% calc(100% - var(--cut)),
+    calc(100% - var(--cut)) 100%,
+    0 100%,
+    0 var(--cut)
+  );
+  transition: --cut var(--md-sys-motion-spring-fast-spatial);
+}
+
+/* ── Structural primitives ───────────────────────────────────────────── */
+
+/* Blueprint field: the ruled paper the schematic is drawn on. */
+.md-blueprint {
+  background-image:
+    linear-gradient(var(--md-sys-color-blueprint-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--md-sys-color-blueprint-grid) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+.md-blueprint-fine {
+  background-image:
+    linear-gradient(var(--md-sys-color-blueprint-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--md-sys-color-blueprint-grid) 1px, transparent 1px);
+  background-size: 8px 8px;
+}
+
+/* Registration marks — the corner ticks that frame a drawing. */
+.md-reg-mark {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: var(--md-sys-frame-rule) solid var(--md-sys-color-accent);
+  opacity: 0.85;
+}
+/* Offsets stay at 0 — containers that carry marks usually clip overflow. */
+.md-reg-mark[data-corner="tl"] {
+  top: 0;
+  left: 0;
+  border-right: 0;
+  border-bottom: 0;
+}
+.md-reg-mark[data-corner="tr"] {
+  top: 0;
+  right: 0;
+  border-left: 0;
+  border-bottom: 0;
+}
+.md-reg-mark[data-corner="bl"] {
+  bottom: 0;
+  left: 0;
+  border-right: 0;
+  border-top: 0;
+}
+.md-reg-mark[data-corner="br"] {
+  bottom: 0;
+  right: 0;
+  border-left: 0;
+  border-top: 0;
+}
+
+/* State layer — M3 draws interaction as a translucent overlay of the ink colour. */
+.md-state-layer {
+  position: relative;
+  isolation: isolate;
+}
+.md-state-layer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: currentColor;
+  opacity: 0;
+  transition: opacity var(--md-sys-motion-spring-fast-effects);
+  pointer-events: none;
+  z-index: -1;
+}
+.md-state-layer:hover::before {
+  opacity: var(--md-sys-state-hover-opacity);
+}
+.md-state-layer:focus-visible::before {
+  opacity: var(--md-sys-state-focus-opacity);
+}
+.md-state-layer:active::before {
+  opacity: var(--md-sys-state-pressed-opacity);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

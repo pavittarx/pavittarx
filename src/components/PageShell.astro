@@ -1,0 +1,264 @@
+---
+import { Image } from "astro:assets";
+import logo from "../assets/pavittarx-logo.svg";
+
+interface Props {
+  /** Big Anton headline for the sheet. */
+  heading: string;
+  /** Mono strap under the headline. */
+  strap?: string;
+  /** Left sheet-head identifier, e.g. "Pavittarx // Mission Log". */
+  sheetId: string;
+  sheetSub?: string;
+  fig?: string;
+  scale?: string;
+  /** Rail link marked as the current page. */
+  current?: string;
+}
+
+const {
+  heading,
+  strap,
+  sheetId,
+  sheetSub = "Model X1 // Ref: 2019—2026",
+  fig = "Fig. 01",
+  scale = "Scale 1:1",
+  current,
+} = Astro.props;
+
+const navItems = [
+  { label: "Timeline", href: "/timeline" },
+  { label: "Skills", href: "/skills" },
+  { label: "Projects", href: "/projects" },
+  { label: "Blog", href: "/blog" },
+];
+---
+
+<div class="shell">
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <div class="frame">
+    <nav class="rail rail-nav">
+      <a href="/" class="brand">
+        <Image src={logo} alt="" class="brand-mark" />
+        <span class="md-label-large brand-name">Pavittar Singh</span>
+      </a>
+
+      <div class="rail-links">
+        {
+          navItems.map((item, i) => (
+            <>
+              {i > 0 && <span class="rail-sep">/</span>}
+              <a
+                href={item.href}
+                class="md-label-medium rail-link"
+                aria-current={current === item.label ? "page" : undefined}
+              >
+                {item.label}
+              </a>
+            </>
+          ))
+        }
+        <span class="rail-sep">/</span>
+        <button
+          type="button"
+          class="md-label-medium rail-link"
+          data-theme-toggle
+          aria-label="Toggle colour scheme"
+        >
+          <span data-theme-label>Dark</span>
+        </button>
+      </div>
+    </nav>
+
+    <header class="sheet">
+      <div class="sheet-head">
+        <div>
+          <p class="md-label-medium sheet-id">{sheetId}</p>
+          <p class="md-label-small sheet-sub">{sheetSub}</p>
+        </div>
+        <div class="sheet-head-right">
+          <p class="md-label-medium sheet-id">{fig}</p>
+          <p class="md-label-small sheet-sub">{scale}</p>
+        </div>
+      </div>
+
+      <h1 class="md-display-medium heading">{heading}</h1>
+      {strap && <p class="md-label-medium strap">{strap}</p>}
+    </header>
+
+    <div class="body">
+      <slot />
+    </div>
+
+    <footer class="rail rail-foot">
+      <a href="/" class="md-label-small foot-link">← Index</a>
+      <span class="md-label-small">© 2026 Pavittar Singh</span>
+    </footer>
+  </div>
+</div>
+
+<style>
+  .shell {
+    position: relative;
+    min-height: 100vh;
+    background: var(--md-sys-color-surface);
+    padding: var(--md-sys-frame-inset);
+  }
+
+  .frame {
+    position: relative;
+    border: var(--md-sys-frame-rule) solid var(--md-sys-color-outline-variant);
+    /* clip, not hidden — hidden would make this a scroll container and break
+       every position: sticky inside the frame. */
+    overflow: clip;
+  }
+
+  .scanlines {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0) 0px,
+      rgba(255, 255, 255, 0) 2px,
+      var(--md-sys-scanline-ink) 3px,
+      var(--md-sys-scanline-ink) 3px
+    );
+    opacity: var(--md-sys-scanline-opacity);
+  }
+
+  .rail {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--md-sys-spacing-4);
+    padding: var(--md-sys-spacing-4) var(--md-sys-spacing-6);
+    background: var(--md-sys-color-surface);
+  }
+  .rail-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: var(--md-sys-frame-rule) solid
+      var(--md-sys-color-outline-variant);
+  }
+  .rail-foot {
+    border-top: var(--md-sys-frame-rule) solid
+      var(--md-sys-color-outline-variant);
+    color: var(--md-sys-color-outline);
+  }
+  .foot-link {
+    text-decoration: none;
+    color: var(--md-sys-color-primary);
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--md-sys-spacing-3);
+    text-decoration: none;
+    color: var(--md-sys-color-on-surface);
+  }
+  .brand-mark {
+    height: 26px;
+    width: auto;
+  }
+  .brand-name {
+    color: var(--md-sys-color-on-surface);
+    white-space: nowrap;
+  }
+
+  .rail-links {
+    display: flex;
+    align-items: center;
+    gap: var(--md-sys-spacing-3);
+  }
+  .rail-sep {
+    color: var(--md-sys-color-outline-variant);
+    font-family: var(--md-sys-typescale-mono-font);
+  }
+  /* Button chrome only — typography stays with .md-label-medium, so no
+     `font: inherit` here or it would clobber the mono label styling. */
+  .rail-link {
+    cursor: pointer;
+    background: none;
+    border: 0;
+    padding: 0;
+    text-decoration: none;
+    color: var(--md-sys-color-on-surface-variant);
+    transition: color var(--md-sys-motion-spring-fast-effects);
+  }
+  .rail-link:hover {
+    color: var(--md-sys-color-primary);
+  }
+  .rail-link[aria-current="page"] {
+    color: var(--md-sys-color-primary);
+  }
+
+  .sheet {
+    padding: var(--md-sys-spacing-8) var(--md-sys-spacing-6);
+    border-bottom: var(--md-sys-frame-rule) solid
+      var(--md-sys-color-outline-variant);
+  }
+  .sheet-head {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--md-sys-spacing-8);
+  }
+  .sheet-head-right {
+    text-align: right;
+  }
+  .sheet-id {
+    margin: 0;
+    color: var(--md-sys-color-accent);
+  }
+  .sheet-sub {
+    margin: 2px 0 0;
+    color: var(--md-sys-color-outline);
+  }
+
+  .heading {
+    margin: 0;
+    background: linear-gradient(
+      92deg,
+      var(--md-sys-color-on-surface) 0%,
+      var(--md-sys-color-primary) 52%,
+      var(--md-sys-color-gradient-end) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .strap {
+    margin: var(--md-sys-spacing-4) 0 0;
+    color: var(--md-sys-color-outline);
+  }
+
+  .body {
+    padding: var(--md-sys-spacing-8) var(--md-sys-spacing-6);
+  }
+
+  @media (max-width: 639px) {
+    .rail-link,
+    .rail-sep {
+      font-size: var(--md-sys-typescale-label-small-size);
+    }
+    .brand-name {
+      display: none;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .rail {
+      padding: var(--md-sys-spacing-4) var(--md-sys-spacing-12);
+    }
+    .sheet {
+      padding: var(--md-sys-spacing-12);
+    }
+    .body {
+      padding: var(--md-sys-spacing-12);
+    }
+  }
+</style>

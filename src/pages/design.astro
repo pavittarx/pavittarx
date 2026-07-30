@@ -1,0 +1,449 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const colorRoles = [
+  ["primary", "on-primary"],
+  ["primary-container", "on-primary-container"],
+  ["accent", "on-accent"],
+  ["accent-container", "on-accent-container"],
+  ["brand", "on-brand"],
+  ["secondary", "on-secondary"],
+  ["secondary-container", "on-secondary-container"],
+  ["tertiary", "on-tertiary"],
+  ["tertiary-container", "on-tertiary-container"],
+  ["error", "on-error"],
+];
+
+const surfaceRoles = [
+  "surface",
+  "surface-container-lowest",
+  "surface-container-low",
+  "surface-container",
+  "surface-container-high",
+  "surface-container-highest",
+];
+
+const primaryTones = [10, 20, 30, 40, 50, 60, 70, 80, 90, 95];
+
+const typeScale = [
+  ["md-display-large", "Display Large", "Anton · fluid 40→80px"],
+  ["md-display-medium", "Display Medium", "Anton · fluid 32→64px"],
+  ["md-display-small", "Display Small", "Anton · fluid 24→40px"],
+  ["md-title-large", "Title Large", "Outfit 600 · 22px"],
+  ["md-title-medium", "Title Medium", "Outfit 600 · 16px"],
+  ["md-body-large", "Body Large", "Outfit 300 · 17px"],
+  ["md-body-medium", "Body Medium", "Outfit 300 · 15px"],
+  ["md-label-large", "Label Large", "IBM Plex Mono · 13px · 0.18em"],
+  ["md-label-medium", "Label Medium", "IBM Plex Mono · 11px · 0.18em"],
+  ["md-label-small", "Label Small", "IBM Plex Mono · 10px · 0.18em"],
+];
+
+const shapes = [
+  ["none", "0px"],
+  ["extra-small", "4px"],
+  ["small", "6px"],
+  ["medium", "10px"],
+  ["large", "14px"],
+  ["extra-large", "22px"],
+  ["extra-extra-large", "32px"],
+];
+
+const motion = [
+  ["spring-fast-spatial", "350ms", "Shape morph, nudge on hover"],
+  ["spring-default-spatial", "500ms", "Element enters / repositions"],
+  ["spring-fast-effects", "150ms", "State layer, colour change"],
+  ["easing-emphasized", "—", "Hero / page-level transitions"],
+];
+---
+
+<Layout title="Design System | Pavittarx">
+  <div class="shell">
+    <div class="frame">
+      <header class="rail">
+        <div>
+          <p class="md-label-medium sheet-id">Pavittarx // Design System</p>
+          <p class="md-label-small sheet-sub">
+            Material 3 Expressive · source #2575FC · dark scheme
+          </p>
+        </div>
+        <a href="/" class="md-label-medium back">← Index</a>
+      </header>
+
+      <section class="block">
+        <p class="md-label-medium section-label">// 01 — Colour roles</p>
+        <div class="swatches">
+          {
+            colorRoles.map(([bg, fg]) => (
+              <div
+                class="swatch"
+                style={`background: var(--md-sys-color-${bg}); color: var(--md-sys-color-${fg});`}
+              >
+                <span class="md-label-small">{bg}</span>
+              </div>
+            ))
+          }
+        </div>
+
+        <p class="md-body-medium note">
+          Two accents, split by meaning: blue says you can act on it, the
+          logo's yellow says the drawing is telling you something — figure
+          numbers, registration marks, spine ticks, status.
+        </p>
+
+        <p class="md-label-small caption">Surfaces</p>
+        <div class="swatches">
+          {
+            surfaceRoles.map((role) => (
+              <div
+                class="swatch swatch-outlined"
+                style={`background: var(--md-sys-color-${role}); color: var(--md-sys-color-on-surface);`}
+              >
+                <span class="md-label-small">{role.replace("surface", "sf")}</span>
+              </div>
+            ))
+          }
+        </div>
+
+        <p class="md-label-small caption">Primary tonal palette</p>
+        <div class="tones">
+          {
+            primaryTones.map((t) => (
+              <div
+                class="tone"
+                style={`background: var(--md-ref-primary-${t}); color: ${t >= 60 ? "var(--md-ref-primary-10)" : "var(--md-ref-primary-95)"};`}
+              >
+                <span class="md-label-small">{t}</span>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="block">
+        <p class="md-label-medium section-label">// 02 — Type scale</p>
+        <div class="type-rows">
+          {
+            typeScale.map(([cls, name, spec]) => (
+              <div class="type-row">
+                <div class={cls}>{name}</div>
+                <span class="md-label-small caption">{spec}</span>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="block">
+        <p class="md-label-medium section-label">// 03 — Shape scale</p>
+        <p class="md-body-medium note">
+          Expressive treats shape as a state signal — containers morph on hover
+          and focus rather than only changing colour. Here the morph is a
+          chamfer, not a radius: corners are cut on the diagonal, the way a
+          drawing breaks an edge. Nothing rounds.
+        </p>
+        <div class="shapes">
+          {
+            shapes.map(([name, px]) => (
+              <div class="shape-cell">
+                <div
+                  class="shape md-cut"
+                  style={`--cut: var(--md-sys-shape-cut-${name});`}
+                />
+                <span class="md-label-small caption">{name}</span>
+                <span class="md-label-small caption dim">{px}</span>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="block">
+        <p class="md-label-medium section-label">// 04 — Motion</p>
+        <div class="motion-rows">
+          {
+            motion.map(([name, dur, use]) => (
+              <div class="motion-row">
+                <span class="md-label-medium mono-key">{name}</span>
+                <span class="md-label-small caption">{dur}</span>
+                <span class="md-body-small">{use}</span>
+              </div>
+            ))
+          }
+        </div>
+        <div class="motion-demo">
+          <div class="demo-box md-cut">
+            <span class="md-label-small">hover me</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="block">
+        <p class="md-label-medium section-label">
+          // 05 — Structural primitives
+        </p>
+        <div class="primitives">
+          <div class="prim md-blueprint">
+            <span class="md-reg-mark" data-corner="tl"></span>
+            <span class="md-reg-mark" data-corner="tr"></span>
+            <span class="md-reg-mark" data-corner="bl"></span>
+            <span class="md-reg-mark" data-corner="br"></span>
+            <span class="md-label-small caption">.md-blueprint + reg marks</span>
+          </div>
+          <div class="prim md-blueprint-fine">
+            <span class="md-label-small caption">.md-blueprint-fine</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="block">
+        <p class="md-label-medium section-label">// 06 — Components</p>
+        <div class="components">
+          <a href="#" class="btn-filled md-cut md-state-layer">Primary action</a>
+          <a href="#" class="btn-outlined md-cut md-state-layer">Outlined</a>
+          <a href="#" class="btn-text md-cut md-state-layer">Text</a>
+          <kbd class="kbd">G</kbd>
+        </div>
+      </section>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .shell {
+    padding: var(--md-sys-frame-inset);
+  }
+  .frame {
+    border: var(--md-sys-frame-rule) solid var(--md-sys-color-outline-variant);
+    overflow: clip;
+  }
+  .rail {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--md-sys-spacing-4) var(--md-sys-spacing-6);
+    border-bottom: var(--md-sys-frame-rule) solid
+      var(--md-sys-color-outline-variant);
+  }
+  .sheet-id {
+    margin: 0;
+    color: var(--md-sys-color-on-surface);
+  }
+  .sheet-sub {
+    margin: 2px 0 0;
+    color: var(--md-sys-color-outline);
+  }
+  .back {
+    text-decoration: none;
+    color: var(--md-sys-color-primary);
+  }
+
+  .block {
+    padding: var(--md-sys-spacing-8) var(--md-sys-spacing-6);
+    border-bottom: var(--md-sys-frame-rule) solid
+      var(--md-sys-color-outline-variant);
+  }
+  .block:last-child {
+    border-bottom: 0;
+  }
+  .section-label {
+    margin: 0 0 var(--md-sys-spacing-6);
+    color: var(--md-sys-color-outline);
+  }
+  .caption {
+    color: var(--md-sys-color-outline);
+    margin: var(--md-sys-spacing-6) 0 var(--md-sys-spacing-3);
+    display: block;
+  }
+  .caption.dim {
+    opacity: 0.6;
+    margin: 0;
+  }
+  .note {
+    max-width: 62ch;
+    margin: 0 0 var(--md-sys-spacing-6);
+  }
+
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--md-sys-spacing-2);
+  }
+  .swatch {
+    padding: var(--md-sys-spacing-6) var(--md-sys-spacing-3);
+    display: flex;
+    align-items: flex-end;
+    min-height: 76px;
+  }
+  .swatch-outlined {
+    border: var(--md-sys-frame-rule) solid var(--md-sys-color-outline-variant);
+  }
+
+  .tones {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+  }
+  .tone {
+    min-height: 56px;
+    display: grid;
+    place-items: center;
+  }
+
+  .type-rows {
+    display: flex;
+    flex-direction: column;
+    gap: var(--md-sys-spacing-6);
+  }
+  .type-row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--md-sys-spacing-2);
+    padding-bottom: var(--md-sys-spacing-4);
+    border-bottom: var(--md-sys-frame-rule) solid
+      var(--md-sys-color-outline-variant);
+  }
+  .type-row .caption {
+    margin: 0;
+  }
+
+  .shapes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--md-sys-spacing-6);
+  }
+  .shape-cell {
+    display: flex;
+    flex-direction: column;
+    gap: var(--md-sys-spacing-2);
+  }
+  .shape {
+    width: 96px;
+    height: 96px;
+    background: var(--md-sys-color-primary-container);
+    border: var(--md-sys-frame-rule) solid var(--md-sys-color-primary);
+  }
+  .shape-cell .caption {
+    margin: 0;
+  }
+
+  .motion-rows {
+    display: flex;
+    flex-direction: column;
+    gap: var(--md-sys-spacing-3);
+  }
+  .motion-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2px;
+    padding-bottom: var(--md-sys-spacing-3);
+    border-bottom: var(--md-sys-frame-rule) solid
+      var(--md-sys-color-outline-variant);
+  }
+  .motion-row .caption {
+    margin: 0;
+  }
+  .mono-key {
+    color: var(--md-sys-color-primary);
+  }
+
+  .motion-demo {
+    margin-top: var(--md-sys-spacing-8);
+  }
+  .demo-box {
+    width: 160px;
+    height: 96px;
+    display: grid;
+    place-items: center;
+    color: var(--md-sys-color-on-surface-variant);
+    background: var(--md-sys-color-surface-container);
+    border: var(--md-sys-frame-rule) solid var(--md-sys-color-outline-variant);
+    --cut: var(--md-sys-shape-cut-extra-small);
+    transition:
+      --cut var(--md-sys-motion-spring-default-spatial),
+      transform var(--md-sys-motion-spring-default-spatial),
+      border-color var(--md-sys-motion-spring-fast-effects);
+  }
+  .demo-box:hover {
+    --cut: var(--md-sys-shape-cut-extra-extra-large);
+    border-color: var(--md-sys-color-primary);
+    transform: scale(1.06);
+  }
+
+  .primitives {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--md-sys-spacing-4);
+  }
+  .prim {
+    position: relative;
+    min-height: 140px;
+    display: grid;
+    place-items: center;
+    border: var(--md-sys-frame-rule) solid var(--md-sys-color-blueprint-rule);
+  }
+  .prim .caption {
+    margin: 0;
+  }
+
+  .components {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--md-sys-spacing-4);
+  }
+  .btn-filled,
+  .btn-outlined,
+  .btn-text {
+    font-family: var(--md-sys-typescale-mono-font);
+    font-size: var(--md-sys-typescale-label-large-size);
+    text-transform: uppercase;
+    letter-spacing: var(--md-sys-typescale-label-tracking);
+    text-decoration: none;
+    padding: var(--md-sys-spacing-3) var(--md-sys-spacing-6);
+    --cut: var(--md-sys-shape-cut-small);
+    transition: --cut var(--md-sys-motion-spring-fast-spatial);
+  }
+  .btn-filled {
+    background: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+  }
+  .btn-outlined {
+    color: var(--md-sys-color-primary);
+    border: var(--md-sys-frame-rule) solid var(--md-sys-color-primary);
+  }
+  .btn-text {
+    color: var(--md-sys-color-primary);
+  }
+  .btn-filled:hover,
+  .btn-outlined:hover,
+  .btn-text:hover {
+    --cut: var(--md-sys-shape-cut-large);
+  }
+  .kbd {
+    font-family: var(--md-sys-typescale-mono-font);
+    font-size: var(--md-sys-typescale-label-small-size);
+    padding: 4px 8px;
+    color: var(--md-sys-color-on-surface-variant);
+    background: var(--md-sys-color-surface-container-high);
+    border: var(--md-sys-frame-rule) solid var(--md-sys-color-outline-variant);
+  }
+
+  @media (min-width: 900px) {
+    .block {
+      padding: var(--md-sys-spacing-12);
+    }
+    .rail {
+      padding: var(--md-sys-spacing-4) var(--md-sys-spacing-12);
+    }
+    .type-row {
+      flex-direction: row;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--md-sys-spacing-8);
+    }
+    .motion-row {
+      grid-template-columns: 16rem 6rem 1fr;
+      align-items: baseline;
+      gap: var(--md-sys-spacing-4);
+    }
+  }
+</style>

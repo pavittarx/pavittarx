@@ -1,10 +1,18 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import PageShell from "../components/PageShell.astro";
 import SkillsComponent from "../components/Skills.astro";
-import Header from "../components/Header.astro";
 ---
 
 <Layout title="Skills Tree | Pavittarx">
-  <Header alwaysVisible={true} />
-  <SkillsComponent />
+  <PageShell
+    heading="Skills Tree"
+    strap="// Stack, depth and dependencies"
+    sheetId="Pavittarx // Capability Map"
+    fig="Fig. 03"
+    scale="Scale 1.5:1"
+    current="Skills"
+  >
+    <SkillsComponent />
+  </PageShell>
 </Layout>

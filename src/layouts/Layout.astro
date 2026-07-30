@@ -27,6 +27,29 @@ const {
     <meta name="description" content={description} />
     <title>{title}</title>
 
+    <!-- Resolve the theme before first paint, or the dark default flashes. -->
+    <script is:inline>
+      (() => {
+        let t;
+        try {
+          t = localStorage.getItem("pavittarx:theme");
+        } catch {}
+        if (t !== "light" && t !== "dark") {
+          t = matchMedia("(prefers-color-scheme: light)").matches
+            ? "light"
+            : "dark";
+        }
+        document.documentElement.dataset.theme = t;
+      })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+    />
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url} />
@@ -40,20 +63,34 @@ const {
   </head>
   <body>
     <slot />
+
+    <script>
+      // Every page carries a scheme toggle in its nav rail.
+      const THEME_KEY = "pavittarx:theme";
+
+      function paintThemeLabels() {
+        const t =
+          document.documentElement.dataset.theme === "light" ? "Light" : "Dark";
+        document
+          .querySelectorAll("[data-theme-label]")
+          .forEach((el) => (el.textContent = t));
+      }
+      paintThemeLabels();
+
+      document.querySelectorAll("[data-theme-toggle]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const next =
+            document.documentElement.dataset.theme === "light"
+              ? "dark"
+              : "light";
+          document.documentElement.dataset.theme = next;
+          try {
+            localStorage.setItem(THEME_KEY, next);
+          } catch {}
+          paintThemeLabels();
+        });
+      });
+    </script>
   </body>
 </html>
 
-<style>
-  @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap");
-
-  html,
-  body {
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    font-family: "Outfit", sans-serif;
-    scroll-behavior: smooth;
-    background-color: #0a0a0f;
-    color: white;
-  }
-</style>

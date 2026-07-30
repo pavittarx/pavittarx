@@ -300,226 +300,334 @@ const events = [
 ];
 ---
 
-<style>
-  #timeline {
-    --theme-primary: #2575fc;
-    position: relative;
-  }
-
-  .clip-corner {
-    clip-path: polygon(
-      10px 0,
-      100% 0,
-      100% calc(100% - 10px),
-      calc(100% - 10px) 100%,
-      0 100%,
-      0 10px
-    );
-  }
-
-  .clip-corner-sm {
-    clip-path: polygon(
-      4px 0,
-      100% 0,
-      100% calc(100% - 4px),
-      calc(100% - 4px) 100%,
-      0 100%,
-      0 4px
-    );
-  }
-
-  /* Custom Scrollbar */
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 6px;
-  }
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background: #0f111a;
-  }
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #2575fc;
-    border-radius: 3px;
-  }
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #4a90e2;
-  }
-
-  .filter-btn.active {
-    background-color: rgba(37, 117, 252, 0.2);
-    border-color: #2575fc;
-    color: #2575fc;
-    box-shadow: 0 0 15px rgba(37, 117, 252, 0.3);
-  }
-</style>
-
-<section
-  id="timeline"
-  class="py-16 bg-[#0a0a0f] min-h-screen flex flex-col"
-  data-initial-filter={initialFilter}
->
-  <!-- Sci-fi Background -->
-  <div
-    class="absolute inset-0 -z-10 h-full w-full overflow-hidden pointer-events-none"
-  >
-    <div
-      class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(37,117,252,0.05)_0%,transparent_70%)]"
-    >
-    </div>
-    <div
-      class="absolute inset-0 bg-[linear-gradient(rgba(37,117,252,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(37,117,252,0.03)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:linear-gradient(to_bottom,black_40%,transparent_90%)]"
-    >
-    </div>
+<section id="timeline" data-initial-filter={initialFilter}>
+  <div class="filters">
+    {
+      [
+        { id: "all", label: "All" },
+        { id: "work", label: "Work" },
+        { id: "blog", label: "Blog" },
+        { id: "education", label: "Education & Certs" },
+        { id: "project", label: "Projects" },
+      ].map((filter) => (
+        <button
+          class={`filter-btn md-label-medium ${filter.id === "all" ? "active" : ""}`}
+          data-filter={filter.id}
+        >
+          {filter.label}
+        </button>
+      ))
+    }
   </div>
 
-  <div class="container mx-auto px-6 z-10 flex-1 flex flex-col">
-    <!-- Header -->
-    <div class="text-center mb-12">
-      <div
-        class="inline-flex items-center justify-center p-3 border border-[#2575FC]/30 bg-[#0f111a]/80 backdrop-blur-sm clip-corner mb-4"
-      >
-        <svg
-          class="w-6 h-6 text-[#2575FC]"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-        </svg>
-        <h2
-          class="ml-3 text-2xl font-bold tracking-wider text-white font-mono uppercase"
-        >
-          Mission Log
-        </h2>
-      </div>
-      <p class="text-gray-400 max-w-2xl mx-auto font-mono text-sm">
-        // CHRONOLOGICAL RECORD OF OPERATIONS AND DEPLOYMENTS
-      </p>
-    </div>
+  <div class="log">
+    {
+      events.map((group) => (
+        <div class="group-container">
+          <div class="year-col">
+            <div class="year-marker md-cut">
+              <span class="md-display-small year">{group.year}</span>
+            </div>
+          </div>
 
-    <!-- Filters -->
-    <div class="flex flex-wrap justify-center gap-4 mb-12">
-      {
-        [
-          { id: "all", label: "All" },
-          { id: "work", label: "Work" },
-          { id: "blog", label: "Blog" },
-          { id: "education", label: "Education & Certs" },
-          { id: "project", label: "Projects" },
-        ].map((filter) => (
-          <button
-            class={`filter-btn px-6 py-2 text-sm font-mono uppercase tracking-wider border border-gray-800 bg-[#0f111a] text-gray-400 hover:text-[#2575FC] hover:border-[#2575FC]/50 transition-all duration-300 clip-corner-sm ${filter.id === "all" ? "active" : ""}`}
-            data-filter={filter.id}
-          >
-            [{filter.label}]
-          </button>
-        ))
-      }
-    </div>
+          <div class="entries">
+            {group.items.map((item, index) => (
+              <article
+                class="timeline-item"
+                data-category={item.category}
+                style={`top: calc(var(--tl-stick) + ${index * 1.25}rem); z-index: ${10 + index};`}
+              >
+                <span class="entry-node" aria-hidden="true" />
 
-    <!-- Vertical Timeline Container -->
-    <div class="relative flex-1">
-      <div class="max-w-6xl mx-auto pb-12 py-12 px-4 md:px-8 relative">
-        {
-          events.map((group) => (
-            <div class="flex flex-col md:flex-row gap-4 md:gap-8 pb-12 md:pb-24 relative group-container">
-              <!-- Left: Sticky Year -->
-              <div class="w-full md:w-32 flex-shrink-0 flex flex-col items-start md:items-center mb-4 md:mb-0 sticky md:static top-0 z-40 bg-[#0a0a0f] md:bg-transparent pt-24 pb-4 md:pt-0 md:pb-0">
-                <div class="md:sticky md:top-32">
-                  <div class="px-3 py-2 md:px-6 md:py-3 flex items-center justify-center bg-[#0f111a] border border-[#2575FC] clip-corner shadow-[0_0_20px_rgba(37,117,252,0.3)] relative group hover:scale-110 transition-transform duration-300">
-                    <span class="text-[#2575FC] font-bold font-mono text-sm md:text-2xl group-hover:text-white transition-colors">
-                      {group.year}
-                    </span>
-                  </div>
-                </div>
-                <!-- Vertical Line for the year group -->
-                <div class="hidden md:block flex-1 w-[2px] bg-gradient-to-b from-[#2575FC] to-transparent opacity-30 mt-4"></div>
-              </div>
-
-              <!-- Right: Events -->
-              <div class="flex-1 flex flex-col gap-6 pt-2 md:pt-4">
-                {group.items.map((item, index) => (
-                  <div
-                    class="timeline-item w-full bg-[#0f111a]/90 border border-gray-800 hover:border-[#2575FC] p-4 md:p-6 clip-corner transition-all duration-300 hover:shadow-[0_0_15px_rgba(37,117,252,0.15)] backdrop-blur-sm sticky origin-top"
-                    style={`top: calc(var(--timeline-sticky-top) + ${index * 1.5}rem); z-index: ${10 + index};`}
+                <div class="entry-card md-cut">
+                <div class="entry-head">
+                  <span
+                    class="md-label-small entry-tag"
                     data-category={item.category}
                   >
-                    <div class="flex justify-between items-start mb-4">
-                      <span
-                        class={`text-xs font-mono uppercase px-3 py-1 border ${
-                          item.category === "work"
-                            ? "border-purple-500/50 text-purple-400"
-                            : item.category === "project"
-                              ? "border-green-500/50 text-green-400"
-                              : item.category === "blog"
-                                ? "border-pink-500/50 text-pink-400"
-                                : "border-blue-500/50 text-blue-400"
-                        } clip-corner-sm`}
-                      >
-                        {item.category}
+                    {item.category}
+                  </span>
+                  {item.date && (
+                    <span class="md-label-small entry-date">{item.date}</span>
+                  )}
+                </div>
+
+                <h3 class="md-title-large entry-title">
+                  {item.link ? (
+                    <a
+                      href={item.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="entry-link"
+                    >
+                      <span>{item.title}</span>
+                      <span class="entry-ext" aria-hidden="true">
+                        ↗
                       </span>
-                      {item.date && (
-                        <span class="text-sm text-gray-500 font-mono">
-                          {item.date}
-                        </span>
-                      )}
-                    </div>
+                    </a>
+                  ) : (
+                    item.title
+                  )}
+                </h3>
 
-                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-[#2575FC] transition-colors">
-                      {item.link ? (
-                        <a
-                          href={item.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          class="inline-flex items-baseline gap-1.5 hover:underline decoration-[#2575FC] underline-offset-4"
-                        >
-                          <span>{item.title}</span>
-                          <svg
-                            class="w-3.5 h-3.5 flex-shrink-0 text-gray-500 group-hover:text-[#2575FC] translate-y-[1px]"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            aria-hidden="true"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                            />
-                          </svg>
-                        </a>
-                      ) : (
-                        item.title
-                      )}
-                    </h3>
-
-                    {item.description && (
-                      <p
-                        class="text-gray-400 leading-relaxed"
-                        set:html={item.description}
-                      />
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))
-        }
-      </div>
-    </div>
+                {item.description && (
+                  <p class="md-body-medium entry-desc" set:html={item.description} />
+                )}
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      ))
+    }
   </div>
 </section>
 
 <style>
-  :root {
-    --timeline-sticky-top: 8rem;
+  /* Clearance under the sticky nav rail. Single-column layouts park the year
+     above the stack, so cards need to clear the marker too. */
+  #timeline {
+    --tl-stick-year: 6rem;
+    --tl-stick: 9.5rem;
   }
-  @media (max-width: 768px) {
-    :root {
-      --timeline-sticky-top: 11rem;
+
+  /* ── Filters ────────────────────────────────────────────────────── */
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--md-sys-spacing-2);
+    padding-bottom: var(--md-sys-spacing-6);
+    border-bottom: var(--md-sys-frame-rule) solid
+      var(--md-sys-color-outline-variant);
+  }
+
+  .filter-btn {
+    cursor: pointer;
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+    color: var(--md-sys-color-on-surface-variant);
+    background: var(--md-sys-color-surface-container-low);
+    border: var(--md-sys-frame-rule) solid var(--md-sys-color-outline-variant);
+    --cut: var(--md-sys-shape-cut-small);
+    transition:
+      --cut var(--md-sys-motion-spring-fast-spatial),
+      color var(--md-sys-motion-spring-default-effects),
+      border-color var(--md-sys-motion-spring-default-effects),
+      background-color var(--md-sys-motion-spring-default-effects);
+  }
+  .filter-btn:hover {
+    --cut: var(--md-sys-shape-cut-large);
+    color: var(--md-sys-color-primary);
+    border-color: var(--md-sys-color-primary);
+  }
+  .filter-btn.active {
+    --cut: var(--md-sys-shape-cut-large);
+    color: var(--md-sys-color-on-primary-container);
+    background: var(--md-sys-color-primary-container);
+    border-color: var(--md-sys-color-primary);
+  }
+
+  /* ── Groups ─────────────────────────────────────────────────────── */
+  .log {
+    padding-top: var(--md-sys-spacing-8);
+  }
+
+  .group-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--md-sys-spacing-4);
+    padding-bottom: var(--md-sys-spacing-12);
+  }
+
+  /* Year rides the group's grid area, so it stays pinned for the whole year —
+     sticking the marker itself only works while its own row is on screen. */
+  .year-col {
+    position: sticky;
+    top: var(--tl-stick-year);
+    align-self: start;
+    z-index: 45;
+  }
+
+  /* Boxed like a drawing's section marker. */
+  .year-marker {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+    background: var(--md-sys-color-surface-container-low);
+    border: var(--md-sys-frame-rule) solid var(--md-sys-color-primary);
+    --cut: var(--md-sys-shape-cut-medium);
+  }
+  .year {
+    color: var(--md-sys-color-primary);
+    line-height: 1;
+  }
+
+  /* ── Spine ──────────────────────────────────────────────────────── */
+  .entries {
+    position: relative;
+    padding-left: var(--md-sys-spacing-6);
+    border-left: var(--md-sys-frame-rule) solid
+      var(--md-sys-color-outline-variant);
+  }
+
+  /* ── Entry ──────────────────────────────────────────────────────── */
+  /* Sticky + staggered: cards collect into a stack as the year scrolls past. */
+  /* Wrapper carries sticky + the spine tick; it must stay unclipped, or the
+     card's clip-path would cut the tick off. */
+  .timeline-item {
+    position: sticky;
+    margin-bottom: var(--md-sys-spacing-3);
+  }
+  .entry-card {
+    padding: var(--md-sys-spacing-4);
+    background: var(--md-sys-color-surface-container-low);
+    border: var(--md-sys-frame-rule) solid var(--md-sys-color-outline-variant);
+    --cut: var(--md-sys-shape-cut-medium);
+    transition:
+      --cut var(--md-sys-motion-spring-fast-spatial),
+      border-color var(--md-sys-motion-spring-default-effects),
+      background-color var(--md-sys-motion-spring-default-effects);
+  }
+  .timeline-item:hover .entry-card {
+    --cut: var(--md-sys-shape-cut-extra-extra-large);
+    border-color: var(--md-sys-color-primary);
+    background: var(--md-sys-color-surface-container);
+  }
+
+  /* Tick on the spine, with a short leader into the card. */
+  .entry-node {
+    position: absolute;
+    top: var(--md-sys-spacing-6);
+    left: calc(var(--md-sys-spacing-6) * -1 - 4px);
+    width: 7px;
+    height: 7px;
+    background: var(--md-sys-color-surface);
+    border: var(--md-sys-frame-rule) solid var(--md-sys-color-accent);
+    transition: background-color var(--md-sys-motion-spring-default-effects);
+  }
+  .entry-node::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    width: calc(var(--md-sys-spacing-6) - 3px);
+    height: 1px;
+    background: var(--md-sys-color-outline-variant);
+  }
+  .timeline-item:hover .entry-node {
+    background: var(--md-sys-color-accent);
+  }
+
+  .entry-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--md-sys-spacing-2);
+    padding-bottom: var(--md-sys-spacing-3);
+    margin-bottom: var(--md-sys-spacing-3);
+    border-bottom: var(--md-sys-frame-rule) solid
+      var(--md-sys-color-outline-variant);
+  }
+
+  /* Category is coded by colour the way a drawing codes layers. */
+  .entry-tag {
+    padding: 2px 8px;
+    border: var(--md-sys-frame-rule) solid currentColor;
+  }
+  .entry-tag[data-category="work"] {
+    color: var(--md-sys-color-accent);
+    background: var(--md-sys-color-accent-tint);
+  }
+  .entry-tag[data-category="project"] {
+    color: var(--md-sys-color-primary);
+    background: var(--md-sys-color-primary-tint);
+  }
+  .entry-tag[data-category="blog"] {
+    color: var(--md-sys-color-tertiary);
+    background: var(--md-sys-color-tertiary-tint);
+  }
+  .entry-tag[data-category="education"],
+  .entry-tag[data-category="certification"] {
+    color: var(--md-sys-color-on-surface-variant);
+    background: var(--md-sys-color-surface-container-high);
+  }
+
+  .entry-date {
+    color: var(--md-sys-color-outline);
+  }
+
+  .entry-title {
+    margin: 0 0 var(--md-sys-spacing-2);
+    color: var(--md-sys-color-on-surface);
+  }
+  .entry-link {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--md-sys-spacing-2);
+    color: inherit;
+    text-decoration: none;
+  }
+  .entry-link:hover {
+    color: var(--md-sys-color-primary);
+  }
+  .entry-ext {
+    font-family: var(--md-sys-typescale-mono-font);
+    font-size: 0.75em;
+    color: var(--md-sys-color-outline);
+  }
+  .entry-link:hover .entry-ext {
+    color: var(--md-sys-color-primary);
+  }
+
+  .entry-desc {
+    margin: 0;
+    max-width: 76ch;
+  }
+  /* Descriptions carry inline links from the source data. */
+  .entry-desc :global(a) {
+    color: var(--md-sys-color-primary);
+    text-decoration: none;
+    border-bottom: var(--md-sys-frame-rule) solid
+      var(--md-sys-color-outline-variant);
+  }
+  .entry-desc :global(a:hover) {
+    border-bottom-color: var(--md-sys-color-primary);
+  }
+
+  @media (min-width: 900px) {
+    /* Year moves into its own column, so cards reclaim the clearance. */
+    #timeline {
+      --tl-stick: 6rem;
+    }
+    .group-container {
+      grid-template-columns: 7rem 1fr;
+      gap: var(--md-sys-spacing-8);
+      padding-bottom: var(--md-sys-spacing-16);
+    }
+    .year-col {
+      display: flex;
+      justify-content: flex-end;
+    }
+    .entries {
+      padding-left: var(--md-sys-spacing-8);
+    }
+    .entry-node {
+      left: calc(var(--md-sys-spacing-8) * -1 - 4px);
+    }
+    .entry-node::after {
+      width: calc(var(--md-sys-spacing-8) - 3px);
+    }
+    .entry-card {
+      padding: var(--md-sys-spacing-6);
+    }
+  }
+
+  /* The stack reads as depth; without motion it just reads as overlap. */
+  @media (prefers-reduced-motion: reduce) {
+    .timeline-item,
+    .year-col {
+      position: static;
     }
   }
 </style>
@@ -531,55 +639,30 @@ const events = [
   const timelineSection = document.getElementById("timeline");
 
   function applyFilter(filter: string) {
-    // Update buttons
     buttons.forEach((b) => {
-      if ((b as HTMLElement).dataset.filter === filter) {
-        b.classList.add("active");
-      } else {
-        b.classList.remove("active");
-      }
+      b.classList.toggle(
+        "active",
+        (b as HTMLElement).dataset.filter === filter,
+      );
     });
 
-    // Filter items
     items.forEach((item) => {
       const category = (item as HTMLElement).dataset.category;
-      let isVisible = false;
+      const isVisible =
+        filter === "all"
+          ? true
+          : filter === "education"
+            ? category === "education" || category === "certification"
+            : category === filter;
 
-      if (filter === "all") {
-        isVisible = true;
-      } else if (filter === "education") {
-        isVisible = category === "education" || category === "certification";
-      } else {
-        isVisible = category === filter;
-      }
-
-      if (isVisible) {
-        (item as HTMLElement).style.display = "block";
-        (item as HTMLElement).style.opacity = "1";
-        (item as HTMLElement).style.transform = "scale(1)";
-      } else {
-        (item as HTMLElement).style.display = "none";
-        (item as HTMLElement).style.opacity = "0";
-        (item as HTMLElement).style.transform = "scale(0.95)";
-      }
+      (item as HTMLElement).style.display = isVisible ? "" : "none";
     });
 
-    // Hide empty groups
     groups.forEach((group) => {
-      const visibleItems = group.querySelectorAll(
-        '.timeline-item[style*="display: block"]'
-      );
-      // Also check for items that haven't been hidden yet (initial state)
-      const allItems = group.querySelectorAll(".timeline-item");
-      const hasVisibleItems = Array.from(allItems).some(
-        (item) => (item as HTMLElement).style.display !== "none"
-      );
-
-      if (hasVisibleItems) {
-        (group as HTMLElement).style.display = "flex";
-      } else {
-        (group as HTMLElement).style.display = "none";
-      }
+      const hasVisibleItems = Array.from(
+        group.querySelectorAll(".timeline-item"),
+      ).some((item) => (item as HTMLElement).style.display !== "none");
+      (group as HTMLElement).style.display = hasVisibleItems ? "" : "none";
     });
   }
 
@@ -590,9 +673,7 @@ const events = [
     });
   });
 
-  // Apply initial filter
   if (timelineSection && timelineSection.dataset.initialFilter) {
     applyFilter(timelineSection.dataset.initialFilter);
   }
 </script>
-```

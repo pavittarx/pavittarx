@@ -382,126 +382,97 @@ for (let iter = 0; iter < iterations; iter++) {
 const positionedGroups = rawGroups;
 ---
 
-<section
-  id="skills"
-  class="relative bg-[#0a0a0f] h-screen w-full overflow-hidden select-none"
->
-  <!-- Sci-fi Background -->
-  <div class="absolute inset-0 -z-10 h-full w-full pointer-events-none">
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(37,117,252,0.05)_0%,transparent_70%)]"></div>
-    <div class="absolute inset-0 bg-[linear-gradient(rgba(37,117,252,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(37,117,252,0.03)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_80%)]"></div>
-  </div>
 
-  <!-- Top View Toggle -->
-  <!-- Top View Toggle -->
-  <div class="absolute top-24 left-1/2 -translate-x-1/2 z-[80] flex bg-[#0f111a] border border-gray-800 clip-corner-sm p-1">
-    <button
-      id="btn-map-view"
-      class="view-toggle-btn active px-6 py-2 text-sm font-mono font-bold uppercase tracking-wider transition-all duration-300 text-gray-400 hover:text-[#2575FC]"
-    >
-      [Skills Tree]
+<section id="skills" class="sheet-drawing md-blueprint">
+  <span class="md-reg-mark" data-corner="tl"></span>
+  <span class="md-reg-mark" data-corner="tr"></span>
+  <span class="md-reg-mark" data-corner="bl"></span>
+  <span class="md-reg-mark" data-corner="br"></span>
+
+  <!-- View toggle -->
+  <div class="view-toggle md-cut">
+    <button id="btn-map-view" class="view-toggle-btn md-cut md-label-medium active">
+      Skills Tree
     </button>
-    <div class="w-[1px] bg-gray-800 my-1"></div>
-    <button
-      id="btn-list-view"
-      class="view-toggle-btn px-6 py-2 text-sm font-mono font-bold uppercase tracking-wider transition-all duration-300 text-gray-400 hover:text-[#2575FC]"
-    >
-      [List View]
+    <button id="btn-list-view" class="view-toggle-btn md-cut md-label-medium">
+      List View
     </button>
   </div>
 
-  <!-- Controls -->
-  <div class="absolute bottom-8 right-8 z-[80] flex flex-col gap-2">
-    <button id="zoom-in" class="w-10 h-10 bg-[#0f111a] border border-[#2575FC]/30 text-[#2575FC] rounded-lg hover:bg-[#2575FC] hover:text-white transition-all flex items-center justify-center shadow-lg active:scale-95">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <!-- Zoom controls -->
+  <div class="controls">
+    <button id="zoom-in" class="ctrl-btn md-cut" aria-label="Zoom in">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
       </svg>
     </button>
-    <button id="zoom-out" class="w-10 h-10 bg-[#0f111a] border border-[#2575FC]/30 text-[#2575FC] rounded-lg hover:bg-[#2575FC] hover:text-white transition-all flex items-center justify-center shadow-lg active:scale-95">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+    <button id="zoom-out" class="ctrl-btn md-cut" aria-label="Zoom out">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
         <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
       </svg>
     </button>
-    <button id="reset-view" class="w-10 h-10 bg-[#0f111a] border border-[#2575FC]/30 text-[#2575FC] rounded-lg hover:bg-[#2575FC] hover:text-white transition-all flex items-center justify-center shadow-lg active:scale-95" title="Reset View">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+    <button id="reset-view" class="ctrl-btn md-cut" aria-label="Reset view">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
       </svg>
     </button>
   </div>
 
-  <!-- Interactive Viewport -->
+  <!-- Interactive viewport -->
   <div id="skill-tree-viewport" class="w-full h-full cursor-grab active:cursor-grabbing touch-none relative overflow-hidden transition-opacity duration-500">
-    <!-- Content Container -->
     <div
       id="skill-tree-content"
       class="absolute top-0 left-0 w-[1400px] h-[900px] origin-top-left will-change-transform"
     >
-      <!-- Central Hub -->
+      <!-- Core -->
       <div
         id="central-hub"
         class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 text-center cursor-pointer hover:scale-110 transition-transform duration-300"
       >
-        <div
-          class="w-32 h-32 flex items-center justify-center relative z-20 group"
-        >
-          <!-- Logo -->
-          <Image
-            src={logo}
-            alt="Core"
-            class="w-24 h-24 object-contain relative z-10 drop-shadow-[0_0_15px_rgba(37,117,252,0.8)]"
-          />
-          
-          <!-- Hexagonal frame -->
-          <div class="absolute inset-0 border border-[#2575FC]/30 clip-hex animate-spin-slow"></div>
-          <div class="absolute inset-2 border border-[#2575FC]/20 clip-hex animate-spin-reverse"></div>
+        <div class="w-32 h-32 flex items-center justify-center relative z-20 group">
+          <Image src={logo} alt="Core" class="core-mark w-24 h-24 object-contain relative z-10" />
+          <div class="core-ring absolute inset-0 clip-hex animate-spin-slow"></div>
+          <div class="core-ring core-ring-inner absolute inset-2 clip-hex animate-spin-reverse"></div>
         </div>
-
-        <!-- Energy Field -->
-        <div
-          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 border border-[#2575FC]/20 animate-ping-slow -z-10 clip-hex"
-        >
-        </div>
+        <div class="core-ring absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 animate-ping-slow -z-10 clip-hex"></div>
       </div>
 
-      <!-- SVG Connections -->
+      <!-- Connections -->
       <svg class="absolute inset-0 w-full h-full pointer-events-none z-0">
         <defs>
           <linearGradient id="line-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#2575FC" stop-opacity="0.2"></stop>
-            <stop offset="100%" stop-color="#2575FC" stop-opacity="0.6"></stop>
+            <stop offset="0%" stop-color="var(--md-sys-color-primary)" stop-opacity="0.2"></stop>
+            <stop offset="100%" stop-color="var(--md-sys-color-primary)" stop-opacity="0.6"></stop>
           </linearGradient>
         </defs>
 
         {
           positionedGroups.map((group, gIdx) => (
             <>
-              {/* Line from Core to Category */}
               <path
                 d={`M${centerX} ${centerY} L${group.x} ${group.y}`}
                 stroke="url(#line-gradient)"
-                stroke-width="3"
+                stroke-width="2"
                 fill="none"
                 class="connection-line opacity-40 transition-opacity duration-700"
                 data-target={`cat-${gIdx}`}
               />
 
-              {/* Lines from Category to Level 1 Skills */}
               {group.items.map((skill, sIdx) => (
                 <>
                   <path
                     d={`M${group.x} ${group.y} L${skill.x} ${skill.y}`}
-                    stroke="#2575FC"
-                    stroke-width="2"
+                    stroke="var(--md-sys-color-primary)"
+                    stroke-width="1.5"
                     fill="none"
                     class="connection-line opacity-0 transition-opacity duration-700"
                     data-target={`l1-${gIdx}-${sIdx}`}
                   />
 
-                  {/* Lines from Level 1 to Level 2 Skills */}
                   {skill.children.map((child, cIdx) => (
                     <path
                       d={`M${skill.x} ${skill.y} L${child.x} ${child.y}`}
-                      stroke="#2575FC"
+                      stroke="var(--md-sys-color-outline)"
                       stroke-width="1"
                       fill="none"
                       class="connection-line opacity-0 transition-opacity duration-700"
@@ -519,23 +490,21 @@ const positionedGroups = rawGroups;
       {
         positionedGroups.map((group, gIdx) => (
           <>
-            <!-- Category Node -->
             <div
               id={`cat-${gIdx}`}
-              class="skill-node group absolute w-16 h-16 -ml-8 -mt-8 z-[70] cursor-pointer hover:scale-110 hover:z-[200] transition-all duration-500"
+              class="skill-node group absolute w-16 h-16 -ml-8 -mt-8 z-[70] cursor-pointer hover:z-[200] transition-all duration-500"
               style={`--tx: ${group.x}px; --ty: ${group.y}px;`}
               data-type="category"
               data-children-ids={group.items.map((_, i) => `l1-${gIdx}-${i}`).join(',')}
             >
-              <!-- Visual Container (Clipped) -->
-              <div class="absolute inset-0 bg-[#0f111a] border border-[#2575FC] flex items-center justify-center shadow-[0_0_15px_rgba(37,117,252,0.2)] clip-corner">
+              <div class="node-face md-cut node-face-cat absolute inset-0 flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
                   stroke="currentColor"
-                  class="w-8 h-8 text-[#2575FC]"
+                  class="w-8 h-8"
                 >
                   <path
                     stroke-linecap="round"
@@ -545,39 +514,27 @@ const positionedGroups = rawGroups;
                 </svg>
               </div>
 
-              <!-- Category Label (Outside Clip) -->
               <div
                 id={`cat-label-${gIdx}`}
-                class={`category-label absolute ${group.y < centerY ? "-top-10" : "-bottom-10"} left-1/2 -translate-x-1/2 whitespace-nowrap pointer-events-none group-hover:opacity-100 transition-opacity duration-300`}
+                class={`category-label absolute ${group.y < centerY ? "-top-9" : "-bottom-9"} left-1/2 -translate-x-1/2 whitespace-nowrap pointer-events-none transition-opacity duration-300`}
               >
-                <span class="text-[#2575FC] font-mono font-bold text-sm uppercase tracking-wider bg-[#0f111a]/90 px-3 py-1 border-l-2 border-r-2 border-[#2575FC] clip-corner-sm">
-                  {group.category}
-                </span>
-              </div>
-
-              <!-- Tooltip (Outside Clip) -->
-              <div class="tooltip-container absolute -bottom-16 left-1/2 -translate-x-1/2 bg-[#0f111a] text-[#2575FC] text-[10px] px-2 py-1 opacity-0 transition-opacity whitespace-nowrap border border-[#2575FC]/30 pointer-events-none clip-corner-sm font-mono tracking-wide shadow-[0_0_10px_rgba(37,117,252,0.5)] z-[200]">
-                Click to Toggle
+                <span class="md-label-small cat-label-text">{group.category}</span>
               </div>
             </div>
 
-            <!-- Level 1 Skill Nodes -->
             {group.items.map((skill, sIdx) => (
               <>
                 <div
                   id={`l1-${gIdx}-${sIdx}`}
-                  class={`skill-node collapsed group absolute w-14 h-14 -ml-7 -mt-7 z-[60] cursor-pointer hover:z-[200] transition-all duration-500`}
+                  class="skill-node collapsed group absolute w-14 h-14 -ml-7 -mt-7 z-[60] cursor-pointer hover:z-[200] transition-all duration-500"
                   style={`--tx: ${skill.x}px; --ty: ${skill.y}px;`}
                   data-type="l1"
                   data-children-ids={skill.children.map((_, i) => `l2-${gIdx}-${sIdx}-${i}`).join(',')}
                 >
-                  <!-- Visual Container (Clipped) -->
-                  <div class={`absolute inset-0 bg-[#0f111a] border ${skill.locked ? 'border-red-900/50' : 'border-gray-700'} group-hover:border-[#2575FC] flex items-center justify-center shadow-lg clip-corner transition-colors duration-300`}>
-                    <div class="absolute inset-0 bg-[#2575FC]/0 group-hover:bg-[#2575FC]/10 transition-colors duration-300"></div>
-                    
+                  <div class={`node-face md-cut node-face-l1 absolute inset-0 flex items-center justify-center ${skill.locked ? 'node-locked' : ''}`}>
                     {skill.locked && (
-                      <div class="absolute inset-0 flex items-center justify-center z-20 bg-black/60 backdrop-blur-[1px]">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-red-500/70">
+                      <div class="node-lock absolute inset-0 flex items-center justify-center z-20">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
                           <path fill-rule="evenodd" d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z" clip-rule="evenodd" />
                         </svg>
                       </div>
@@ -586,17 +543,15 @@ const positionedGroups = rawGroups;
                     <img
                       src={skill.icon}
                       alt={skill.name}
-                      class={`w-7 h-7 object-contain transition-all duration-300 transform group-hover:scale-110 ${skill.locked ? 'opacity-20 grayscale' : 'opacity-100'}`}
+                      class={`w-7 h-7 object-contain transition-transform duration-300 group-hover:scale-110 ${skill.locked ? 'opacity-20 grayscale' : ''}`}
                     />
                   </div>
 
-                  <!-- Tooltip (Outside Clip) -->
-                  <div class="tooltip-container absolute -bottom-10 left-1/2 -translate-x-1/2 bg-[#0f111a] text-[#2575FC] text-xs px-3 py-1 opacity-0 transition-opacity whitespace-nowrap border border-[#2575FC]/30 pointer-events-none clip-corner-sm font-mono tracking-wide shadow-[0_0_10px_rgba(37,117,252,0.5)] z-[200]">
+                  <div class="tooltip-container md-label-small">
                     {skill.name} {skill.locked && "(Locked)"}
                   </div>
                 </div>
 
-                <!-- Level 2 Skill Nodes -->
                 {skill.children.map((child: any, cIdx) => (
                   <div
                     id={`l2-${gIdx}-${sIdx}-${cIdx}`}
@@ -604,20 +559,15 @@ const positionedGroups = rawGroups;
                     style={`--tx: ${child.x}px; --ty: ${child.y}px;`}
                     data-type="l2"
                   >
-                    <!-- Visual Container (Clipped) -->
-                    <div class="absolute inset-0 bg-[#0f111a] border border-gray-700 group-hover:border-[#2575FC] flex items-center justify-center shadow-md clip-corner transition-colors duration-300">
-                      <div class="absolute inset-0 bg-[#2575FC]/5 group-hover:bg-[#2575FC]/20 transition-colors duration-300"></div>
+                    <div class="node-face md-cut node-face-l2 absolute inset-0 flex items-center justify-center">
                       <img
                         src={child.icon}
                         alt={child.name}
-                        class="w-5 h-5 object-contain opacity-100 transition-all duration-300 transform group-hover:scale-125"
+                        class="w-5 h-5 object-contain transition-transform duration-300 group-hover:scale-125"
                       />
                     </div>
 
-                    <!-- Tooltip (Outside Clip) -->
-                    <div class="tooltip-container absolute -bottom-8 left-1/2 -translate-x-1/2 bg-[#0f111a] text-[#2575FC] text-[10px] px-2 py-1 opacity-0 transition-opacity whitespace-nowrap border border-[#2575FC]/30 pointer-events-none clip-corner-sm font-mono tracking-wide shadow-[0_0_10px_rgba(37,117,252,0.5)] z-[200]">
-                      {child.name}
-                    </div>
+                    <div class="tooltip-container md-label-small">{child.name}</div>
                   </div>
                 ))}
               </>
@@ -628,108 +578,60 @@ const positionedGroups = rawGroups;
     </div>
   </div>
 
-  <!-- Flat View (Hidden by default) -->
-  <div id="flat-view" class="absolute inset-0 z-40 bg-[#0a0a0f] overflow-y-auto opacity-0 pointer-events-none transition-opacity duration-500 pt-32 pb-10 px-6 lg:px-20">
-    <div class="max-w-7xl mx-auto">
-      <h2 class="text-3xl font-bold text-white mb-10 font-mono border-l-4 border-[#2575FC] pl-4">Weapons</h2>
-      
-      <div class="space-y-12">
-        {skills.map((category) => (
-          <div>
-            <h3 class="text-xl font-bold text-[#2575FC] mb-6 font-mono flex items-center gap-3 border-b border-[#2575FC]/20 pb-2">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d={getCategoryIcon(category.category)} />
-              </svg>
-              {category.category}
-            </h3>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {category.items.map((skill) => (
-                <>
-                  {/* Level 1 Skill */}
-                  <div class={`bg-[#0f111a]/80 border rounded-lg p-4 flex items-center gap-4 transition-all duration-300 group ${
-                    skill.locked 
-                      ? 'border-red-900/30 opacity-50 grayscale cursor-not-allowed' 
-                      : 'border-gray-800 hover:border-[#2575FC]/50 hover:bg-[#2575FC]/5'
-                  }`}>
-                    <div class={`w-10 h-10 flex-shrink-0 bg-[#0a0a0f] rounded-md border flex items-center justify-center ${
-                      skill.locked ? 'border-red-900/30' : 'border-gray-800 group-hover:border-[#2575FC]/30'
-                    }`}>
-                      <img src={skill.icon} alt={skill.name} class="w-6 h-6 object-contain" />
+  <!-- Flat view -->
+  <div id="flat-view" class="flat-view opacity-0 pointer-events-none">
+    <div class="flat-inner">
+      {skills.map((category) => (
+        <div class="flat-group">
+          <h3 class="md-label-medium flat-cat">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d={getCategoryIcon(category.category)} />
+            </svg>
+            {category.category}
+          </h3>
+
+          <div class="flat-grid">
+            {category.items.map((skill) => (
+              <>
+                <div class={`flat-card md-cut ${skill.locked ? 'flat-card-locked' : ''}`}>
+                  <div class="flat-icon">
+                    <img src={skill.icon} alt={skill.name} class="w-6 h-6 object-contain" />
+                  </div>
+                  <div class="flat-meta">
+                    <span class="md-title-small flat-name">{skill.name}</span>
+                    <span class="md-label-small flat-sub">
+                      {skill.locked ? "Locked" : category.category}
+                    </span>
+                  </div>
+                </div>
+
+                {skill.children && skill.children.map((child) => (
+                  <div class={`flat-card md-cut flat-card-child ${child.locked ? 'flat-card-locked' : ''}`}>
+                    <div class="flat-icon">
+                      <img src={child.icon} alt={child.name} class="w-5 h-5 object-contain" />
                     </div>
-                    <div class="flex-1 min-w-0">
-                      <div class="flex items-center gap-2">
-                        <h4 class={`font-medium truncate transition-colors ${
-                          skill.locked ? 'text-gray-500' : 'text-white group-hover:text-[#2575FC]'
-                        }`}>{skill.name}</h4>
-                        {skill.locked && <span class="text-[10px] text-red-500 border border-red-500/30 px-1 rounded bg-red-500/10">Locked</span>}
-                      </div>
-                      <p class="text-xs text-gray-500 truncate">{category.category}</p>
+                    <div class="flat-meta">
+                      <span class="md-title-small flat-name">{child.name}</span>
+                      <span class="md-label-small flat-sub">{skill.name}</span>
                     </div>
                   </div>
-
-                  {/* Level 2 Skills (Children) */}
-                  {skill.children && skill.children.map((child) => (
-                    <div class={`bg-[#0f111a]/80 border rounded-lg p-4 flex items-center gap-4 transition-all duration-300 group ml-4 sm:ml-0 relative ${
-                      child.locked 
-                        ? 'border-red-900/30 opacity-50 grayscale cursor-not-allowed' 
-                        : 'border-gray-800 hover:border-[#2575FC]/50 hover:bg-[#2575FC]/5'
-                    }`}>
-                      {/* Visual indicator for sub-skill in mobile view */}
-                      <div class={`absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 rounded-r sm:hidden ${
-                        child.locked ? 'bg-red-900/30' : 'bg-[#2575FC]/20'
-                      }`}></div>
-                      
-                      <div class={`w-10 h-10 flex-shrink-0 bg-[#0a0a0f] rounded-md border flex items-center justify-center ${
-                        child.locked ? 'border-red-900/30' : 'border-gray-800 group-hover:border-[#2575FC]/30'
-                      }`}>
-                        <img src={child.icon} alt={child.name} class="w-5 h-5 object-contain" />
-                      </div>
-                      <div class="flex-1 min-w-0">
-                        <h4 class={`font-medium truncate transition-colors ${
-                          child.locked ? 'text-gray-500' : 'text-white group-hover:text-[#2575FC]'
-                        }`}>{child.name}</h4>
-                        <p class="text-xs text-gray-500 truncate">{skill.name} Ecosystem</p>
-                      </div>
-                    </div>
-                  ))}
-                </>
-              ))}
-            </div>
+                ))}
+              </>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
   </div>
 
-  <!-- Interaction Instructions -->
-  <div class="absolute bottom-8 left-8 z-50 pointer-events-none">
-    <div class="bg-[#0f111a]/90 border border-[#2575FC]/30 p-4 rounded-lg shadow-[0_0_15px_rgba(37,117,252,0.2)] backdrop-blur-sm pointer-events-auto">
-      <h3 class="text-[#2575FC] font-mono text-sm font-bold mb-2 uppercase tracking-wider flex items-center gap-2">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-        </svg>
-        System Guide
-      </h3>
-      <ul class="text-gray-400 text-xs font-mono space-y-1">
-        <li class="flex items-center gap-2">
-          <span class="w-1.5 h-1.5 bg-[#2575FC] rounded-full"></span>
-          <span><strong class="text-gray-300">Click Hub</strong>: Toggle All</span>
-        </li>
-        <li class="flex items-center gap-2">
-          <span class="w-1.5 h-1.5 bg-[#2575FC] rounded-full"></span>
-          <span><strong class="text-gray-300">Click Node</strong>: Expand/Collapse Branch</span>
-        </li>
-        <li class="flex items-center gap-2">
-          <span class="w-1.5 h-1.5 bg-[#2575FC] rounded-full"></span>
-          <span><strong class="text-gray-300">Drag</strong>: Pan View</span>
-        </li>
-        <li class="flex items-center gap-2">
-          <span class="w-1.5 h-1.5 bg-[#2575FC] rounded-full"></span>
-          <span><strong class="text-gray-300">Scroll/Pinch</strong>: Zoom</span>
-        </li>
-      </ul>
-    </div>
+  <!-- Legend -->
+  <div class="legend md-cut">
+    <p class="md-label-small legend-title">// Controls</p>
+    <ul class="legend-list md-label-small">
+      <li>Click hub — toggle all</li>
+      <li>Click node — expand branch</li>
+      <li>Drag — pan · Scroll — zoom</li>
+    </ul>
   </div>
 </section>
 
@@ -743,7 +645,7 @@ const positionedGroups = rawGroups;
   const btnMapView = document.getElementById("btn-map-view");
   const btnListView = document.getElementById("btn-list-view");
   const flatView = document.getElementById("flat-view");
-  const instructions = document.querySelector('.absolute.bottom-8.left-8');
+  const instructions = document.querySelector('.legend');
 
   // --- View Toggle Logic ---
   let isFlatView = false;
@@ -1120,18 +1022,287 @@ const positionedGroups = rawGroups;
 </script>
 
 <style>
-  /* ... Existing animations ... */
+  /* ── Drawing surface ────────────────────────────────────────────── */
+  .sheet-drawing {
+    position: relative;
+    width: 100%;
+    height: clamp(520px, 72vh, 820px);
+    overflow: hidden;
+    user-select: none;
+    border: var(--md-sys-frame-rule) solid var(--md-sys-color-blueprint-rule);
+    background-color: var(--md-sys-color-surface);
+  }
+
+  /* ── Chrome ─────────────────────────────────────────────────────── */
+  .view-toggle {
+    position: absolute;
+    top: var(--md-sys-spacing-4);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 80;
+    display: flex;
+    gap: var(--md-sys-spacing-1);
+    padding: var(--md-sys-spacing-1);
+    background: var(--md-sys-color-surface-container-low);
+    border: var(--md-sys-frame-rule) solid var(--md-sys-color-outline-variant);
+    --cut: var(--md-sys-shape-cut-small);
+  }
+  .view-toggle-btn {
+    cursor: pointer;
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+    color: var(--md-sys-color-on-surface-variant);
+    background: transparent;
+    border: 0;
+    --cut: var(--md-sys-shape-cut-extra-small);
+    transition:
+      color var(--md-sys-motion-spring-fast-effects),
+      background-color var(--md-sys-motion-spring-default-effects);
+  }
+  .view-toggle-btn:hover {
+    color: var(--md-sys-color-primary);
+  }
+  .view-toggle-btn.active {
+    --cut: var(--md-sys-shape-cut-small);
+    color: var(--md-sys-color-on-primary-container);
+    background: var(--md-sys-color-primary-container);
+  }
+
+  .controls {
+    position: absolute;
+    right: var(--md-sys-spacing-4);
+    bottom: var(--md-sys-spacing-4);
+    z-index: 80;
+    display: flex;
+    flex-direction: column;
+    gap: var(--md-sys-spacing-2);
+  }
+  .ctrl-btn {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    color: var(--md-sys-color-primary);
+    background: var(--md-sys-color-surface-container-low);
+    border: var(--md-sys-frame-rule) solid var(--md-sys-color-outline-variant);
+    --cut: var(--md-sys-shape-cut-small);
+    transition:
+      --cut var(--md-sys-motion-spring-fast-spatial),
+      background-color var(--md-sys-motion-spring-default-effects),
+      border-color var(--md-sys-motion-spring-default-effects);
+  }
+  .ctrl-btn:hover {
+    --cut: var(--md-sys-shape-cut-large);
+    border-color: var(--md-sys-color-primary);
+    background: var(--md-sys-color-surface-container-high);
+  }
+  .ctrl-btn:active {
+    transform: scale(0.95);
+  }
+
+  .legend {
+    position: absolute;
+    left: var(--md-sys-spacing-4);
+    bottom: var(--md-sys-spacing-4);
+    z-index: 50;
+    padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
+    background: var(--md-sys-color-surface-container-low);
+    border: var(--md-sys-frame-rule) solid var(--md-sys-color-outline-variant);
+    --cut: var(--md-sys-shape-cut-medium);
+  }
+  .legend-title {
+    margin: 0 0 var(--md-sys-spacing-2);
+    color: var(--md-sys-color-accent);
+  }
+  .legend-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: var(--md-sys-color-outline);
+    letter-spacing: 0.08em;
+    text-transform: none;
+  }
+  @media (max-width: 767px) {
+    .legend {
+      display: none;
+    }
+  }
+
+  /* ── Core ───────────────────────────────────────────────────────── */
+  .core-mark {
+    filter: var(--md-sys-mark-halo);
+  }
+  .core-ring {
+    border: var(--md-sys-frame-rule) solid var(--md-sys-color-blueprint-rule);
+  }
+  .core-ring-inner {
+    opacity: 0.6;
+  }
+
+  /* ── Nodes ──────────────────────────────────────────────────────── */
+  .node-face {
+    background: var(--md-sys-color-surface-container-low);
+    border: var(--md-sys-frame-rule) solid var(--md-sys-color-outline-variant);
+    --cut: var(--md-sys-shape-cut-small);
+    transition:
+      --cut var(--md-sys-motion-spring-fast-spatial),
+      border-color var(--md-sys-motion-spring-default-effects),
+      background-color var(--md-sys-motion-spring-default-effects);
+  }
+  .skill-node:hover .node-face {
+    --cut: var(--md-sys-shape-cut-large);
+    border-color: var(--md-sys-color-primary);
+    background: var(--md-sys-color-surface-container-high);
+  }
+  .node-face-cat {
+    color: var(--md-sys-color-primary);
+    border-color: var(--md-sys-color-primary);
+    box-shadow: var(--md-sys-elevation-glow);
+  }
+  .node-face-l2 {
+    --cut: var(--md-sys-shape-cut-extra-small);
+  }
+  .node-locked {
+    border-color: color-mix(in srgb, var(--md-sys-color-error) 40%, transparent);
+  }
+  .node-lock {
+    color: var(--md-sys-color-error);
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: inherit;
+  }
+
+  .cat-label-text {
+    display: inline-block;
+    padding: 2px 8px;
+    color: var(--md-sys-color-accent);
+    background: var(--md-sys-color-accent-tint);
+    border: var(--md-sys-frame-rule) solid var(--md-sys-color-accent);
+  }
+
+  .tooltip-container {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 200;
+    padding: 2px 8px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    color: var(--md-sys-color-on-surface);
+    background: var(--md-sys-color-surface-container-highest);
+    border: var(--md-sys-frame-rule) solid var(--md-sys-color-outline-variant);
+    transition: opacity var(--md-sys-motion-spring-fast-effects);
+  }
+  .skill-node:hover .tooltip-container {
+    opacity: 1;
+  }
+
+  /* ── Flat view ──────────────────────────────────────────────────── */
+  .flat-view {
+    position: absolute;
+    inset: 0;
+    z-index: 40;
+    overflow-y: auto;
+    background: var(--md-sys-color-surface);
+    padding: calc(var(--md-sys-spacing-16) + var(--md-sys-spacing-4))
+      var(--md-sys-spacing-6) var(--md-sys-spacing-8);
+    transition: opacity var(--md-sys-motion-duration-medium)
+      var(--md-sys-motion-easing-emphasized);
+  }
+  .flat-inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--md-sys-spacing-8);
+  }
+  .flat-cat {
+    display: flex;
+    align-items: center;
+    gap: var(--md-sys-spacing-2);
+    margin: 0 0 var(--md-sys-spacing-4);
+    padding-bottom: var(--md-sys-spacing-2);
+    color: var(--md-sys-color-accent);
+    border-bottom: var(--md-sys-frame-rule) solid
+      var(--md-sys-color-outline-variant);
+  }
+  .flat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--md-sys-spacing-3);
+  }
+  .flat-card {
+    display: flex;
+    align-items: center;
+    gap: var(--md-sys-spacing-3);
+    padding: var(--md-sys-spacing-3);
+    background: var(--md-sys-color-surface-container-low);
+    border: var(--md-sys-frame-rule) solid var(--md-sys-color-outline-variant);
+    --cut: var(--md-sys-shape-cut-medium);
+    transition:
+      --cut var(--md-sys-motion-spring-fast-spatial),
+      border-color var(--md-sys-motion-spring-default-effects),
+      background-color var(--md-sys-motion-spring-default-effects);
+  }
+  .flat-card:hover {
+    --cut: var(--md-sys-shape-cut-extra-extra-large);
+    border-color: var(--md-sys-color-primary);
+    background: var(--md-sys-color-surface-container);
+  }
+  .flat-card-child {
+    background: var(--md-sys-color-surface-container-lowest);
+  }
+  .flat-card-locked {
+    opacity: 0.45;
+    filter: grayscale(1);
+  }
+  .flat-icon {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    background: var(--md-sys-color-surface);
+    border: var(--md-sys-frame-rule) solid var(--md-sys-color-outline-variant);
+  }
+  .flat-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+  .flat-name {
+    color: var(--md-sys-color-on-surface);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .flat-sub {
+    color: var(--md-sys-color-outline);
+  }
+
+  /* ── Node transitions (drive the collapse animation) ────────────── */
+  .skill-node {
+    left: var(--tx);
+    top: var(--ty);
+    transform: scale(1);
+    opacity: 1;
+  }
+  .skill-node.collapsed {
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) scale(0) !important;
+    opacity: 0 !important;
+    pointer-events: none;
+  }
+
+  /* ── Animations ─────────────────────────────────────────────────── */
   @keyframes ping-slow {
     75%,
     100% {
       transform: translate(-50%, -50%) scale(1.5);
-      opacity: 0;
-    }
-  }
-  @keyframes ping-slower {
-    75%,
-    100% {
-      transform: translate(-50%, -50%) scale(2);
       opacity: 0;
     }
   }
@@ -1151,23 +1322,8 @@ const positionedGroups = rawGroups;
       transform: rotate(0deg);
     }
   }
-  @keyframes pulse-slow {
-    0%,
-    100% {
-      opacity: 0.5;
-      transform: translate(-50%, -50%) scale(1);
-    }
-    50% {
-      opacity: 0.8;
-      transform: translate(-50%, -50%) scale(1.05);
-    }
-  }
-
   .animate-ping-slow {
     animation: ping-slow 3s cubic-bezier(0, 0, 0.2, 1) infinite;
-  }
-  .animate-ping-slower {
-    animation: ping-slower 4s cubic-bezier(0, 0, 0.2, 1) infinite;
   }
   .animate-spin-slow {
     animation: spin-slow 10s linear infinite;
@@ -1175,57 +1331,7 @@ const positionedGroups = rawGroups;
   .animate-spin-reverse {
     animation: spin-reverse 15s linear infinite;
   }
-  .animate-pulse-slow {
-    animation: pulse-slow 4s ease-in-out infinite;
-  }
-  
   .clip-hex {
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-  }
-  
-  .clip-corner {
-    clip-path: polygon(
-      10px 0, 100% 0,
-      100% calc(100% - 10px), calc(100% - 10px) 100%,
-      0 100%, 0 10px
-    );
-  }
-  
-  .clip-corner-sm {
-    clip-path: polygon(
-      4px 0, 100% 0,
-      100% calc(100% - 4px), calc(100% - 4px) 100%,
-      0 100%, 0 4px
-    );
-  }
-
-  /* --- New Styles for Collapsible Nodes --- */
-  .skill-node {
-    /* Default Expanded State */
-    left: var(--tx);
-    top: var(--ty);
-    transform: scale(1);
-    opacity: 1;
-  }
-
-  .skill-node.collapsed {
-    /* Collapsed State: Center of screen */
-    left: 50% !important;
-    top: 50% !important;
-    transform: translate(-50%, -50%) scale(0) !important;
-    opacity: 0 !important;
-    pointer-events: none;
-  }
-  
-  /* Tooltip Enhancements */
-  .skill-node:hover .tooltip-container {
-      opacity: 1;
-      pointer-events: auto;
-  }
-
-  .view-toggle-btn.active {
-    background-color: rgba(37, 117, 252, 0.15);
-    color: #2575fc;
-    text-shadow: 0 0 10px rgba(37, 117, 252, 0.5);
   }
 </style>
