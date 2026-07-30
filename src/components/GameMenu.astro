@@ -35,7 +35,20 @@ const callouts = [
   { key: "D", value: "Claude SDK · Agents", side: "right", top: "62%" },
 ];
 
-const socials = [
+const RESUME_FILENAME = "Pavittar-Singh-Senior-Software-Engineer.pdf";
+
+interface SocialLink {
+  readonly key: string;
+  readonly label: string;
+  readonly href: string;
+  readonly icon: string;
+  readonly external: boolean;
+  /** Explicit filename. A bare `download` lets the browser name the file,
+      which combined with target=_blank yields a UUID instead of the title. */
+  readonly downloadAs?: string;
+}
+
+const socials: readonly SocialLink[] = [
   {
     key: "G",
     label: "Github",
@@ -60,10 +73,11 @@ const socials = [
   {
     key: "R",
     label: "Resume",
-    href: "/Pavittar-Singh-Senior-Software-Engineer.pdf",
+    href: `/${RESUME_FILENAME}`,
     icon: "↓",
-    external: true,
-    download: true,
+    // A download is not a navigation — opening a tab is what broke the name.
+    external: false,
+    downloadAs: RESUME_FILENAME,
   },
 ];
 ---
@@ -282,7 +296,7 @@ const socials = [
                 href={s.href}
                 target={s.external ? "_blank" : undefined}
                 rel={s.external ? "noopener noreferrer" : undefined}
-                download={s.download ? "" : undefined}
+                download={s.downloadAs}
                 data-shortcut={s.key}
                 class="social-btn md-cut md-state-layer"
               >
