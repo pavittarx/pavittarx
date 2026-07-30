@@ -298,11 +298,31 @@ const events = [
     ],
   },
 ];
+
+// Filter at build time, not in the browser. Rendering every entry on all
+// three routes and hiding the rest with JS made /timeline, /projects and
+// /blog near-identical to a crawler — classic duplicate content.
+const matches = (category: string) =>
+  initialFilter === "all"
+    ? true
+    : initialFilter === "education"
+      ? category === "education" || category === "certification"
+      : category === initialFilter;
+
+const visibleEvents = events
+  .map((group) => ({ ...group, items: group.items.filter((i) => matches(i.category)) }))
+  .filter((group) => group.items.length > 0);
+
+// Chips only make sense on the combined view; a dedicated page filtering
+// itself away is just confusing.
+const showFilters = initialFilter === "all";
 ---
 
 <section id="timeline" data-initial-filter={initialFilter}>
-  <div class="filters">
-    {
+  {
+    showFilters && (
+      <div class="filters">
+        {
       [
         { id: "all", label: "All" },
         { id: "work", label: "Work" },
@@ -315,18 +335,20 @@ const events = [
           data-filter={filter.id}
         >
           {filter.label}
-        </button>
-      ))
-    }
-  </div>
+            </button>
+          ))
+        }
+      </div>
+    )
+  }
 
   <div class="log">
     {
-      events.map((group) => (
+      visibleEvents.map((group) => (
         <div class="group-container">
           <div class="year-col">
             <div class="year-marker md-cut">
-              <span class="md-display-small year">{group.year}</span>
+              <h2 class="md-display-small year">{group.year}</h2>
             </div>
           </div>
 
@@ -458,6 +480,7 @@ const events = [
     --cut: var(--md-sys-shape-cut-medium);
   }
   .year {
+    margin: 0;
     color: var(--md-sys-color-primary);
     line-height: 1;
   }
